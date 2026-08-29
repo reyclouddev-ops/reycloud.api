@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ReyCloud API Docs</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root{
+    --bg: #050505;
+    --panel: rgba(15, 15, 18, 0.75);
+    --panel2: #121212;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-hover: rgba(59, 130, 246, 0.5);
+    --blue-dark: #1e3a8a;
+    --blue-main: #3b82f6;
+    --blue-light: #93c5fd;
+    --blue-cyan: #38bdf8;
+    --error: #f87171;
+    --text: #ffffff;
+    --muted: #a1a1aa;
+    --radius: 18px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Inter,sans-serif; }
+html{ scroll-behavior:smooth; }
+body{
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 0 0, rgba(59,130,246, 0.12), transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(56,189,248, 0.08), transparent 40%),
+        var(--bg);
+    background-attachment:fixed;
+}
+
+button, input{ font:inherit; }
+button{ cursor:pointer; }
+button:disabled{ cursor:not-allowed; opacity:.65; }
+
+::-webkit-scrollbar{ width:6px; height:6px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:20px; }
+::-webkit-scrollbar-thumb:hover{ background:var(--blue-main); }
+
+.app{
+    width:100%; max-width:560px; margin:auto; padding:20px 15px 40px;
+}
+
+.glass{
+    background:var(--panel);
+    border:1px solid var(--border);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 15px 45px rgba(0,0,0,.4);
+}
+
+.header{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px;
+}
+
+.brand{ display:flex; align-items:center; gap:11px; min-width:0; }
+
+.menu-btn{
+    width:43px; height:43px; flex-shrink:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:5px; border-radius:13px;
+    background:#111; border:1px solid var(--border); color:#fff; transition:.2s;
+}
+.menu-btn:hover{ border-color:var(--blue-main); background:#1a1a1a; }
+.menu-btn span{ width:18px; height:2px; background:#fff; border-radius:2px; }
+
+.logo{
+    width:43px; height:43px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    border-radius:13px; background:linear-gradient(135deg, #ffffff, #a1a1aa); color: #000;
+    font-size:21px; font-weight:800; box-shadow:0 0 20px rgba(255,255,255,.15);
+}
+.brand h1{ font-size:18px; font-weight:800; letter-spacing: -0.5px; }
+.brand p{ margin-top:2px; color:var(--muted); font-size:10px; }
+
+.status{
+    display:flex; align-items:center; gap:7px; padding:7px 12px; border-radius:30px;
+    font-size:9px; font-weight:800; background:rgba(59, 130, 246, 0.1);
+    color:var(--blue-light); border:1px solid rgba(59, 130, 246, 0.25); white-space:nowrap;
+}
+.status:before{
+    content:""; width:6px; height:6px; border-radius:50%; background:var(--blue-light);
+    box-shadow:0 0 9px var(--blue-light); animation:pulse 1.8s infinite;
+}
+.status.error{ color:var(--error); background:rgba(239,68,68,.08); border-color:rgba(239,68,68,.18); }
+.status.error:before{ background:var(--error); box-shadow:0 0 9px var(--error); }
+
+@keyframes pulse{
+    0%,100%{ transform:scale(.8); opacity:.7; }
+    50%{ transform:scale(1.25); opacity:1; }
+}
+
+.hero{ padding:20px; border-radius:var(--radius); margin-bottom:15px; }
+.hero-title{ font-size:22px; font-weight:800; margin-bottom:7px; color:#fff; }
+.hero-text{ color:var(--muted); font-size:12px; line-height:1.7; }
+
+.stats{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:25px; }
+.stat{ padding:16px; border-radius:16px; transition: .2s; }
+.stat:hover{ border-color: var(--blue-main); }
+.stat span{ color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:1px; }
+.stat strong{ display:block; margin-top:6px; font-size:22px; font-weight: 800; }
+
+.category{
+    margin:25px 4px 12px; display:flex; align-items:center; gap:10px;
+    color:var(--blue-light); font-size:10px; font-weight:800;
+    text-transform:uppercase; letter-spacing:1.5px;
+}
+.category:after{ content:""; height:1px; flex:1; background:linear-gradient(90deg, var(--border), transparent); }
+
+.endpoint{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 16px; margin-bottom:10px; border-radius:14px; transition:.25s;
+}
+.endpoint:hover{ border-color:var(--blue-main); transform:translateY(-2px); background: rgba(255,255,255,0.03); }
+
+.endpoint-info{ min-width:0; }
+.endpoint-info h4{ font-size:14px; font-weight:700; margin-bottom:4px; color:#fff; }
+.endpoint-info p{
+    color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:9px;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+
+.try-btn{
+    flex-shrink:0; padding:8px 16px; border:1px solid rgba(255,255,255,0.2); border-radius:30px;
+    color:white; background: #000; font-size:10px; font-weight:700; transition:.2s;
+}
+.try-btn:hover{ background:var(--text); color:#000; }
+
+/* Sidebar Drawer untuk Status API & Socials */
+.sidebar-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.7); backdrop-filter:blur(6px);
+    z-index:1999; opacity:0; visibility:hidden; transition:.3s;
+}
+.sidebar-overlay.active{ opacity:1; visibility:visible; }
+
+.sidebar{
+    position:fixed; left:0; top:0; bottom:0; width:330px; background:#0a0a0a;
+    border-right:1px solid var(--border); padding:20px; z-index:2000;
+    transform:translateX(-100%); transition:.3s; overflow-y:auto; display: flex; flex-direction: column; justify-content: space-between;
+}
+.sidebar.active{ transform:translateX(0); }
+.sidebar-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:12px; }
+.sidebar-head h3{ font-size:16px; font-weight:700; color:#fff; }
+
+/* Tataan Status Server yang Rapi (Bukan JSON Mentah) */
+.status-card-box {
+    display: flex; flex-direction: column; gap: 10px;
+}
+.status-item {
+    background: #121212; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+    display: flex; justify-content: space-between; align-items: center; font-size: 11px;
+}
+.status-item span:first-child { color: var(--muted); font-weight: 500; }
+.status-item span:last-child { color: #fff; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+.status-group-title {
+    font-size: 10px; color: var(--blue-cyan); text-transform: uppercase; font-weight: 800; margin-top: 10px; margin-bottom: 4px; letter-spacing: 1px;
+}
+
+/* Sidebar Social Links Footer */
+.sidebar-socials {
+    border-top: 1px solid var(--border); padding-top: 15px; margin-top: 15px; display: flex; flex-direction: column; gap: 8px;
+}
+.social-link {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px;
+    background: #121212; border: 1px solid var(--border); color: #fff; text-decoration: none; font-size: 11px; font-weight: 600; transition: .2s;
+}
+.social-link:hover { border-color: var(--blue-main); background: rgba(59,130,246,0.1); }
+.social-link svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+
+/* Modal API Playground */
+.overlay{
+    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    padding:10px; background:rgba(0,0,0,.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    z-index:999; opacity:0; visibility:hidden; transition:.25s;
+}
+.overlay.active{ opacity:1; visibility:visible; }
+
+.modal{
+    width:100%; max-width:510px; max-height:95vh; display:flex; flex-direction:column;
+    background:#0a0a0a; border:1px solid var(--border); border-radius:20px;
+    overflow:hidden; transform:translateY(20px) scale(.97); transition:.25s;
+    box-shadow:0 30px 80px rgba(0,0,0,.8);
+}
+.overlay.active .modal{ transform:translateY(0) scale(1); }
+
+.modal-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:16px 20px; border-bottom:1px solid var(--border); background:#111111;
+}
+.modal-title-wrap{ min-width:0; }
+.modal-head h3{ font-size:15px; font-weight:700; color:#fff; }
+.modal-head p{
+    color:var(--blue-light); font-family:'JetBrains Mono',monospace; font-size:9px; margin-top:4px; word-break:break-all;
+}
+
+.close{
+    width:32px; height:32px; flex-shrink:0; border:1px solid var(--border); border-radius:50%;
+    color:white; background:#000; transition:.2s; font-size: 14px;
+}
+.close:hover{ background:#fff; color:#000; }
+
+.modal-body{ padding:20px; overflow-y:auto; }
+.label{ display:block; margin-bottom:8px; color:var(--muted); font-size:10px; font-weight:600; text-transform: uppercase; letter-spacing: 0.5px;}
+
+.input{
+    width:100%; padding:14px; margin-bottom:20px; color:white;
+    background:#000; border:1px solid var(--border); border-radius:12px;
+    outline:none; font-size:12px; transition:.2s;
+}
+.input:focus{ border-color:var(--blue-main); box-shadow:0 0 0 2px rgba(59,130,246,.2); }
+
+.tabs{
+    display:flex; gap:8px; overflow-x:auto; padding-bottom:8px;
+    border-bottom:1px solid var(--border); margin-bottom:15px;
+}
+.tab{
+    padding:8px 12px; border:1px solid transparent; border-radius:8px;
+    background:transparent; color:var(--muted); font-size:10px; font-weight:600; white-space:nowrap; transition: .2s;
+}
+.tab:hover{ color:#fff; }
+.tab.active{ background:rgba(255,255,255,0.05); color:#fff; border-color: var(--border); }
+
+.code-wrap{ position:relative; margin-bottom:20px; }
+.code{
+    padding:15px; padding-right:60px; min-height:58px; max-height:170px; overflow:auto;
+    background:#000; border:1px solid var(--border); border-radius:12px;
+    color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.6;
+    white-space:pre-wrap; word-break:break-all;
+}
+.code-wrap .code span.highlight { color: #fff; }
+
+.copy-code{
+    position:absolute; right:8px; top:8px; padding:6px 10px; border:1px solid var(--border);
+    border-radius:8px; background:#111; color:white; font-size:9px; font-weight: 600;
+}
+.copy-code:hover{ background:#fff; color:#000; }
+
+.response-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
+.response-actions{ display:flex; gap:6px; }
+
+.small-btn{
+    border:1px solid var(--border); background:#050505; color:var(--muted);
+    border-radius:8px; padding:7px 10px; font-size:9px; font-weight:600; white-space:nowrap; transition:.2s;
+}
+.small-btn:hover{ border-color:var(--blue-main); color:#fff; }
+
+.response{
+    min-height:120px; max-height:280px; overflow:auto; padding:15px;
+    background:#000; border:1px solid var(--border); border-radius:12px;
+    color:#fff; font-family:'JetBrains Mono',monospace; font-size:10px;
+    line-height:1.65; white-space:pre-wrap; word-break:break-word;
+}
+.response.loading{ color:var(--blue-light); border-color: rgba(59,130,246,0.3); }
+.response.error{ color:var(--error); border-color:rgba(239,68,68,.3); }
+
+.media{ display:none; margin-top:12px; padding:10px; border:1px solid var(--border); border-radius:12px; background:#000; }
+.media.active{ display:block; }
+.media img, .media video{ display:block; width:100%; max-height:310px; object-fit:contain; border-radius:8px; background:#050505; border:1px solid var(--border); }
+.media-url{ display:block; margin-top:10px; color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:9px; line-height:1.5; word-break:break-all; }
+.media-buttons{ display:flex; gap:8px; margin-top:10px; }
+.media-buttons button{ flex:1; }
+
+.modal-foot{
+    padding:16px 20px; display:flex; gap:10px; border-top:1px solid var(--border); background:#111;
+}
+.execute-btn{
+    flex:1; padding:12px; border:0; border-radius:10px;
+    color:#000; background: #fff; font-size:12px; font-weight:700; transition: .2s;
+}
+.execute-btn:hover{ background:var(--blue-light); }
+
+.open-btn{
+    padding:12px 16px; border:1px solid var(--border); border-radius:10px;
+    color:white; background:#000; font-size:11px; font-weight:700; transition: .2s;
+}
+.open-btn:hover{ background: rgba(255,255,255,0.1); }
+
+.toast{
+    position:fixed; left:50%; bottom:20px; transform:translate(-50%,20px);
+    padding:10px 16px; border-radius:30px; background:#fff; border:1px solid #fff;
+    color:#000; font-size:11px; font-weight: 600; opacity:0; visibility:hidden;
+    transition:.25s; z-index:2000; white-space:nowrap; box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.toast.show{ opacity:1; visibility:visible; transform:translate(-50%,0); }
+</style>
+</head>
+
+<body>
+
+<!-- Sidebar Status API (Garis Tiga) & Socials -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar">
+    <div>
+        <div class="sidebar-head">
+            <h3>📊 Server Live Status</h3>
+            <button class="close" id="closeSidebar">✕</button>
+        </div>
+        <div id="statusStructuredView" class="status-card-box">
+            <div style="font-size: 11px; color: var(--muted); text-align: center; padding: 20px;">Memuat informasi server...</div>
+        </div>
+    </div>
+
+    <!-- Social Links dengan Icon WhatsApp & Telegram -->
+    <div class="sidebar-socials">
+        <a href="https://wa.me/6281260512743" target="_blank" class="social-link">
+            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            WhatsApp ReyCloud
+        </a>
+        <a href="https://whatsapp.com/channel/0029Vb8AU5sEQIakiPGkOA2k" target="_blank" class="social-link">
+            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Channel ReyCloud
+        </a>
+        <a href="https://t.me/ReyCloudShop" target="_blank" class="social-link">
+            <svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.534.26l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.535-.196 1.006.128.832.941z"/></svg>
+            Telegram ReyCloud
+        </a>
+    </div>
+</aside>
+
+<div class="app">
+<header class="header">
+    <div class="brand">
+        <button class="menu-btn" id="menuBtn" title="Server Status">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="logo">R</div>
+        <div>
+            <h1>ReyCloud API</h1>
+            <p>Developer Documentation</p>
+        </div>
+    </div>
+    <div id="statusBadge" class="status">CHECKING</div>
+</header>
+
+<section class="hero glass">
+    <div class="hero-title">API Playground 🚀</div>
+    <div class="hero-text">
+        Dokumentasi API ReyCloud dengan live testing.
+        Jalankan endpoint langsung dan lihat response,
+        gambar, video, serta JSON secara realtime.
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat glass">
+        <span>Endpoints</span>
+        <strong id="statTotal">--</strong>
+    </div>
+    <div class="stat glass">
+        <span>Categories</span>
+        <strong id="statCategories">--</strong>
+    </div>
+    <div class="stat glass">
+        <span>RAM</span>
+        <strong id="statRam">--</strong>
+    </div>
+    <div class="stat glass">
+        <span>CPU</span>
+        <strong id="statCpu">--</strong>
+    </div>
+</section>
+
+<div id="apiListContainer"></div>
+</div>
+
+<div class="overlay" id="apiModal">
+<div class="modal">
+    <div class="modal-head">
+        <div class="modal-title-wrap">
+            <h3 id="modalTitle">Endpoint</h3>
+            <p id="modalEndpoint">/endpoint</p>
+        </div>
+        <button class="close" id="closeModal">✕</button>
+    </div>
+
+    <div class="modal-body">
+        <label class="label" id="inputLabel">Query Parameter / File</label>
+        <input id="apiInput" class="input" type="text" autocomplete="off" placeholder="Masukkan value...">
+        <input id="apiFileInput" class="input" type="file" style="display:none; padding:10px;">
+
+        <div class="tabs">
+            <button class="tab active" data-lang="curl">cURL</button>
+            <button class="tab" data-lang="javascript">Fetch</button>
+            <button class="tab" data-lang="python">Python</button>
+            <button class="tab" data-lang="php">PHP</button>
+        </div>
+
+        <div class="code-wrap">
+            <pre class="code" id="codeSnippet">...</pre>
+            <button class="copy-code" id="copyCode">Salin</button>
+        </div>
+
+        <div class="response-head">
+            <label class="label" style="margin:0">API Response</label>
+            <div class="response-actions">
+                <button class="small-btn" id="copyEndpoint">🔗 Salin Endpoint</button>
+                <button class="small-btn" id="copyResponse">📋 Salin Response</button>
+            </div>
+        </div>
+
+        <div class="response" id="apiResponse">// Klik Execute Request untuk menjalankan API...</div>
+        <div class="media" id="mediaPreview"></div>
+    </div>
+
+    <div class="modal-foot">
+        <button class="open-btn" id="openEndpoint">↗ Buka</button>
+        <button class="execute-btn" id="executeRequest">Execute Request</button>
+    </div>
+</div>
+</div>
+
+<div class="toast" id="toast">Tersalin!</div>
+
+<script>
+const BASE_URL = "https://api.legionteknologi.my.id";
+
+const apiData = [
+{
+    category: "AI Intelligence",
+    list: [
+        { title: "Rayleigh AI", desc: "Advanced conversational assistant", path: "/ai/rayleigh", param: "text", placeholder: "Jelaskan cara kerja VPS" },
+        { title: "Img 2 Prompt", desc: "Extract prompt from image URL", path: "/ai/imgtoprompt", param: "url", placeholder: "https://example.com/image.jpg" },
+        { title: "Img 2 Img AI", desc: "Modify image using AI", path: "/ai/img2img", param: "url", placeholder: "https://example.com/image.jpg" }
+    ]
+},
+{
+    category: "Media Downloader",
+    list: [
+        { title: "YouTube Audio", desc: "Extract high quality MP3", path: "/download/ytmp3", param: "url", placeholder: "https://youtu.be/..." },
+        { title: "YouTube Video", desc: "Download MP4", path: "/download/ytmp4", param: "url", placeholder: "https://youtu.be/..." },
+        { title: "TikTok DL v1", desc: "TikTok No-Watermark", path: "/download/tiktok", param: "url", placeholder: "https://vt.tiktok.com/..." },
+        { title: "TikTok DL v2", desc: "Alternative TikTok endpoint", path: "/download/tiktokv2", param: "url", placeholder: "https://vt.tiktok.com/..." },
+        { title: "Instagram DL", desc: "Reels and Posts", path: "/download/igdl", param: "url", placeholder: "https://www.instagram.com/p/..." },
+        { title: "MediaFire Bypass", desc: "Direct download link", path: "/download/mediafire", param: "url", placeholder: "https://www.mediafire.com/file/..." },
+        { title: "TeraBox Extractor", desc: "Extract TeraBox link", path: "/download/terabox", param: "url", placeholder: "https://terabox.com/s/..." },
+        { title: "Videy Uploader", desc: "Upload video to Videy", path: "/download/videy", param: "url", placeholder: "https://example.com/video.mp4" }
+    ]
+},
+{
+    category: "Tools & Utilities",
+    list: [
+        { title: "Upload Legion", desc: "CDN File Uploader", path: "/upload", param: "file", placeholder: "Pilih file untuk di-upload" },
+        { title: "TempMail Generate", desc: "Create temporary email", path: "/utility/tempmail/create", param: "none", placeholder: "" },
+        { title: "TempMail Inbox", desc: "Check received messages", path: "/utility/tempmail/inbox", param: "email", placeholder: "user@domain.com" },
+        { title: "Remove BG", desc: "AI Background Remover", path: "/utility/removebg", param: "url", placeholder: "https://example.com/image.jpg" },
+        { title: "NSFW Random", desc: "Anime media generator", path: "/utility/nsfw", param: "category", placeholder: "waifu" }
+    ]
+}
+];
+
+const modal = document.getElementById("apiModal");
+const input = document.getElementById("apiInput");
+const fileInput = document.getElementById("apiFileInput");
+const responseBox = document.getElementById("apiResponse");
+const mediaPreview = document.getElementById("mediaPreview");
+const codeSnippet = document.getElementById("codeSnippet");
+const executeButton = document.getElementById("executeRequest");
+
+const total = apiData.reduce((sum,cat) => sum + cat.list.length, 0);
+document.getElementById("statTotal").textContent = total;
+document.getElementById("statCategories").textContent = apiData.length;
+
+let currentApi = null;
+let currentUrl = "";
+let currentResponse = "";
+let requestRunning = false;
+let toastTimer = null;
+
+// Sidebar & Status Mapping
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const closeSidebar = document.getElementById("closeSidebar");
+
+menuBtn.addEventListener("click", () => {
+    sidebar.classList.add("active");
+    sidebarOverlay.classList.add("active");
+    loadSidebarStatus();
+});
+
+function closeSidebarFunc(){
+    sidebar.classList.remove("active");
+    sidebarOverlay.classList.remove("active");
+}
+closeSidebar.addEventListener("click", closeSidebarFunc);
+sidebarOverlay.addEventListener("click", closeSidebarFunc);
+
+async function loadSidebarStatus(){
+    const containerBox = document.getElementById("statusStructuredView");
+    containerBox.innerHTML = `<div style="font-size: 11px; color: var(--muted); text-align: center; padding: 20px;">Memuat informasi server...</div>`;
+    try {
+        const res = await fetch(`${BASE_URL}/status`);
+        const data = await res.json();
+        
+        // Tatah response /status jadi bentuk list rapi (bukan json mentah)
+        containerBox.innerHTML = `
+            <div class="status-item"><span>Service Name</span><span>${data.service || 'N/A'}</span></div>
+            <div class="status-item"><span>Version</span><span>${data.version || 'N/A'}</span></div>
+            <div class="status-item"><span>Platform</span><span>${data.platform || 'N/A'}</span></div>
+            <div class="status-item"><span>Node Version</span><span>${data.nodeVersion || 'N/A'}</span></div>
+
+            <div class="status-group-title">Uptime</div>
+            <div class="status-item"><span>Server Uptime</span><span>${data.uptime?.server || 'N/A'}</span></div>
+            <div class="status-item"><span>VPS Uptime</span><span>${data.uptime?.vps || 'N/A'}</span></div>
+
+            <div class="status-group-title">Memory (RAM)</div>
+            <div class="status-item"><span>Used</span><span>${data.memory?.used || 'N/A'}</span></div>
+            <div class="status-item"><span>Free</span><span>${data.memory?.free || 'N/A'}</span></div>
+            <div class="status-item"><span>Total</span><span>${data.memory?.total || 'N/A'}</span></div>
+
+            <div class="status-group-title">CPU Hardware</div>
+            <div class="status-item"><span>Cores</span><span>${data.cpu?.cores || 'N/A'} Cores</span></div>
+            <div class="status-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <span>Model</span>
+                <span style="font-size: 9px; color: var(--blue-cyan); word-break: break-all;">${data.cpu?.model || 'N/A'}</span>
+            </div>
+        `;
+    } catch(err) {
+        containerBox.innerHTML = `<div style="font-size: 11px; color: var(--error); text-align: center; padding: 20px;">Gagal terhubung ke server status.</div>`;
+    }
+}
+
+const container = document.getElementById("apiListContainer");
+
+apiData.forEach(category => {
+    const categoryTitle = document.createElement("div");
+    categoryTitle.className = "category";
+    categoryTitle.textContent = category.category;
+    container.appendChild(categoryTitle);
+
+    category.list.forEach(api => {
+        const card = document.createElement("div");
+        card.className = "endpoint glass";
+
+        const info = document.createElement("div");
+        info.className = "endpoint-info";
+
+        const title = document.createElement("h4");
+        title.textContent = api.title;
+
+        const path = document.createElement("p");
+        path.textContent = api.path;
+
+        info.appendChild(title);
+        info.appendChild(path);
+
+        const button = document.createElement("button");
+        button.className = "try-btn";
+        button.textContent = "Test API";
+        button.addEventListener("click", () => openModal(api));
+
+        card.appendChild(info);
+        card.appendChild(button);
+        container.appendChild(card);
+    });
+});
+
+function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
+
+function buildUrl(){
+    if(!currentApi) return BASE_URL;
+    if(currentApi.param === "none" || currentApi.param === "file") return BASE_URL + currentApi.path;
+    const value = input.value.trim();
+    return BASE_URL + currentApi.path + "?" + encodeURIComponent(currentApi.param) + "=" + encodeURIComponent(value);
+}
+
+function updateCode(lang){
+    currentUrl = buildUrl();
+    let code = "";
+    if(currentApi && currentApi.param === "file"){
+        code = `curl -X POST "${BASE_URL}${currentApi.path}" \\\n  -F "file=@/path/to/file"`;
+    } else {
+        switch(lang){
+            case "curl": code = `curl -X GET <span class="highlight">"${currentUrl}"</span>`; break;
+            case "javascript": code = `fetch(<span class="highlight">"${currentUrl}"</span>)\n  .then(res => res.json())\n  .then(console.log);`; break;
+            case "python": code = `import requests\n\nres = requests.get(<span class="highlight">"${currentUrl}"</span>)\nprint(res.json())`; break;
+            case "php": code = `$ch = curl_init(<span class="highlight">"${currentUrl}"</span>);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\n\necho $response;`; break;
+        }
+    }
+    codeSnippet.innerHTML = code;
+}
+
+function openModal(api){
+    currentApi = api;
+    currentUrl = "";
+    currentResponse = "";
+    document.getElementById("modalTitle").textContent = api.title;
+    document.getElementById("modalEndpoint").textContent = BASE_URL + api.path;
+    
+    input.value = "";
+    fileInput.value = "";
+
+    if(api.param === "none"){
+        document.getElementById("inputLabel").textContent = "No Parameter Required";
+        input.style.display = "none";
+        fileInput.style.display = "none";
+    } else if(api.param === "file"){
+        document.getElementById("inputLabel").textContent = "Upload File (Multipart Form)";
+        input.style.display = "none";
+        fileInput.style.display = "block";
+    } else {
+        document.getElementById("inputLabel").textContent = "Enter " + api.param.toUpperCase();
+        input.placeholder = api.placeholder || "";
+        input.style.display = "block";
+        fileInput.style.display = "none";
+    }
+
+    responseBox.className = "response";
+    responseBox.textContent = "// Klik Execute Request untuk menjalankan API...";
+    
+    mediaPreview.innerHTML = "";
+    mediaPreview.classList.remove("active");
+
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    const curlTab = document.querySelector('.tab[data-lang="curl"]');
+    curlTab.classList.add("active");
+    updateCode("curl");
+
+    modal.classList.add("active");
+}
+
+function closeModal(){
+    if(requestRunning) return;
+    modal.classList.remove("active");
+}
+
+document.getElementById("closeModal").addEventListener("click", closeModal);
+modal.addEventListener("click", event => {
+    if(event.target === modal && !requestRunning) closeModal();
+});
+
+input.addEventListener("input", () => {
+    const active = document.querySelector(".tab.active");
+    updateCode(active ? active.dataset.lang : "curl");
+});
+
+document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
+        tab.classList.add("active");
+        updateCode(tab.dataset.lang);
+    });
+});
+
+function showToast(message = "Tersalin!"){
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+}
+
+async function copyText(text, message){
+    if(!text){ showToast("Tidak ada data"); return; }
+    try{
+        await navigator.clipboard.writeText(text);
+    }catch{
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+    }
+    showToast(message);
+}
+
+document.getElementById("copyEndpoint").addEventListener("click", () => copyText(currentUrl || buildUrl(), "Endpoint tersalin!"));
+document.getElementById("copyResponse").addEventListener("click", () => copyText(currentResponse, "Response tersalin!"));
+document.getElementById("copyCode").addEventListener("click", () => copyText(codeSnippet.innerText, "Code tersalin!"));
+document.getElementById("openEndpoint").addEventListener("click", () => {
+    const url = currentUrl || buildUrl();
+    window.open(url, "_blank", "noopener,noreferrer");
+});
+
+function isImage(contentType = "", url = ""){ return contentType.includes("image/") || /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i.test(url); }
+function isVideo(contentType = "", url = ""){ return contentType.includes("video/") || /\.(mp4|webm|mov|mkv|avi)(\?|$)/i.test(url); }
+function extractUrls(text){ if(typeof text !== "string") return []; return text.match(/https?:\/\/[^\s"'<>]+/gi) || []; }
+
+function findMediaUrlDeep(data){
+    if(!data) return null;
+    if(typeof data === "string"){
+        const urls = extractUrls(data);
+        for(const url of urls){ if(isImage("",url) || isVideo("",url)) return url; }
+        if(/^https?:\/\//i.test(data.trim())) return data.trim();
+        return null;
+    }
+    if(Array.isArray(data)){
+        for(const item of data){ const result = findMediaUrlDeep(item); if(result) return result; }
+        return null;
+    }
+    if(typeof data === "object"){
+        const priorityKeys = ["url", "image", "imageUrl", "image_url", "img", "photo", "picture", "thumbnail", "thumbnailUrl", "thumbnail_url", "media", "mediaUrl", "media_url", "video", "videoUrl", "video_url", "download", "downloadUrl", "download_url", "result", "data"];
+        for(const key of priorityKeys){
+            if(data[key] !== undefined && data[key] !== null){
+                const result = findMediaUrlDeep(data[key]);
+                if(result) return result;
+            }
+        }
+        for(const key of Object.keys(data)){
+            const result = findMediaUrlDeep(data[key]);
+            if(result) return result;
+        }
+    }
+    return null;
+}
+
+function showMedia(url, type = ""){
+    mediaPreview.innerHTML = "";
+    let element = null;
+    if(isImage(type,url)){
+        element = document.createElement("img");
+        element.src = url;
+        element.alt = "API Image Response";
+        element.loading = "lazy";
+    }else if(isVideo(type,url)){
+        element = document.createElement("video");
+        element.src = url;
+        element.controls = true;
+        element.playsInline = true;
+    }
+    if(!element) return;
+    
+    mediaPreview.appendChild(element);
+    
+    const urlText = document.createElement("span");
+    urlText.className = "media-url";
+    urlText.textContent = url;
+    mediaPreview.appendChild(urlText);
+    
+    const buttons = document.createElement("div");
+    buttons.className = "media-buttons";
+    
+    const copy = document.createElement("button");
+    copy.className = "small-btn";
+    copy.textContent = "🔗 Salin URL";
+    copy.onclick = () => copyText(url, "URL media tersalin!");
+    
+    const open = document.createElement("button");
+    open.className = "small-btn";
+    open.textContent = "↗ Buka Media";
+    open.onclick = () => window.open(url, "_blank", "noopener,noreferrer");
+    
+    buttons.appendChild(copy);
+    buttons.appendChild(open);
+    mediaPreview.appendChild(buttons);
+    mediaPreview.classList.add("active");
+}
+
+async function showProgress(message){
+    responseBox.className = "response loading";
+    responseBox.textContent = message;
+    await sleep(350);
+}
+
+executeButton.addEventListener("click", async () => {
+    if(requestRunning) return;
+    
+    if(currentApi.param !== "none" && currentApi.param !== "file" && !input.value.trim()){
+        showToast(currentApi.param.toUpperCase() + " wajib diisi");
+        input.focus();
+        return;
+    }
+    if(currentApi.param === "file" && fileInput.files.length === 0){
+        showToast("Pilih file terlebih dahulu");
+        return;
+    }
+
+    requestRunning = true;
+    executeButton.disabled = true;
+    executeButton.textContent = "Processing...";
+    
+    currentUrl = buildUrl();
+    currentResponse = "";
+    mediaPreview.innerHTML = "";
+    mediaPreview.classList.remove("active");
+
+    try{
+        await showProgress("⏳ Connecting to API...");
+        const start = performance.now();
+        let res;
+
+        try{
+            if(currentApi.param === "file"){
+                const formData = new FormData();
+                formData.append("file", fileInput.files[0]);
+                res = await fetch(`${BASE_URL}${currentApi.path}`, {
+                    method: "POST",
+                    body: formData
+                });
+            } else {
+                res = await fetch(currentUrl, { method:"GET", cache:"no-store", headers:{ "Accept": "*/*" } });
+            }
+        }catch(error){
+            throw new Error("Gagal terhubung ke API. Periksa CORS atau status server.");
+        }
+
+        const elapsed = Math.round(performance.now() - start);
+        const contentType = (res.headers.get("content-type") || "").toLowerCase();
+
+        if(contentType.includes("image/")){
+            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nMedia URL:\n${currentUrl}`;
+            showMedia(currentUrl, contentType);
+            responseBox.className = "response";
+            responseBox.textContent = `🖼️ Image Response\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n✅ Request completed`;
+            return;
+        }
+
+        if(contentType.includes("video/")){
+            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nMedia URL:\n${currentUrl}`;
+            showMedia(currentUrl, contentType);
+            responseBox.className = "response";
+            responseBox.textContent = `🎬 Video Response\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n✅ Request completed`;
+            return;
+        }
+
+        const raw = await res.text();
+        let data;
+        try{ data = JSON.parse(raw); }catch{ data = raw; }
+
+        let mediaUrl = (data && typeof data === "object") ? findMediaUrlDeep(data) : findMediaUrlDeep(raw);
+        if(mediaUrl){
+            let mediaType = "";
+            try{
+                const mediaResponse = await fetch(mediaUrl, { method:"HEAD", cache:"no-store" });
+                mediaType = (mediaResponse.headers.get("content-type") || "").toLowerCase();
+            }catch{}
+            if(mediaType || isImage("", mediaUrl) || isVideo("", mediaUrl)){
+                showMedia(mediaUrl, mediaType);
+            }
+        }
+
+        currentResponse = (data && typeof data === "object") ? JSON.stringify(data, null, 2) : String(data);
+        responseBox.className = res.ok ? "response" : "response error";
+        responseBox.textContent = `✅ Request completed\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n` + currentResponse;
+
+    }catch(error){
+        currentResponse = error?.message || "Unknown error";
+        responseBox.className = "response error";
+        responseBox.textContent = `❌ API Request Failed\n\n` + currentResponse + `\n\nEndpoint:\n` + currentUrl;
+    }finally{
+        requestRunning = false;
+        executeButton.disabled = false;
+        executeButton.textContent = "Execute Request";
+    }
+});
+
+async function fetchServerStatus(){
+    const badge = document.getElementById("statusBadge");
+    try{
+        const res = await fetch(`${BASE_URL}/status`, { cache:"no-store" });
+        if(!res.ok) throw new Error("Offline");
+        const data = await res.json();
+        
+        badge.textContent = "SYSTEM ONLINE";
+        badge.classList.remove("error");
+        document.getElementById("statRam").textContent = data.memory?.used || "Stable";
+        document.getElementById("statCpu").textContent = data.cpu?.cores ? `${data.cpu.cores} Cores` : "Active";
+    }catch{
+        badge.textContent = "SYSTEM OFFLINE";
+        badge.classList.add("error");
+        document.getElementById("statRam").textContent = "N/A";
+        document.getElementById("statCpu").textContent = "N/A";
+    }
+}
+
+fetchServerStatus();
+setInterval(fetchServerStatus, 30000);
+</script>
+
+</body>
+</html>
