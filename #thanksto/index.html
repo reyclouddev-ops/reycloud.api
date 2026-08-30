@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanks Too - Elite Agents | Cyberpunk</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+        :root {
+            --bg-dark: #050505;
+            --cyber-yellow: #fcee0a;
+            --cyber-pink: #ff003c;
+            --cyber-blue: #00f0ff;
+            --dark-violet: #1a0033;
+            --card-bg: rgba(20, 20, 25, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 50% 50%, #1a0033 0%, #050505 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(255,255,255,0.03) 0px,
+                    rgba(255,255,255,0.03) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            background-size: cover, 100% 3px;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            display: block;
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(
+                    rgba(18, 16, 16, 0) 50%,
+                    rgba(0, 0, 0, 0.1) 50%
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 0, 0, 0.03),
+                    rgba(0, 255, 0, 0.01),
+                    rgba(0, 255, 0, 0.03)
+                );
+            z-index: 100;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .phone-mockup {
+            width: 100%;
+            max-width: 420px;
+            padding: 25px;
+            margin: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .back-link {
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .back-nav {
+            background: transparent;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--cyber-blue);
+            clip-path: polygon(
+                0 0,
+                100% 0,
+                100% 70%,
+                70% 100%,
+                0 100%
+            );
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .back-nav:hover {
+            background: var(--cyber-blue);
+            box-shadow: 0 0 15px var(--cyber-blue);
+        }
+
+        .back-nav:hover svg {
+            stroke: #000;
+        }
+
+        .header-title {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+            color: var(--cyber-yellow);
+            text-transform: uppercase;
+            text-shadow: 2px 2px var(--cyber-pink);
+        }
+
+        .main-heading {
+            border-left: 5px solid var(--cyber-yellow);
+            padding-left: 15px;
+            margin-bottom: 22px;
+            position: relative;
+        }
+
+        .main-heading h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            margin: 0;
+            letter-spacing: -1px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .main-heading p {
+            color: var(--cyber-pink);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin: 5px 0 0;
+            text-transform: uppercase;
+        }
+
+        /* API IDENTITY */
+
+        .identity-box {
+            position: relative;
+            margin-bottom: 25px;
+            padding: 18px;
+            background: rgba(0, 240, 255, 0.04);
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            border-left: 3px solid var(--cyber-blue);
+            clip-path: polygon(
+                0 0,
+                96% 0,
+                100% 18%,
+                100% 100%,
+                4% 100%,
+                0 82%
+            );
+            box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.03);
+        }
+
+        .identity-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--cyber-blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .identity-dot {
+            width: 7px;
+            height: 7px;
+            background: #00ff66;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff66;
+            animation: pulseStatus 1.5s infinite;
+        }
+
+        .identity-box h2 {
+            margin: 0 0 8px;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .identity-box p {
+            margin: 0;
+            color: rgba(255,255,255,0.72);
+            font-size: 12px;
+            line-height: 1.7;
+            letter-spacing: 0.5px;
+        }
+
+        .identity-box p strong {
+            color: var(--cyber-yellow);
+        }
+
+        /* API INFO */
+
+        .api-info {
+            display: grid;
+            grid-template-columns: 1fr 100px;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            background: rgba(20, 20, 25, 0.8);
+            border: 1px solid rgba(255, 0, 60, 0.3);
+            padding: 12px;
+            min-height: 58px;
+            position: relative;
+            clip-path: polygon(
+                0 0,
+                94% 0,
+                100% 20%,
+                100% 100%,
+                0 100%
+            );
+        }
+
+        .info-item small {
+            display: block;
+            color: var(--cyber-pink);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 7px;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.5px;
+        }
+
+        .clock {
+            color: var(--cyber-yellow) !important;
+            text-shadow: 0 0 8px rgba(252, 238, 10, 0.6);
+            font-size: 11px !important;
+        }
+
+        /* HERO */
+
+        .hero-banner {
+            background:
+                linear-gradient(
+                    45deg,
+                    rgba(255,0,60,0.3),
+                    rgba(0,240,255,0.3)
+                ),
+                url('https://api.legionteknologi.my.id/r/8EprmF.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 140px;
+            border: 2px solid var(--cyber-pink);
+            margin-bottom: 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(
+                0 15%,
+                5% 0,
+                100% 0,
+                100% 85%,
+                95% 100%,
+                0 100%
+            );
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
+        }
+
+        .official-badge {
+            position: absolute;
+            top: 0;
+            right: 15%;
+            background: var(--cyber-yellow);
+            color: #000;
+            padding: 2px 12px;
+            font-size: 10px;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+            z-index: 2;
+        }
+
+        .thanks-to {
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-shadow:
+                3px 3px 0px var(--cyber-pink),
+                -1px -1px 0px var(--cyber-blue);
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: skew(0deg);
+            }
+
+            2% {
+                transform: skew(10deg);
+            }
+
+            4% {
+                transform: skew(-10deg);
+            }
+
+            6% {
+                transform: skew(0deg);
+            }
+        }
+
+        /* AGENTS */
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            position: relative;
+            padding: 20px 10px;
+            text-align: center;
+            transition: 0.3s;
+            clip-path: polygon(
+                10% 0,
+                100% 0,
+                100% 90%,
+                90% 100%,
+                0 100%,
+                0 10%
+            );
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--cyber-blue);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyber-yellow);
+            box-shadow: 0 0 15px rgba(252, 238, 10, 0.3);
+        }
+
+        .img-container {
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 15px;
+            position: relative;
+            padding: 4px;
+            background: linear-gradient(
+                var(--cyber-blue),
+                var(--cyber-pink)
+            );
+            clip-path: polygon(
+                50% 0%,
+                100% 25%,
+                100% 75%,
+                50% 100%,
+                0% 75%,
+                0% 25%
+            );
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            clip-path: polygon(
+                50% 0%,
+                100% 25%,
+                100% 75%,
+                50% 100%,
+                0% 75%,
+                0% 25%
+            );
+        }
+
+        .online-status {
+            width: 12px;
+            height: 12px;
+            background: var(--cyber-yellow);
+            border: 2px solid #000;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            box-shadow: 0 0 10px var(--cyber-yellow);
+        }
+
+        .name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: block;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .badge {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            display: inline-block;
+            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .badge-owner {
+            color: #000;
+            background: var(--cyber-yellow);
+        }
+
+        .badge-anomali {
+            color: #fff;
+            background: var(--cyber-pink);
+        }
+
+        .badge-friend {
+            color: #000;
+            background: var(--cyber-blue);
+        }
+
+        .footer-info {
+            margin-top: 30px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(252, 238, 10, 0.25);
+            background: rgba(252, 238, 10, 0.03);
+            clip-path: polygon(
+                4% 0,
+                96% 0,
+                100% 25%,
+                100% 100%,
+                0 100%,
+                0 25%
+            );
+        }
+
+        .footer-info p {
+            margin: 0;
+            color: rgba(255,255,255,0.6);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        .footer-info strong {
+            color: var(--cyber-yellow);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .phone-mockup::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: var(--cyber-blue);
+            margin-top: 30px;
+            box-shadow: 0 0 10px var(--cyber-blue);
+        }
+
+        @keyframes pulseStatus {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+        }
+
+        @media (max-width: 360px) {
+            .phone-mockup {
+                padding: 20px 15px;
+            }
+
+            .main-heading h1 {
+                font-size: 23px;
+            }
+
+            .api-info {
+                grid-template-columns: 1fr 90px;
+            }
+
+            .info-item strong {
+                font-size: 8px;
+            }
+
+            .agents-grid {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="phone-mockup">
+
+    <a href="/dashboard" class="back-link">
+        <div class="back-nav">
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--cyber-blue)"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </div>
+    </a>
+
+    <div class="header-title">
+        THANKS TO & CONTRIBUTOR
+    </div>
+
+    <div class="main-heading">
+        <h1>REST API REYCLOUDSHP</h1>
+        <p>Operational Unit v.2.1.0</p>
+    </div>
+
+    <!-- IDENTITAS API -->
+
+    <div class="identity-box">
+
+        <div class="identity-label">
+            <span class="identity-dot"></span>
+            API IDENTITY
+        </div>
+
+        <h2>APA ITU REST API REYCLOUDSHP?</h2>
+
+        <p>
+            <strong>REST API ReyCloudSHP</strong> adalah layanan API
+            yang digunakan untuk menyediakan berbagai fungsi dan
+            endpoint secara terstruktur agar dapat diakses oleh
+            website, aplikasi, maupun sistem lainnya melalui HTTP.
+        </p>
+
+        <br>
+
+        <p>
+            Halaman ini merupakan bagian informasi dari
+            <strong>ReyCloudSHP</strong> yang menampilkan identitas
+            sistem, informasi versi, status layanan, serta
+            contributor yang membantu pengembangan sistem.
+        </p>
+
+    </div>
+
+    <!-- STATUS + JAM -->
+
+    <div class="api-info">
+
+        <div class="info-item">
+            <small>API STATUS</small>
+            <strong>
+                ● OPERATIONAL
+            </strong>
+        </div>
+
+        <div class="info-item">
+            <small>LOCAL TIME</small>
+            <strong
+                id="clock"
+                class="clock"
+            >
+                00:00:00
+            </strong>
+        </div>
+
+    </div>
+
+    <!-- HERO -->
+
+    <div class="hero-banner">
+
+        <span class="official-badge">
+            IDENTIFIED
+        </span>
+
+        <div class="thanks-to">
+            
+        </div>
+
+    </div>
+
+    <!-- CONTRIBUTOR -->
+
+    <div class="agents-grid">
+
+        <div class="card">
+
+            <div class="img-container">
+                <img
+                    src="https://api.legionteknologi.my.id/r/lP1h0a.jpeg"
+                    alt="ReyCloudSHP"
+                >
+
+                <div class="online-status"></div>
+            </div>
+
+            <span class="name">
+                ReyCloudSHP
+            </span>
+
+            <span class="badge badge-owner">
+                OWNER
+            </span>
+
+        </div>
+
+        <div class="card">
+
+            <div class="img-container">
+                <img
+                    src="https://api.legionteknologi.my.id/r/P9B9LO.jpeg"
+                    alt="foxxcliys"
+                >
+
+                <div class="online-status"></div>
+            </div>
+
+            <span class="name">
+                foxxcliys
+            </span>
+
+            <span class="badge badge-anomali">
+                CONTRIBUTOR
+            </span>
+
+        </div>
+
+        <div class="card">
+
+            <div class="img-container">
+                <img
+                    src="https://api.legionteknologi.my.id/r/LyF58f.jpeg"
+                    alt="PahmiMoon"
+                >
+
+                <div class="online-status"></div>
+            </div>
+
+            <span class="name">
+                PahmiMoon
+            </span>
+
+            <span class="badge badge-anomali">
+                CONTRIBUTOR
+            </span>
+
+        </div>
+
+        <div class="card">
+
+            <div class="img-container">
+                <img
+                    src="https://api.legionteknologi.my.id/r/p43t2M.jpeg"
+                    alt="Unknown"
+                >
+
+                <div class="online-status"></div>
+            </div>
+
+            <span class="name">
+                UNKNOW
+            </span>
+
+            <span class="badge badge-friend">
+                NONE
+            </span>
+
+        </div>
+
+        <div class="card">
+
+            <div class="img-container">
+                <img
+                    src="https://api.legionteknologi.my.id/r/p43t2M.jpeg"
+                    alt="Unknown"
+                >
+
+                <div class="online-status"></div>
+            </div>
+
+            <span class="name">
+                UNKNOW
+            </span>
+
+            <span class="badge badge-friend">
+                NONE
+            </span>
+
+        </div>
+
+        <div class="card">
+
+            <div class="img-container">
+                <img
+                    src="https://api.legionteknologi.my.id/r/p43t2M.jpeg"
+                    alt="Unknown"
+                >
+
+                <div class="online-status"></div>
+            </div>
+
+            <span class="name">
+                UNKNOW
+            </span>
+
+            <span class="badge badge-friend">
+                NONE
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer-info">
+
+        <p>
+            <strong>REYCLOUDSHP</strong>
+            &nbsp; // &nbsp;
+            REST API SYSTEM
+            &nbsp; // &nbsp;
+            2026
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+
+        const time = now.toLocaleTimeString('id-ID', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+
+        document.getElementById('clock').textContent = time;
+    }
+
+    updateClock();
+
+    setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
