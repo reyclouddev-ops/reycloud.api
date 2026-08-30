@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ReyCloudSHP API Dashboard</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root{
+    --bg: #030305;
+    --panel: rgba(12, 12, 16, 0.75);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(59, 130, 246, 0.4);
+    --blue-main: #3b82f6;
+    --blue-light: #93c5fd;
+    --blue-cyan: #38bdf8;
+    --error: #f87171;
+    --text: #ffffff;
+    --muted: #94a3b8;
+    --radius: 20px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Inter,sans-serif; -webkit-font-smoothing:antialiased; touch-action: manipulation; }
+html{ scroll-behavior:smooth; }
+body{
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 10%, rgba(59,130,246, 0.08), transparent 45%),
+        radial-gradient(circle at 90% 90%, rgba(56,189,248, 0.05), transparent 45%),
+        var(--bg);
+    background-attachment:fixed;
+    overflow-y:auto;
+}
+
+button, input, textarea{ font:inherit; }
+button{ cursor:pointer; }
+button:disabled{ cursor:not-allowed; opacity:.65; }
+
+::-webkit-scrollbar{ width:4px; height:4px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.15); border-radius:20px; }
+::-webkit-scrollbar-thumb:hover{ background:var(--blue-main); }
+
+.app{ width:100%; max-width:850px; margin:auto; padding:25px 20px 60px; }
+
+.glass{
+    background:var(--panel);
+    border:1px solid var(--border);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+}
+
+.header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:24px; }
+.brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+
+.back-btn{
+    width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid var(--border); color:#fff; text-decoration:none; transition:.2s;
+}
+.back-btn:hover{ border-color:var(--blue-main); background:rgba(59,130,246,0.08); }
+.back-btn svg{ width:18px; height:18px; fill:currentColor; }
+
+.logo{
+    width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    border-radius:14px; background:linear-gradient(135deg, #ffffff, #94a3b8); color: #000;
+    font-size:20px; font-weight:800; box-shadow:0 0 25px rgba(255,255,255,0.1);
+}
+.brand h1{ font-size:17px; font-weight:800; letter-spacing:-0.3px; }
+.brand p{ margin-top:2px; color:var(--muted); font-size:10px; }
+
+.hero{ padding:24px; border-radius:var(--radius); margin-bottom:24px; }
+.hero-title{ font-size:20px; font-weight:800; margin-bottom:6px; color:#fff; }
+.hero-text{ color:var(--muted); font-size:12px; line-height:1.6; }
+
+.category{
+    margin:25px 4px 12px; display:flex; align-items:center; gap:10px;
+    color:var(--blue-light); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1.5px;
+}
+.category:after{ content:""; height:1px; flex:1; background:linear-gradient(90deg, var(--border), transparent); }
+
+.endpoint{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:16px 20px; margin-bottom:12px; border-radius:16px; transition:.2s;
+}
+.endpoint:hover{ border-color:var(--blue-main); transform:translateY(-1px); background:rgba(59,130,246,0.02); }
+
+.endpoint-info{ min-width:0; }
+.endpoint-info h4{ font-size:14px; font-weight:700; margin-bottom:4px; color:#fff; }
+.endpoint-info p{
+    color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+
+.try-btn{
+    flex-shrink:0; padding:8px 16px; border:1px solid rgba(255,255,255,0.2); border-radius:30px;
+    color:white; background:#000; font-size:11px; font-weight:700; transition:.2s;
+}
+.try-btn:hover{ background:var(--blue-main); border-color:var(--blue-main); color:#fff; }
+
+.overlay{
+    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    padding:15px; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px);
+    z-index:999; opacity:0; visibility:hidden; transition:.2s;
+}
+.overlay.active{ opacity:1; visibility:visible; }
+
+.modal{
+    width:100%; max-width:510px; max-height:95vh; display:flex; flex-direction:column;
+    background:#0a0a0e; border:1px solid var(--border); border-radius:var(--radius);
+    overflow:hidden; transform:translateY(20px) scale(.97); transition:.2s;
+    box-shadow:0 30px 80px rgba(0,0,0,.8);
+}
+.overlay.active .modal{ transform:translateY(0) scale(1); }
+
+.modal-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:16px 20px; border-bottom:1px solid var(--border); background:#111116;
+}
+.modal-title-wrap{ min-width:0; }
+.modal-head h3{ font-size:15px; font-weight:700; color:#fff; }
+.modal-head p{ color:var(--blue-light); font-family:'JetBrains Mono',monospace; font-size:9px; margin-top:4px; word-break:break-all; }
+
+.close{
+    width:32px; height:32px; flex-shrink:0; border:1px solid var(--border); border-radius:50%;
+    color:white; background:#000; transition:.2s; font-size:14px; display:flex; align-items:center; justify-content:center;
+}
+.close:hover{ background:#fff; color:#000; }
+
+.modal-body{ padding:20px; overflow-y:auto; }
+.label{ display:block; margin-bottom:8px; color:var(--muted); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+
+.input{
+    width:100%; padding:14px; margin-bottom:16px; color:white;
+    background:#000; border:1px solid var(--border); border-radius:12px;
+    outline:none; font-size:12px; transition:.2s;
+}
+.input:focus{ border-color:var(--blue-main); box-shadow:0 0 0 2px rgba(59,130,246,.2); }
+
+/* CUSTOM DROPDOWN EMOJI WA REACT */
+.custom-select-container { position:relative; margin-bottom:16px; display:none; }
+.custom-select-trigger {
+    width:100%; padding:14px; background:#000; border:1px solid var(--border); border-radius:12px;
+    color:#fff; font-size:12px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; transition:.2s;
+}
+.custom-select-trigger:hover { border-color:var(--blue-main); }
+.custom-options {
+    position:absolute; top:calc(100% + 6px); left:0; right:0; background:#0d0d12;
+    border:1px solid var(--border); border-radius:12px; max-height:200px; overflow-y:auto;
+    z-index:60; display:none; box-shadow:0 15px 30px rgba(0,0,0,0.7);
+}
+.custom-options.open { display:block; }
+.custom-option {
+    padding:12px 15px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--muted);
+    cursor:pointer; transition:.15s; border-bottom:1px solid rgba(255,255,255,0.03);
+}
+.custom-option:hover { background:rgba(59,130,246,0.15); color:#fff; }
+.custom-option.selected { color:var(--blue-cyan); font-weight:700; background:rgba(59,130,246,0.08); }
+
+.tabs{
+    display:flex; gap:8px; overflow-x:auto; padding-bottom:8px;
+    border-bottom:1px solid var(--border); margin-bottom:15px;
+}
+.tab{
+    padding:8px 12px; border:1px solid transparent; border-radius:8px;
+    background:transparent; color:var(--muted); font-size:10px; font-weight:600; white-space:nowrap; transition:.2s;
+}
+.tab:hover{ color:#fff; }
+.tab.active{ background:rgba(255,255,255,0.05); color:#fff; border-color:var(--border); }
+
+.code-wrap{ position:relative; margin-bottom:20px; }
+.code{
+    padding:15px; padding-right:60px; min-height:58px; max-height:170px; overflow:auto;
+    background:#000; border:1px solid var(--border); border-radius:12px;
+    color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.6;
+    white-space:pre-wrap; word-break:break-all;
+}
+.code span.highlight { color: #fff; }
+
+.copy-code{
+    position:absolute; right:8px; top:8px; padding:6px 10px; border:1px solid var(--border);
+    border-radius:8px; background:#111; color:white; font-size:9px; font-weight:600;
+}
+.copy-code:hover{ background:#fff; color:#000; }
+
+.response-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
+.response-actions{ display:flex; gap:6px; }
+
+.small-btn{
+    border:1px solid var(--border); background:#050505; color:var(--muted);
+    border-radius:8px; padding:7px 10px; font-size:9px; font-weight:600; white-space:nowrap; transition:.2s;
+}
+.small-btn:hover{ border-color:var(--blue-main); color:#fff; }
+
+.response{
+    min-height:120px; max-height:280px; overflow:auto; padding:15px;
+    background:#000; border:1px solid var(--border); border-radius:12px;
+    color:#fff; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.65;
+    white-space:pre-wrap; word-break:break-word;
+}
+.response.loading{ color:var(--blue-light); border-color:rgba(59,130,246,0.3); }
+.response.error{ color:var(--error); border-color:rgba(239,68,68,.3); }
+
+.media{ display:none; margin-top:12px; padding:10px; border:1px solid var(--border); border-radius:12px; background:#000; }
+.media.active{ display:block; }
+.media img, .media video{ display:block; width:100%; max-height:310px; object-fit:contain; border-radius:8px; background:#050505; border:1px solid var(--border); }
+.media-url{ display:block; margin-top:10px; color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:9px; line-height:1.5; word-break:break-all; }
+.media-buttons{ display:flex; gap:8px; margin-top:10px; }
+.media-buttons button{ flex:1; }
+
+.modal-foot{ padding:16px 20px; display:flex; gap:10px; border-top:1px solid var(--border); background:#111116; }
+.execute-btn{ flex:1; padding:12px; border:0; border-radius:10px; color:#000; background:#fff; font-size:12px; font-weight:700; transition:.2s; }
+.execute-btn:hover{ background:var(--blue-light); }
+
+.open-btn{ padding:12px 16px; border:1px solid var(--border); border-radius:10px; color:white; background:#000; font-size:11px; font-weight:700; }
+.open-btn:hover{ background:rgba(255,255,255,0.1); }
+
+.toast{
+    position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px);
+    padding:11px 18px; border-radius:30px; background:#fff; border:1px solid #fff;
+    color:#000; font-size:11px; font-weight:700; opacity:0; visibility:hidden;
+    transition:.2s; z-index:2000; white-space:nowrap; box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.toast.show{ opacity:1; visibility:visible; transform:translate(-50%,0); }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+<header class="header">
+    <div class="brand">
+        <a href="/dashboard" class="back-btn" title="Kembali ke Dashboard">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </a>
+        <div class="logo">🛠️</div>
+        <div>
+            <h1>Tools & Utilities</h1>
+            <p>ReyCloudSHP API Docs</p>
+        </div>
+    </div>
+</header>
+
+<section class="hero glass">
+    <div class="hero-title">🛠️ Tools & Utilities Endpoints</div>
+    <div class="hero-text">
+        Kumpulan endpoint utilities seperti TempMail, Remove BG, NSFW, Token Scraper, Wink Enhance, Bacon Bypass, dan WA Auto React dengan live testing.
+    </div>
+</section>
+
+<div class="category">Endpoints List</div>
+<div id="apiListContainer"></div>
+</div>
+
+<!-- MODAL PLAYGROUND -->
+<div class="overlay" id="apiModal">
+<div class="modal">
+    <div class="modal-head">
+        <div class="modal-title-wrap">
+            <h3 id="modalTitle">Endpoint</h3>
+            <p id="modalEndpoint">/endpoint</p>
+        </div>
+        <button class="close" id="closeModal">✕</button>
+    </div>
+
+    <div class="modal-body">
+        <label class="label" id="inputLabel">Query Parameter / File</label>
+        <input id="apiInput" class="input" type="text" autocomplete="off" placeholder="Masukkan value...">
+        <input id="apiFileInput" class="input" type="file" style="display:none; padding:10px;">
+
+        <!-- CUSTOM DROPDOWN EMOJI WA REACT -->
+        <div class="custom-select-container" id="emojiSelectContainer">
+            <label class="label">Pilih Emoji Reaksi</label>
+            <div class="custom-select-trigger" id="emojiSelectTrigger">
+                <span id="selectedEmojiText">😹 (Default)</span>
+                <span>▾</span>
+            </div>
+            <div class="custom-options" id="emojiOptions">
+                <div class="custom-option selected" data-value="😹,🚀,😎,☠️,🤓">😹,🚀,😎,☠️,🤓 (Semua)</div>
+                <div class="custom-option" data-value="😹">😹 (Kucing Ketawa)</div>
+                <div class="custom-option" data-value="🚀">🚀 (Roket)</div>
+                <div class="custom-option" data-value="😎">😎 (Kacamata Hitam)</div>
+                <div class="custom-option" data-value="☠️">☠️ (Tengkorak)</div>
+                <div class="custom-option" data-value="🤓">🤓 (Nerd)</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-lang="curl">cURL</button>
+            <button class="tab" data-lang="javascript">Node.js</button>
+            <button class="tab" data-lang="python">Python</button>
+            <button class="tab" data-lang="php">PHP</button>
+        </div>
+
+        <div class="code-wrap">
+            <pre class="code" id="codeSnippet">...</pre>
+            <button class="copy-code" id="copyCode">Salin</button>
+        </div>
+
+        <div class="response-head">
+            <label class="label" style="margin:0">API Response</label>
+            <div class="response-actions">
+                <button class="small-btn" id="copyEndpoint">🔗 Salin Endpoint</button>
+                <button class="small-btn" id="copyResponse">📋 Salin Response</button>
+            </div>
+        </div>
+
+        <div class="response" id="apiResponse">// Klik Execute Request untuk menjalankan API...</div>
+        <div class="media" id="mediaPreview"></div>
+    </div>
+
+    <div class="modal-foot">
+        <button class="open-btn" id="openEndpoint">↗ Buka</button>
+        <button class="execute-btn" id="executeRequest">Execute Request</button>
+    </div>
+</div>
+</div>
+
+<div class="toast" id="toast">Tersalin!</div>
+
+<script>
+const API_BASE = "https://api.legionteknologi.my.id";
+
+const toolsApiList = [
+    { title: "TempMail Create", desc: "Generate temporary email address", path: "/utility/tempmail/create", param: "none", placeholder: "" },
+    { title: "TempMail Inbox", desc: "Check incoming inbox messages", path: "/utility/tempmail/inbox", param: "email", placeholder: "user@domain.com" },
+    { title: "Remove Background", desc: "AI image background remover", path: "/utility/removebg", param: "file", placeholder: "Pilih file gambar atau masukkan URL" },
+    { title: "NSFW Media Generator", desc: "Fetch random anime/waifu media", path: "/utility/nsfw", param: "category", placeholder: "waifu" },
+    { title: "NFToken Scraper", desc: "Fetch tokens with proxies & plans", path: "/utility/nftoken", param: "count", placeholder: "1" },
+    { title: "Wink Image Enhance", desc: "Enhance image quality using AI", path: "/utility/wink", param: "file", placeholder: "Pilih file gambar atau URL" },
+    { title: "Bacon Bypass Link", desc: "Bypass target shortened links", path: "/utility/bacon", param: "url", placeholder: "https://linktarget.com/..." },
+    { title: "WA Auto React", desc: "Kirim spam reaction emoji WA channel", path: "/tools/wareact", param: "url", placeholder: "https://whatsapp.com/channel/...", hasEmojis: true }
+];
+
+const modal = document.getElementById("apiModal");
+const input = document.getElementById("apiInput");
+const fileInput = document.getElementById("apiFileInput");
+
+const emojiSelectContainer = document.getElementById("emojiSelectContainer");
+const emojiSelectTrigger = document.getElementById("emojiSelectTrigger");
+const emojiOptions = document.getElementById("emojiOptions");
+const selectedEmojiText = document.getElementById("selectedEmojiText");
+
+const responseBox = document.getElementById("apiResponse");
+const mediaPreview = document.getElementById("mediaPreview");
+const codeSnippet = document.getElementById("codeSnippet");
+const executeButton = document.getElementById("executeRequest");
+
+let currentApi = null;
+let currentUrl = "";
+let currentResponse = "";
+let requestRunning = false;
+let selectedEmojiValue = "😹,🚀,😎,☠️,🤓";
+let toastTimer = null;
+
+function renderList(){
+    const container = document.getElementById("apiListContainer");
+    container.innerHTML = "";
+    const fragment = document.createDocumentFragment();
+
+    toolsApiList.forEach(api => {
+        const card = document.createElement("div");
+        card.className = "endpoint glass";
+
+        const info = document.createElement("div");
+        info.className = "endpoint-info";
+
+        const title = document.createElement("h4");
+        title.textContent = api.title;
+
+        const path = document.createElement("p");
+        path.textContent = api.path;
+
+        info.appendChild(title);
+        info.appendChild(path);
+
+        const button = document.createElement("button");
+        button.className = "try-btn";
+        button.textContent = "Test API";
+        button.addEventListener("click", () => openModal(api));
+
+        card.appendChild(info);
+        card.appendChild(button);
+        fragment.appendChild(card);
+    });
+    container.appendChild(fragment);
+}
+
+renderList();
+
+// Custom Select Logic (Emoji WA React)
+emojiSelectTrigger.onclick = () => {
+    emojiOptions.classList.toggle("open");
+};
+emojiOptions.querySelectorAll(".custom-option").forEach(opt => {
+    opt.onclick = () => {
+        emojiOptions.querySelectorAll(".custom-option").forEach(o => o.classList.remove("selected"));
+        opt.classList.add("selected");
+        selectedEmojiValue = opt.dataset.value;
+        selectedEmojiText.textContent = opt.textContent;
+        emojiOptions.classList.remove("open");
+        updateCode(document.querySelector(".tab.active").dataset.lang);
+    };
+});
+document.addEventListener("click", e => {
+    if(!emojiSelectContainer.contains(e.target)) emojiOptions.classList.remove("open");
+});
+
+function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
+
+function buildUrl(){
+    if(!currentApi) return API_BASE;
+    if(currentApi.param === "none" || currentApi.param === "file") return API_BASE + currentApi.path;
+    
+    let queryParams = [];
+    const value = input.value.trim();
+    if(value) queryParams.push(`${encodeURIComponent(currentApi.param)}=${encodeURIComponent(value)}`);
+    
+    if(currentApi.hasEmojis){
+        queryParams.push(`emojis=${encodeURIComponent(selectedEmojiValue)}`);
+    }
+
+    return queryParams.length > 0 ? `${API_BASE}${currentApi.path}?${queryParams.join("&")}` : `${API_BASE}${currentApi.path}`;
+}
+
+function updateCode(lang){
+    currentUrl = buildUrl();
+    let code = "";
+    if(currentApi && currentApi.param === "file"){
+        code = `curl -X POST "${API_BASE}${currentApi.path}" \\\n  -F "file=@/path/to/file"`;
+    } else {
+        switch(lang){
+            case "curl": 
+                code = `curl -X GET <span class="highlight">"${currentUrl}"</span>`; 
+                break;
+            case "javascript": 
+                code = `const axios = require('axios');\n\n(async () => {\n  try {\n    const res = await axios.get(<span class="highlight">"${currentUrl}"</span>);\n    console.log(res.data);\n  } catch (err) {\n    console.error(err.message);\n  }\n})();`; 
+                break;
+            case "python": 
+                code = `import requests\n\nres = requests.get(<span class="highlight">"${currentUrl}"</span>)\nprint(res.json())`; 
+                break;
+            case "php": 
+                code = `$ch = curl_init(<span class="highlight">"${currentUrl}"</span>);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\n\nencho $response;`; 
+                break;
+        }
+    }
+    codeSnippet.innerHTML = code;
+}
+
+function openModal(api){
+    currentApi = api;
+    currentUrl = "";
+    currentResponse = "";
+    document.getElementById("modalTitle").textContent = api.title;
+    document.getElementById("modalEndpoint").textContent = API_BASE + api.path;
+    
+    input.value = "";
+    fileInput.value = "";
+
+    if(api.param === "none"){
+        document.getElementById("inputLabel").textContent = "No Parameter Required";
+        input.style.display = "none";
+        fileInput.style.display = "none";
+    } else if(api.param === "file"){
+        document.getElementById("inputLabel").textContent = "Upload File / Multipart";
+        input.style.display = "none";
+        fileInput.style.display = "block";
+    } else {
+        document.getElementById("inputLabel").textContent = "Enter " + api.param.toUpperCase();
+        input.placeholder = api.placeholder || "";
+        input.style.display = "block";
+        fileInput.style.display = "none";
+    }
+
+    if(api.hasEmojis){
+        emojiSelectContainer.style.display = "block";
+    } else {
+        emojiSelectContainer.style.display = "none";
+    }
+
+    responseBox.className = "response";
+    responseBox.textContent = "// Klik Execute Request untuk menjalankan API...";
+    
+    mediaPreview.innerHTML = "";
+    mediaPreview.classList.remove("active");
+
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    const curlTab = document.querySelector('.tab[data-lang="curl"]');
+    curlTab.classList.add("active");
+    updateCode("curl");
+
+    modal.classList.add("active");
+}
+
+function closeModal(){
+    if(requestRunning) return;
+    modal.classList.remove("active");
+}
+
+document.getElementById("closeModal").addEventListener("click", closeModal);
+modal.addEventListener("click", event => {
+    if(event.target === modal && !requestRunning) closeModal();
+});
+
+input.addEventListener("input", () => {
+    const active = document.querySelector(".tab.active");
+    updateCode(active ? active.dataset.lang : "curl");
+});
+
+document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
+        tab.classList.add("active");
+        updateCode(tab.dataset.lang);
+    });
+});
+
+function showToast(message = "Tersalin!"){
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+}
+
+async function copyText(text, message){
+    if(!text){ showToast("Tidak ada data"); return; }
+    try{
+        await navigator.clipboard.writeText(text);
+    }catch{
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+    }
+    showToast(message);
+}
+
+document.getElementById("copyEndpoint").addEventListener("click", () => copyText(currentUrl || buildUrl(), "Endpoint tersalin!"));
+document.getElementById("copyResponse").addEventListener("click", () => copyText(currentResponse, "Response tersalin!"));
+document.getElementById("copyCode").addEventListener("click", () => copyText(codeSnippet.innerText, "Code tersalin!"));
+document.getElementById("openEndpoint").addEventListener("click", () => {
+    const url = currentUrl || buildUrl();
+    window.open(url, "_blank", "noopener,noreferrer");
+});
+
+function isImage(contentType = "", url = ""){ return contentType.includes("image/") || /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i.test(url); }
+function isVideo(contentType = "", url = ""){ return contentType.includes("video/") || /\.(mp4|webm|mov|mkv|avi)(\?|$)/i.test(url); }
+function extractUrls(text){ if(typeof text !== "string") return []; return text.match(/https?:\/\/[^\s"'<>]+/gi) || []; }
+
+function findMediaUrlDeep(data){
+    if(!data) return null;
+    if(typeof data === "string"){
+        const urls = extractUrls(data);
+        for(const url of urls){ if(isImage("",url) || isVideo("",url)) return url; }
+        if(/^https?:\/\//i.test(data.trim())) return data.trim();
+        return null;
+    }
+    if(Array.isArray(data)){
+        for(const item of data){ const result = findMediaUrlDeep(item); if(result) return result; }
+        return null;
+    }
+    if(typeof data === "object"){
+        const priorityKeys = ["url", "image", "imageUrl", "image_url", "img", "photo", "picture", "thumbnail", "thumbnailUrl", "thumbnail_url", "media", "mediaUrl", "media_url", "video", "videoUrl", "video_url", "download", "downloadUrl", "download_url", "result", "data", "displayUrl"];
+        for(const key of priorityKeys){
+            if(data[key] !== undefined && data[key] !== null){
+                const result = findMediaUrlDeep(data[key]);
+                if(result) return result;
+            }
+        }
+        for(const key of Object.keys(data)){
+            const result = findMediaUrlDeep(data[key]);
+            if(result) return result;
+        }
+    }
+    return null;
+}
+
+function showMedia(url, type = ""){
+    mediaPreview.innerHTML = "";
+    let element = null;
+    if(isImage(type,url)){
+        element = document.createElement("img");
+        element.src = url;
+        element.alt = "API Image Response";
+        element.loading = "lazy";
+    }else if(isVideo(type,url)){
+        element = document.createElement("video");
+        element.src = url;
+        element.controls = true;
+        element.playsInline = true;
+    }
+    if(!element) return;
+    
+    mediaPreview.appendChild(element);
+    
+    const urlText = document.createElement("span");
+    urlText.className = "media-url";
+    urlText.textContent = url;
+    mediaPreview.appendChild(urlText);
+    
+    const buttons = document.createElement("div");
+    buttons.className = "media-buttons";
+    
+    const copy = document.createElement("button");
+    copy.className = "small-btn";
+    copy.textContent = "🔗 Salin URL";
+    copy.onclick = () => copyText(url, "URL media tersalin!");
+    
+    const open = document.createElement("button");
+    open.className = "small-btn";
+    open.textContent = "↗ Buka Media";
+    open.onclick = () => window.open(url, "_blank", "noopener,noreferrer");
+    
+    buttons.appendChild(copy);
+    buttons.appendChild(open);
+    mediaPreview.appendChild(buttons);
+    mediaPreview.classList.add("active");
+}
+
+async function showProgress(message){
+    responseBox.className = "response loading";
+    responseBox.textContent = message;
+    await sleep(350);
+}
+
+executeButton.addEventListener("click", async () => {
+    if(requestRunning) return;
+
+    requestRunning = true;
+    executeButton.disabled = true;
+    executeButton.textContent = "Processing...";
+    
+    currentUrl = buildUrl();
+    currentResponse = "";
+    mediaPreview.innerHTML = "";
+    mediaPreview.classList.remove("active");
+
+    try{
+        await showProgress("⏳ Connecting to API...");
+        const start = performance.now();
+        let res;
+
+        try{
+            if(currentApi.param === "file" && fileInput.files.length > 0){
+                const formData = new FormData();
+                formData.append("file", fileInput.files[0]);
+                res = await fetch(`${API_BASE}${currentApi.path}`, {
+                    method: "POST",
+                    body: formData
+                });
+            } else {
+                res = await fetch(currentUrl, { method:"GET", cache:"no-store", headers:{ "Accept": "*/*" } });
+            }
+        }catch(error){
+            throw new Error("Gagal terhubung ke API. Periksa CORS atau status server.");
+        }
+
+        const elapsed = Math.round(performance.now() - start);
+        const contentType = (res.headers.get("content-type") || "").toLowerCase();
+
+        if(contentType.includes("image/")){
+            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nMedia URL:\n${currentUrl}`;
+            showMedia(currentUrl, contentType);
+            responseBox.className = "response";
+            responseBox.textContent = `🖼️ Image Response\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n✅ Request completed`;
+            return;
+        }
+
+        if(contentType.includes("video/")){
+            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nMedia URL:\n${currentUrl}`;
+            showMedia(currentUrl, contentType);
+            responseBox.className = "response";
+            responseBox.textContent = `🎬 Video Response\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n✅ Request completed`;
+            return;
+        }
+
+        const raw = await res.text();
+        let data;
+        try{ data = JSON.parse(raw); }catch{ data = raw; }
+
+        let mediaUrl = (data && typeof data === "object") ? findMediaUrlDeep(data) : findMediaUrlDeep(raw);
+        if(mediaUrl){
+            let mediaType = "";
+            try{
+                const mediaResponse = await fetch(mediaUrl, { method:"HEAD", cache:"no-store" });
+                mediaType = (mediaResponse.headers.get("content-type") || "").toLowerCase();
+            }catch{}
+            if(mediaType || isImage("", mediaUrl) || isVideo("", mediaUrl)){
+                showMedia(mediaUrl, mediaType);
+            }
+        }
+
+        currentResponse = (data && typeof data === "object") ? JSON.stringify(data, null, 2) : String(data);
+        responseBox.className = res.ok ? "response" : "response error";
+        responseBox.textContent = `✅ Request completed\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n` + currentResponse;
+
+    }catch(error){
+        currentResponse = error?.message || "Unknown error";
+        responseBox.className = "response error";
+        responseBox.textContent = `❌ API Request Failed\n\n` + currentResponse + `\n\nEndpoint:\n` + currentUrl;
+    }finally{
+        requestRunning = false;
+        executeButton.disabled = false;
+        executeButton.textContent = "Execute Request";
+    }
+});
+</script>
+
+</body>
+</html>
