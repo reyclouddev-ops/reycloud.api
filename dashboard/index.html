@@ -292,11 +292,11 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
 const API_BASE = "https://api.legionteknologi.my.id";
 
 const apiCategories = [
-    { name: "AI Intelligence", desc: "Rayleigh AI, DeepAI Chat & Models, Image Generator, & Prompt Extractor", icon: "🤖", path: "docs/ai.html", count: 9 },
-    { name: "Media Downloader", desc: "YouTube MP3/MP4, TikTok v1/v2, Instagram, MediaFire, TeraBox, Videy, & SaveFrom", icon: "📥", path: "docs/downloader.html", count: 9 },
-    { name: "Tools & Utilities", desc: "TempMail, Remove BG, NSFW, Token Scraper, Wink Enhance, WA Auto React, & Bacon Bypass", icon: "🛠️", path: "docs/tools.html", count: 7 },
-    { name: "Anime & Donghua", desc: "Samehadaku, Donghub, Tokusatsu, Alight Motion, & Nekopoi Directory", icon: "🌸", path: "docs/anime.html", count: 27 },
-    { name: "Other APIs", desc: "Amprem Task Generator & Dapodik School Finder", icon: "🌐", path: "docs/other.html", count: 5 }
+    { name: "AI Intelligence", desc: "Rayleigh AI, DeepAI Chat & Models, Image Generator, & Prompt Extractor", icon: "🤖", path: "docs/ai", count: 9 },
+    { name: "Media Downloader", desc: "YouTube MP3/MP4, TikTok v1/v2, Instagram, MediaFire, TeraBox, Videy, & SaveFrom", icon: "📥", path: "docs/downloader", count: 9 },
+    { name: "Tools & Utilities", desc: "TempMail, Remove BG, NSFW, Token Scraper, Wink Enhance, WA Auto React, & Bacon Bypass", icon: "🛠️", path: "docs/tools", count: 7 },
+    { name: "Anime & Donghua", desc: "Samehadaku, Donghub, Tokusatsu, Alight Motion, & Nekopoi Directory", icon: "🌸", path: "docs/anime", count: 27 },
+    { name: "Other APIs", desc: "Amprem Task Generator & Dapodik School Finder", icon: "🌐", path: "docs/other", count: 5 }
 ];
 
 document.getElementById("statTotal").textContent = apiCategories.reduce((sum, cat) => sum + cat.count, 0);
@@ -359,7 +359,7 @@ async function loadSidebarStatus(){
         
         containerBox.innerHTML = `
             <div class="status-item"><span>Service Name</span><span>${data.service || 'ReyCloudSHP API'}</span></div>
-            <div class="status-item"><span>Version</span><span>${data.version || '2.0.0'}</span></div>
+            <div class="status-item"><span>Version</span><span>${data.version || '2.1.0'}</span></div>
             <div class="status-item"><span>Platform</span><span>${data.platform || 'Node.js'}</span></div>
             <div class="status-item"><span>Node Version</span><span>${data.nodeVersion || 'v20+'}</span></div>
 
