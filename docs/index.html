@@ -392,12 +392,11 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
         </div>
 
         <div class="tabs">
-    <button class="tab active" data-lang="curl">cURL</button>
-    <button class="tab" data-lang="javascript">Node.js</button>
-    <button class="tab" data-lang="python">Python</button>
-    <button class="tab" data-lang="php">PHP</button>
-  </div>
-
+            <button class="tab active" data-lang="curl">cURL</button>
+            <button class="tab" data-lang="javascript">Node.js</button>
+            <button class="tab" data-lang="python">Python</button>
+            <button class="tab" data-lang="php">PHP</button>
+        </div>
 
         <div class="code-wrap">
             <pre class="code" id="codeSnippet">...</pre>
@@ -429,6 +428,14 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
 const API_BASE = "https://api.legionteknologi.my.id";
 
 const apiData = [
+{
+    category: "Amprem Generator (By Shiky-Ofc)",
+    list: [
+        { title: "Create Task", desc: "Membuat task baru pembuatan akun amprem", path: "/amprem/create", param: "none", placeholder: "" },
+        { title: "Check Task", desc: "Mengecek status task berdasarkan ID", path: "/amprem/task", param: "id", placeholder: "t4pvuxlv749kp" },
+        { title: "Get Verification Link", desc: "Mendapatkan link verifikasi setelah task selesai", path: "/verif/amprem/link", param: "task", placeholder: "t4pvuxlv749kp" }
+    ]
+},
 {
     category: "AI Intelligence",
     list: [
@@ -691,7 +698,7 @@ function updateCode(lang){
                 code = `import requests\n\nres = requests.get(<span class="highlight">"${currentUrl}"</span>)\nprint(res.json())`; 
                 break;
             case "php": 
-                code = `$ch = curl_init(<span class="highlight">"${currentUrl}"</span>);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\n\necho $response;`; 
+                code = `$ch = curl_init(<span class="highlight">"${currentUrl}"</span>);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\n\nencho $response;`; 
                 break;
         }
     }
