@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ReyCloudSHP API Dashboard</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root{
+    --bg: #030305;
+    --panel: rgba(12, 12, 16, 0.75);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(59, 130, 246, 0.4);
+    --blue-main: #3b82f6;
+    --blue-light: #93c5fd;
+    --blue-cyan: #38bdf8;
+    --error: #f87171;
+    --text: #ffffff;
+    --muted: #94a3b8;
+    --radius: 20px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Inter,sans-serif; -webkit-font-smoothing:antialiased; touch-action: manipulation; }
+html{ scroll-behavior:smooth; }
+body{
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 10%, rgba(59,130,246, 0.08), transparent 45%),
+        radial-gradient(circle at 90% 90%, rgba(56,189,248, 0.05), transparent 45%),
+        var(--bg);
+    background-attachment:fixed;
+    overflow-y:auto;
+}
+
+button, input, textarea{ font:inherit; }
+button{ cursor:pointer; }
+button:disabled{ cursor:not-allowed; opacity:.65; }
+
+::-webkit-scrollbar{ width:4px; height:4px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.15); border-radius:20px; }
+::-webkit-scrollbar-thumb:hover{ background:var(--blue-main); }
+
+.app{ width:100%; max-width:850px; margin:auto; padding:25px 20px 60px; }
+
+.glass{
+    background:var(--panel);
+    border:1px solid var(--border);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+}
+
+.header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:24px; }
+.brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+
+.menu-btn, .mail-btn{
+    width:44px; height:44px; flex-shrink:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; border-radius:14px;
+    background:rgba(255,255,255,0.03); border:1px solid var(--border); color:#fff; transition:.2s;
+}
+.menu-btn{ gap:5px; }
+.menu-btn:hover, .mail-btn:hover{ border-color:var(--blue-main); background:rgba(59,130,246,0.08); }
+.menu-btn span{ width:18px; height:2px; background:#fff; border-radius:2px; }
+.mail-btn svg{ width:18px; height:18px; fill:currentColor; }
+
+.brand-actions{ display:flex; gap:10px; align-items:center; }
+
+.logo{
+    width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    border-radius:14px; background:linear-gradient(135deg, #ffffff, #94a3b8); color: #000;
+    font-size:20px; font-weight:800; box-shadow:0 0 25px rgba(255,255,255,0.1);
+}
+.brand h1{ font-size:17px; font-weight:800; letter-spacing:-0.3px; }
+.brand p{ margin-top:2px; color:var(--muted); font-size:10px; }
+
+/* MODAL / KOTAK REQUEST POPUP */
+.request-modal-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px);
+    z-index:2999; opacity:0; visibility:hidden; transition:.25s; display:flex; align-items:center; justify-content:center; padding:15px;
+}
+.request-modal-overlay.active{ opacity:1; visibility:visible; }
+
+.request-modal{
+    width:100%; max-width:420px; background:#0d0d12; border:1px solid var(--border);
+    border-radius:var(--radius); padding:24px; box-shadow:0 25px 60px rgba(0,0,0,0.8);
+    transform:translateY(20px) scale(0.95); transition:.25s;
+}
+.request-modal-overlay.active .request-modal{ transform:translateY(0) scale(1); }
+
+.req-modal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.req-modal-head h3{ font-size:15px; font-weight:700; color:#fff; display:flex; align-items:center; gap:8px; }
+
+.request-modal textarea {
+    width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--border);
+    border-radius: 12px; color: #fff; padding: 12px; font-size: 12px; resize: none;
+    height: 90px; outline: none; transition: 0.2s; margin-bottom: 14px;
+}
+.request-modal textarea:focus { border-color: var(--blue-main); box-shadow: 0 0 0 2px rgba(59,130,246,0.15); }
+.request-modal button {
+    width: 100%; background: var(--blue-main); color: #fff; border: none;
+    border-radius: 12px; padding: 11px; font-size: 12px; font-weight: 700; transition: 0.2s;
+}
+.request-modal button:hover { background: var(--blue-cyan); color: #000; }
+
+.hero{ padding:24px; border-radius:var(--radius); margin-bottom:20px; }
+.hero-title{ font-size:20px; font-weight:800; margin-bottom:6px; color:#fff; }
+.hero-text{ color:var(--muted); font-size:12px; line-height:1.6; }
+
+.stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+.stat{ padding:16px 12px; border-radius:16px; text-align:center; }
+.stat span{ color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:1px; }
+.stat strong{ display:block; margin-top:6px; font-size:18px; font-weight:800; }
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+.category-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 22px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    transition: 0.25s;
+    border: 1px solid var(--border);
+    gap: 16px;
+}
+.category-card:hover {
+    border-color: var(--blue-main);
+    transform: translateY(-3px);
+    background: rgba(59, 130, 246, 0.02);
+    box-shadow: 0 15px 35px rgba(59,130,246,0.08);
+}
+.cat-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: #fff; }
+.cat-info p { font-size: 11px; color: var(--muted); line-height: 1.5; }
+.cat-badge {
+    align-self: flex-start;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.2);
+    color: var(--blue-light);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.sidebar-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px);
+    z-index:1999; opacity:0; visibility:hidden; transition:.25s;
+}
+.sidebar-overlay.active{ opacity:1; visibility:visible; }
+
+.sidebar{
+    position:fixed; left:0; top:0; bottom:0; width:320px; background:#070709;
+    border-right:1px solid var(--border); padding:24px; z-index:2000;
+    transform:translateX(-100%); transition:.25s; overflow-y:auto; display:flex; flex-direction:column; justify-content:space-between;
+}
+.sidebar.active{ transform:translateX(0); }
+.sidebar-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; border-bottom:1px solid var(--border); padding-bottom:12px; }
+.sidebar-head h3{ font-size:15px; font-weight:700; color:#fff; }
+
+.status-card-box { display:flex; flex-direction:column; gap:8px; }
+.status-item {
+    background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:12px; padding:10px 14px;
+    display:flex; justify-content:space-between; align-items:center; font-size:11px;
+}
+.status-item span:first-child { color:var(--muted); font-weight:500; }
+.status-item span:last-child { color:#fff; font-weight:700; font-family:'JetBrains Mono',monospace; }
+.status-group-title { font-size:10px; color:var(--blue-cyan); text-transform:uppercase; font-weight:800; margin-top:12px; margin-bottom:4px; letter-spacing:1px; }
+
+.sidebar-socials { border-top:1px solid var(--border); padding-top:16px; display:flex; flex-direction:column; gap:8px; }
+.social-link {
+    display:flex; align-items:center; gap:10px; padding:11px 14px; border-radius:12px;
+    background:rgba(255,255,255,0.02); border:1px solid var(--border); color:#fff; text-decoration:none; font-size:11px; font-weight:600; transition:.2s;
+}
+.social-link:hover { border-color:var(--blue-main); background:rgba(59,130,246,0.08); }
+.social-link svg { width:16px; height:16px; fill:currentColor; flex-shrink:0; }
+
+.toast{
+    position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px);
+    padding:11px 18px; border-radius:30px; background:#fff; border:1px solid #fff;
+    color:#000; font-size:11px; font-weight:700; opacity:0; visibility:hidden;
+    transition:.25s; z-index:3000; white-space:nowrap; box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.toast.show{ opacity:1; visibility:visible; transform:translate(-50%,0); }
+</style>
+</head>
+
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar">
+    <div>
+        <div class="sidebar-head">
+            <h3>📊 Server Live Status</h3>
+            <button class="close" id="closeSidebar" style="background:rgba(255,255,255,0.03); color:#fff; border:1px solid var(--border); border-radius:50%; width:32px; height:32px; font-size:13px;">✕</button>
+        </div>
+        <div id="statusStructuredView" class="status-card-box">
+            <div style="font-size:11px; color:var(--muted); text-align:center; padding:20px;">Memuat informasi server...</div>
+        </div>
+    </div>
+
+    <div>
+        <div class="sidebar-socials">
+            <a href="https://wa.me/6281260512743" target="_blank" class="social-link">
+                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                WhatsApp ReyCloud
+            </a>
+            <a href="https://whatsapp.com/channel/0029Vb8AU5sEQIakiPGkOA2k" target="_blank" class="social-link">
+                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                Channel ReyCloud
+            </a>
+            <a href="https://t.me/ReyCloudShop" target="_blank" class="social-link">
+                <svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.534.26l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.535-.196 1.006.128.832.941z"/></svg>
+                Telegram ReyCloud
+            </a>
+        </div>
+    </div>
+</aside>
+
+<!-- MODAL POPUP REQUEST FITUR (TANPA TOMBOL X) -->
+<div class="request-modal-overlay" id="requestModalOverlay">
+    <div class="request-modal">
+        <div class="req-modal-head">
+            <h3>📬 Request Fitur / Tools</h3>
+        </div>
+        <textarea id="siteReqInput" placeholder="Ketik pesan atau request fitur di sini..."></textarea>
+        <button id="siteReqBtn" onclick="submitWebsiteRequest()">Kirim Request ke Owner</button>
+    </div>
+</div>
+
+<div class="app">
+<header class="header">
+    <div class="brand">
+        <button class="menu-btn" id="menuBtn" title="Server Status">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="logo">R</div>
+        <div>
+            <h1>ReyCloudSHP API</h1>
+            <p>Developer Dashboard</p>
+        </div>
+    </div>
+    <div class="brand-actions">
+        <button class="mail-btn" id="openReqModal" title="Request Fitur">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-4V6l8 5 8-4v2z"/></svg>
+        </button>
+    </div>
+</header>
+
+<section class="hero glass">
+    <div class="hero-title">API Categories 🚀</div>
+    <div class="hero-text">
+        Pilih kategori dokumentasi endpoint API yang ingin kamu jelajahi atau uji coba di bawah ini.
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat glass">
+        <span>Endpoints</span>
+        <strong id="statTotal">--</strong>
+    </div>
+    <div class="stat glass">
+        <span>Categories</span>
+        <strong id="statCategories">--</strong>
+    </div>
+    <div class="stat glass">
+        <span>RAM</span>
+        <strong id="statRam">--</strong>
+    </div>
+    <div class="stat glass">
+        <span>CPU</span>
+        <strong id="statCpu">--</strong>
+    </div>
+</section>
+
+<div class="category-grid" id="categoryGrid"></div>
+</div>
+
+<div class="toast" id="toast">Tersalin!</div>
+
+<script>
+const API_BASE = "https://api.legionteknologi.my.id";
+
+const apiCategories = [
+    { name: "AI Intelligence", desc: "Rayleigh AI, DeepAI Chat & Models, Image Generator, & Prompt Extractor", icon: "🤖", path: "docs/ai.html", count: 9 },
+    { name: "Media Downloader", desc: "YouTube MP3/MP4, TikTok v1/v2, Instagram, MediaFire, TeraBox, Videy, & SaveFrom", icon: "📥", path: "docs/downloader.html", count: 9 },
+    { name: "Tools & Utilities", desc: "TempMail, Remove BG, NSFW, Token Scraper, Wink Enhance, WA Auto React, & Bacon Bypass", icon: "🛠️", path: "docs/tools.html", count: 7 },
+    { name: "Anime & Donghua", desc: "Samehadaku, Donghub, Tokusatsu, Alight Motion, & Nekopoi Directory", icon: "🌸", path: "docs/anime.html", count: 27 },
+    { name: "Other APIs", desc: "Amprem Task Generator & Dapodik School Finder", icon: "🌐", path: "docs/other.html", count: 5 }
+];
+
+document.getElementById("statTotal").textContent = apiCategories.reduce((sum, cat) => sum + cat.count, 0);
+document.getElementById("statCategories").textContent = apiCategories.length;
+
+const gridContainer = document.getElementById("categoryGrid");
+apiCategories.forEach(cat => {
+    const card = document.createElement("a");
+    card.href = cat.path;
+    card.className = "category-card glass";
+    card.innerHTML = `
+        <div class="cat-info">
+            <h3>${cat.icon} ${cat.name}</h3>
+            <p>${cat.desc}</p>
+        </div>
+        <div class="cat-badge">${cat.count} Endpoints</div>
+    `;
+    gridContainer.appendChild(card);
+});
+
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const closeSidebar = document.getElementById("closeSidebar");
+
+menuBtn.addEventListener("click", () => {
+    sidebar.classList.add("active");
+    sidebarOverlay.classList.add("active");
+    loadSidebarStatus();
+});
+
+function closeSidebarFunc(){
+    sidebar.classList.remove("active");
+    sidebarOverlay.classList.remove("active");
+}
+closeSidebar.addEventListener("click", closeSidebarFunc);
+sidebarOverlay.addEventListener("click", closeSidebarFunc);
+
+// Logika Popup Modal Request Mail (Tutup dengan klik area luar/backdrop)
+const reqModalOverlay = document.getElementById("requestModalOverlay");
+const openReqModalBtn = document.getElementById("openReqModal");
+
+openReqModalBtn.addEventListener("click", () => {
+    reqModalOverlay.classList.add("active");
+});
+
+function closeReqModalFunc(){
+    reqModalOverlay.classList.remove("active");
+}
+reqModalOverlay.addEventListener("click", (e) => {
+    if(e.target === reqModalOverlay) closeReqModalFunc();
+});
+
+async function loadSidebarStatus(){
+    const containerBox = document.getElementById("statusStructuredView");
+    containerBox.innerHTML = `<div style="font-size: 11px; color: var(--muted); text-align: center; padding: 20px;">Memuat informasi server...</div>`;
+    try {
+        const res = await fetch(`${API_BASE}/status`, { cache:"no-store" });
+        const data = await res.json();
+        
+        containerBox.innerHTML = `
+            <div class="status-item"><span>Service Name</span><span>${data.service || 'ReyCloudSHP API'}</span></div>
+            <div class="status-item"><span>Version</span><span>${data.version || '2.0.0'}</span></div>
+            <div class="status-item"><span>Platform</span><span>${data.platform || 'Node.js'}</span></div>
+            <div class="status-item"><span>Node Version</span><span>${data.nodeVersion || 'v20+'}</span></div>
+
+            <div class="status-group-title">Uptime</div>
+            <div class="status-item"><span>Server Uptime</span><span>${data.uptime?.server || 'N/A'}</span></div>
+            <div class="status-item"><span>VPS Uptime</span><span>${data.uptime?.vps || 'N/A'}</span></div>
+
+            <div class="status-group-title">Memory (RAM)</div>
+            <div class="status-item"><span>Used</span><span>${data.memory?.used || 'N/A'}</span></div>
+            <div class="status-item"><span>Free</span><span>${data.memory?.free || 'N/A'}</span></div>
+            <div class="status-item"><span>Total</span><span>${data.memory?.total || 'N/A'}</span></div>
+
+            <div class="status-group-title">CPU Hardware</div>
+            <div class="status-item"><span>Cores</span><span>${data.cpu?.cores || 'N/A'} Cores</span></div>
+            <div class="status-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <span>Model</span>
+                <span style="font-size: 9px; color: var(--blue-cyan); word-break: break-all;">${data.cpu?.model || 'N/A'}</span>
+            </div>
+        `;
+    } catch(err) {
+        containerBox.innerHTML = `<div style="font-size: 11px; color: var(--error); text-align: center; padding: 20px;">Gagal terhubung ke server status.</div>`;
+    }
+}
+
+async function submitWebsiteRequest() {
+    const textarea = document.getElementById("siteReqInput");
+    const btn = document.getElementById("siteReqBtn");
+    const message = textarea.value.trim();
+
+    if(!message){
+        showToast("Pesan request tidak boleh kosong!");
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Mengirim...";
+
+    try {
+        const res = await fetch(`${API_BASE}/api/request`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message })
+        });
+        const json = await res.json();
+
+        if(json.status){
+            showToast("✅ Berhasil dikirim ke Telegram Owner!");
+            textarea.value = "";
+            closeReqModalFunc();
+        } else {
+            showToast("❌ " + (json.message || "Gagal mengirim"));
+        }
+    } catch(err) {
+        showToast("❌ Gagal terhubung ke server");
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "Kirim Request ke Owner";
+    }
+}
+
+function showToast(message = "Tersalin!"){
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 1800);
+}
+
+async function fetchServerStatus(){
+    try{
+        const res = await fetch(`${API_BASE}/status`, { cache:"no-store" });
+        if(!res.ok) throw new Error("Offline");
+        const data = await res.json();
+        
+        document.getElementById("statRam").textContent = data.memory?.used || "Stable";
+        document.getElementById("statCpu").textContent = data.cpu?.cores ? `${data.cpu.cores} Cores` : "Active";
+    }catch{
+        document.getElementById("statRam").textContent = "N/A";
+        document.getElementById("statCpu").textContent = "N/A";
+    }
+}
+
+fetchServerStatus();
+setInterval(fetchServerStatus, 30000);
+</script>
+
+</body>
+</html>
