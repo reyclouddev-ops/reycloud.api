@@ -92,10 +92,39 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
 .hero-title{ font-size:22px; font-weight:800; margin-bottom:7px; color:#fff; }
 .hero-text{ color:var(--muted); font-size:12px; line-height:1.7; }
 
-.stats{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:25px; }
+.stats{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:20px; }
 .stat{ padding:16px; border-radius:16px; }
 .stat span{ color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:1px; }
 .stat strong{ display:block; margin-top:6px; font-size:22px; font-weight:800; }
+
+/* FILTER KATEGORI TAB */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+.filter-tab {
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: #111;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+.filter-tab:hover {
+    border-color: var(--blue-main);
+    color: #fff;
+}
+.filter-tab.active {
+    background: var(--blue-main);
+    border-color: var(--blue-main);
+    color: #fff;
+}
 
 .category{
     margin:25px 4px 12px; display:flex; align-items:center; gap:10px;
@@ -242,7 +271,7 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
 }
 .input:focus{ border-color:var(--blue-main); box-shadow:0 0 0 2px rgba(59,130,246,.2); }
 
-/* CUSTOM DROPDOWN SELECTOR AI MODELS */
+/* CUSTOM DROPDOWN SELECTOR EMOJI / AI MODELS */
 .custom-select-container { position:relative; margin-bottom:16px; display:none; }
 .custom-select-trigger {
     width:100%; padding:14px; background:#000; border:1px solid var(--border); border-radius:12px;
@@ -378,7 +407,7 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
         </button>
         <div class="logo">R</div>
         <div>
-            <h1>ReyCloud API</h1>
+            <h1>ReyCloudSHP API</h1>
             <p>Developer Documentation</p>
         </div>
     </div>
@@ -388,7 +417,7 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
 <section class="hero glass">
     <div class="hero-title">API Playground 🚀</div>
     <div class="hero-text">
-        Dokumentasi API ReyCloud dengan live testing.
+        Dokumentasi API ReyCloudSHP dengan live testing.
         Jalankan endpoint langsung dan lihat response,
         gambar, video, serta JSON secara realtime.
     </div>
@@ -413,6 +442,16 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
     </div>
 </section>
 
+<!-- TOMBOL FILTER KATEGORI -->
+<div class="filter-tabs" id="filterTabsContainer">
+    <button class="filter-tab active" data-filter="all">⚡ All Endpoints</button>
+    <button class="filter-tab" data-filter="AI Intelligence">🤖 AI Intelligence</button>
+    <button class="filter-tab" data-filter="Media Downloader">📥 Media Downloader</button>
+    <button class="filter-tab" data-filter="Tools & Utilities">🛠️ Tools & Utilities</button>
+    <button class="filter-tab" data-filter="Anime & Donghua">🌸 Anime & Donghua</button>
+    <button class="filter-tab" data-filter="Other APIs">🌐 Other APIs</button>
+</div>
+
 <div id="apiListContainer"></div>
 </div>
 
@@ -431,6 +470,7 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
         <input id="apiInput" class="input" type="text" autocomplete="off" placeholder="Masukkan value...">
         <input id="apiFileInput" class="input" type="file" style="display:none; padding:10px;">
 
+        <!-- CUSTOM DROPDOWN MODEL AI -->
         <div class="custom-select-container" id="customSelectContainer">
             <label class="label">Pilih Model AI</label>
             <div class="custom-select-trigger" id="selectTrigger">
@@ -445,6 +485,23 @@ button:disabled{ cursor:not-allowed; opacity:.65; }
                 <div class="custom-option" data-value="llama-3.3-70b-instruct">llama-3.3-70b-instruct</div>
                 <div class="custom-option" data-value="gpt-oss-120b">gpt-oss-120b</div>
                 <div class="custom-option" data-value="gpt-5-nano">gpt-5-nano</div>
+            </div>
+        </div>
+
+        <!-- CUSTOM DROPDOWN EMOJI WA REACT -->
+        <div class="custom-select-container" id="emojiSelectContainer">
+            <label class="label">Pilih Emoji Reaksi</label>
+            <div class="custom-select-trigger" id="emojiSelectTrigger">
+                <span id="selectedEmojiText">😹 (Default)</span>
+                <span>▾</span>
+            </div>
+            <div class="custom-options" id="emojiOptions">
+                <div class="custom-option selected" data-value="😹,🚀,😎,☠️,🤓">😹,🚀,😎,☠️,🤓 (Semua)</div>
+                <div class="custom-option" data-value="😹">😹 (Kucing Ketawa)</div>
+                <div class="custom-option" data-value="🚀">🚀 (Roket)</div>
+                <div class="custom-option" data-value="😎">😎 (Kacamata Hitam)</div>
+                <div class="custom-option" data-value="☠️">☠️ (Tengkorak)</div>
+                <div class="custom-option" data-value="🤓">🤓 (Nerd)</div>
             </div>
         </div>
 
@@ -486,21 +543,17 @@ const API_BASE = "https://api.legionteknologi.my.id";
 
 const apiData = [
 {
-    category: "Amprem Generator (By Shiky-Ofc)",
-    list: [
-        { title: "Create Task", desc: "Membuat task baru pembuatan akun amprem", path: "/amprem/create", param: "none", placeholder: "" },
-        { title: "Check Task", desc: "Mengecek status task berdasarkan ID", path: "/amprem/task", param: "id", placeholder: "t4pvuxlv749kp" },
-        { title: "Get Verification Link", desc: "Mendapatkan link verifikasi setelah task selesai", path: "/verif/amprem/link", param: "task", placeholder: "t4pvuxlv749kp" }
-    ]
-},
-{
     category: "AI Intelligence",
     list: [
         { title: "Rayleigh AI", desc: "Advanced conversational assistant", path: "/ai/rayleigh", param: "text", placeholder: "Jelaskan cara kerja VPS" },
         { title: "DeepAI Chat Advanced", desc: "Multi-model chat with deepai", path: "/ai/deepai/chat", param: "text", placeholder: "Halo, apa kabar?", hasModel: true },
         { title: "DeepAI Models List", desc: "Get available DeepAI models", path: "/ai/deepai/models", param: "none", placeholder: "" },
         { title: "Img 2 Prompt", desc: "Extract prompt from image URL", path: "/ai/imgtoprompt", param: "file", placeholder: "Pilih file atau masukkan URL" },
-        { title: "Img 2 Img AI", desc: "Modify image using AI", path: "/ai/img2img", param: "prompt", placeholder: "Contoh: ubah menjadi anime" }
+        { title: "Img 2 Img AI", desc: "Modify image using AI", path: "/ai/img2img", param: "prompt", placeholder: "Contoh: ubah menjadi anime" },
+        { title: "Imagen Generate", desc: "Generate image using Imagen AI", path: "/ai/imagen", param: "prompt", placeholder: "robot futuristik" },
+        { title: "Imagen Image", desc: "Generate and return binary image", path: "/ai/imagen/image", param: "prompt", placeholder: "robot futuristik" },
+        { title: "Imagen Styles", desc: "Get available Imagen styles", path: "/ai/imagen/styles", param: "none", placeholder: "" },
+        { title: "Imagen Ratios", desc: "Get available image ratios", path: "/ai/imagen/ratios", param: "none", placeholder: "" }
     ]
 },
 {
@@ -524,11 +577,12 @@ const apiData = [
         { title: "TempMail Inbox", desc: "Check received messages", path: "/utility/tempmail/inbox", param: "email", placeholder: "user@domain.com" },
         { title: "Remove BG", desc: "AI Background Remover", path: "/utility/removebg", param: "file", placeholder: "Pilih gambar atau masukkan URL" },
         { title: "NSFW Random", desc: "Anime media generator", path: "/utility/nsfw", param: "category", placeholder: "waifu" },
-        { title: "NFToken Scraper", desc: "Generate token with proxies", path: "/utility/nftoken", param: "count", placeholder: "1" }
+        { title: "NFToken Scraper", desc: "Generate token with proxies", path: "/utility/nftoken", param: "count", placeholder: "1" },
+        { title: "WA Auto React", desc: "Kirim spam reaction emoji WA channel", path: "/tools/wareact", param: "url", placeholder: "https://whatsapp.com/channel/...", hasEmojis: true }
     ]
 },
 {
-    category: "Samehadaku Anime",
+    category: "Anime & Donghua",
     list: [
         { title: "Anime Home", desc: "Mengambil data anime terbaru", path: "/anime/home", param: "none", placeholder: "" },
         { title: "Anime List", desc: "Mengambil daftar anime", path: "/anime/list", param: "none", placeholder: "" },
@@ -536,34 +590,19 @@ const apiData = [
         { title: "Anime Batch", desc: "Daftar anime batch", path: "/anime/batch", param: "none", placeholder: "" },
         { title: "Batch Detail", desc: "Detail download anime batch", path: "/anime/batch/detail", param: "url", placeholder: "https://samehadaku.vip/..." },
         { title: "Anime Detail", desc: "Mengambil detail anime tertentu", path: "/anime/detail", param: "url", placeholder: "https://samehadaku.vip/anime/..." },
-        { title: "Anime Episode", desc: "Mengambil detail dan link episode", path: "/anime/episode", param: "url", placeholder: "https://samehadaku.vip/..." }
-    ]
-},
-{
-    category: "Donghub Donghua",
-    list: [
+        { title: "Anime Episode", desc: "Mengambil detail dan link episode", path: "/anime/episode", param: "url", placeholder: "https://samehadaku.vip/..." },
         { title: "Donghub Home", desc: "Home recommendations & popular", path: "/donghub/home", param: "none", placeholder: "" },
         { title: "Donghub Schedule", desc: "Weekly release schedule", path: "/donghub/schedule", param: "none", placeholder: "" },
         { title: "Donghub Detail", desc: "Donghua series detail & episodes", path: "/donghub/detail", param: "slug", placeholder: "battle-through-the-heavens" },
         { title: "Donghub Search", desc: "Search donghua list", path: "/donghub/search", param: "q", placeholder: "swallowed star" },
         { title: "Donghub Genre List", desc: "Get all available genres", path: "/donghub/genres", param: "none", placeholder: "" },
-        { title: "Donghub Episode", desc: "Episode video mirrors", path: "/donghub/episode", param: "slug", placeholder: "battle-through-episode-1" }
-    ]
-},
-{
-    category: "Tokusatsu Indo",
-    list: [
+        { title: "Donghub Episode", desc: "Episode video mirrors", path: "/donghub/episode", param: "slug", placeholder: "battle-through-episode-1" },
         { title: "Tokusatsu Home", desc: "Home releases & sliders", path: "/tokusatsu/home", param: "none", placeholder: "" },
         { title: "Tokusatsu Movies", desc: "Movie list with pagination", path: "/tokusatsu/movie", param: "page", placeholder: "1" },
         { title: "Tokusatsu Special", desc: "Movie special categories", path: "/tokusatsu/movie-special", param: "none", placeholder: "" },
         { title: "Tokusatsu Era", desc: "Kamen Rider, Sentai, Ultraman", path: "/tokusatsu/era", param: "type", placeholder: "kamen-rider" },
         { title: "Tokusatsu Search", desc: "Search tokusatsu shows", path: "/tokusatsu/search", param: "q", placeholder: "Kamen Rider" },
-        { title: "Tokusatsu Detail", desc: "Series & episode streaming detail", path: "/tokusatsu/detail", param: "url", placeholder: "https://www.tokusatsuindo.com/..." }
-    ]
-},
-{
-    category: "Nekopoi Scraper",
-    list: [
+        { title: "Tokusatsu Detail", desc: "Series & episode streaming detail", path: "/tokusatsu/detail", param: "url", placeholder: "https://www.tokusatsuindo.com/..." },
         { title: "Nekopoi Latest", desc: "Latest hentai & jav releases", path: "/nekopoi/latest", param: "page", placeholder: "1" },
         { title: "Nekopoi Search", desc: "Search content", path: "/nekopoi/search", param: "q", placeholder: "query" },
         { title: "Nekopoi Category", desc: "Get by category name", path: "/nekopoi/category", param: "name", placeholder: "3d-hentai" },
@@ -576,19 +615,13 @@ const apiData = [
     ]
 },
 {
-    category: "Dapodik Sekolah",
+    category: "Other APIs",
     list: [
+        { title: "Create Task", desc: "Membuat task baru pembuatan akun amprem", path: "/amprem/create", param: "none", placeholder: "" },
+        { title: "Check Task", desc: "Mengecek status task berdasarkan ID", path: "/amprem/task", param: "id", placeholder: "t4pvuxlv749kp" },
+        { title: "Get Verification Link", desc: "Mendapatkan link verifikasi setelah task selesai", path: "/verif/amprem/link", param: "task", placeholder: "t4pvuxlv749kp" },
         { title: "Search School", desc: "Mencari sekolah berdasarkan query", path: "/dapodik/search", param: "q", placeholder: "SMKN 1 Batam" },
         { title: "School Detail", desc: "Mengambil detail berdasarkan NPSN", path: "/dapodik/detail", param: "npsn", placeholder: "10900123" }
-    ]
-},
-{
-    category: "Imagen AI",
-    list: [
-        { title: "Imagen Generate", desc: "Generate image using Imagen AI", path: "/ai/imagen", param: "prompt", placeholder: "robot futuristik" },
-        { title: "Imagen Image", desc: "Generate and return binary image", path: "/ai/imagen/image", param: "prompt", placeholder: "robot futuristik" },
-        { title: "Imagen Styles", desc: "Get available Imagen styles", path: "/ai/imagen/styles", param: "none", placeholder: "" },
-        { title: "Imagen Ratios", desc: "Get available image ratios", path: "/ai/imagen/ratios", param: "none", placeholder: "" }
     ]
 }
 ];
@@ -596,10 +629,17 @@ const apiData = [
 const modal = document.getElementById("apiModal");
 const input = document.getElementById("apiInput");
 const fileInput = document.getElementById("apiFileInput");
+
 const customSelectContainer = document.getElementById("customSelectContainer");
 const selectTrigger = document.getElementById("selectTrigger");
 const customOptions = document.getElementById("customOptions");
 const selectedModelText = document.getElementById("selectedModelText");
+
+const emojiSelectContainer = document.getElementById("emojiSelectContainer");
+const emojiSelectTrigger = document.getElementById("emojiSelectTrigger");
+const emojiOptions = document.getElementById("emojiOptions");
+const selectedEmojiText = document.getElementById("selectedEmojiText");
+
 const responseBox = document.getElementById("apiResponse");
 const mediaPreview = document.getElementById("mediaPreview");
 const codeSnippet = document.getElementById("codeSnippet");
@@ -613,6 +653,8 @@ let currentUrl = "";
 let currentResponse = "";
 let requestRunning = false;
 let selectedModelValue = "standard";
+let selectedEmojiValue = "😹,🚀,😎,☠️,🤓";
+let currentFilter = "all";
 let toastTimer = null;
 
 const menuBtn = document.getElementById("menuBtn");
@@ -633,12 +675,11 @@ function closeSidebarFunc(){
 closeSidebar.addEventListener("click", closeSidebarFunc);
 sidebarOverlay.addEventListener("click", closeSidebarFunc);
 
-// Custom Select Logic
-selectTrigger.onclick = () => customOptions.classList.toggle("open");
-document.addEventListener("click", e => {
-    if(!customSelectContainer.contains(e.target)) customOptions.classList.remove("open");
-});
-
+// Custom Select Logic (AI Model)
+selectTrigger.onclick = () => {
+    customOptions.classList.toggle("open");
+    emojiOptions.classList.remove("open");
+};
 customOptions.querySelectorAll(".custom-option").forEach(opt => {
     opt.onclick = () => {
         customOptions.querySelectorAll(".custom-option").forEach(o => o.classList.remove("selected"));
@@ -648,6 +689,27 @@ customOptions.querySelectorAll(".custom-option").forEach(opt => {
         customOptions.classList.remove("open");
         updateCode(document.querySelector(".tab.active").dataset.lang);
     };
+});
+
+// Custom Select Logic (Emoji WA React)
+emojiSelectTrigger.onclick = () => {
+    emojiOptions.classList.toggle("open");
+    customOptions.classList.remove("open");
+};
+emojiOptions.querySelectorAll(".custom-option").forEach(opt => {
+    opt.onclick = () => {
+        emojiOptions.querySelectorAll(".custom-option").forEach(o => o.classList.remove("selected"));
+        opt.classList.add("selected");
+        selectedEmojiValue = opt.dataset.value;
+        selectedEmojiText.textContent = opt.textContent;
+        emojiOptions.classList.remove("open");
+        updateCode(document.querySelector(".tab.active").dataset.lang);
+    };
+});
+
+document.addEventListener("click", e => {
+    if(!customSelectContainer.contains(e.target)) customOptions.classList.remove("open");
+    if(!emojiSelectContainer.contains(e.target)) emojiOptions.classList.remove("open");
 });
 
 async function loadSidebarStatus(){
@@ -684,7 +746,6 @@ async function loadSidebarStatus(){
     }
 }
 
-// Fungsi Submit Request dari Sidebar Website ke Endpoint Server
 async function submitWebsiteRequest() {
     const textarea = document.getElementById("siteReqInput");
     const btn = document.getElementById("siteReqBtn");
@@ -720,42 +781,60 @@ async function submitWebsiteRequest() {
     }
 }
 
-const container = document.getElementById("apiListContainer");
-const fragment = document.createDocumentFragment();
+// Render Endpoint List berdasarkan Filter Kategori
+function renderApiList(filter = "all"){
+    const container = document.getElementById("apiListContainer");
+    container.innerHTML = "";
+    const fragment = document.createDocumentFragment();
 
-apiData.forEach(category => {
-    const categoryTitle = document.createElement("div");
-    categoryTitle.className = "category";
-    categoryTitle.textContent = category.category;
-    fragment.appendChild(categoryTitle);
+    apiData.forEach(category => {
+        if(filter !== "all" && category.category !== filter) return;
 
-    category.list.forEach(api => {
-        const card = document.createElement("div");
-        card.className = "endpoint glass";
+        const categoryTitle = document.createElement("div");
+        categoryTitle.className = "category";
+        categoryTitle.textContent = category.category;
+        fragment.appendChild(categoryTitle);
 
-        const info = document.createElement("div");
-        info.className = "endpoint-info";
+        category.list.forEach(api => {
+            const card = document.createElement("div");
+            card.className = "endpoint glass";
 
-        const title = document.createElement("h4");
-        title.textContent = api.title;
+            const info = document.createElement("div");
+            info.className = "endpoint-info";
 
-        const path = document.createElement("p");
-        path.textContent = api.path;
+            const title = document.createElement("h4");
+            title.textContent = api.title;
 
-        info.appendChild(title);
-        info.appendChild(path);
+            const path = document.createElement("p");
+            path.textContent = api.path;
 
-        const button = document.createElement("button");
-        button.className = "try-btn";
-        button.textContent = "Test API";
-        button.addEventListener("click", () => openModal(api));
+            info.appendChild(title);
+            info.appendChild(path);
 
-        card.appendChild(info);
-        card.appendChild(button);
-        fragment.appendChild(card);
+            const button = document.createElement("button");
+            button.className = "try-btn";
+            button.textContent = "Test API";
+            button.addEventListener("click", () => openModal(api));
+
+            card.appendChild(info);
+            card.appendChild(button);
+            fragment.appendChild(card);
+        });
+    });
+    container.appendChild(fragment);
+}
+
+// Setup Event Filter Kategori Tab
+document.querySelectorAll(".filter-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+        document.querySelectorAll(".filter-tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        currentFilter = tab.dataset.filter;
+        renderApiList(currentFilter);
     });
 });
-container.appendChild(fragment);
+
+renderApiList("all");
 
 function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
 
@@ -769,6 +848,9 @@ function buildUrl(){
     
     if(currentApi.hasModel){
         queryParams.push(`model=${encodeURIComponent(selectedModelValue)}`);
+    }
+    if(currentApi.hasEmojis){
+        queryParams.push(`emojis=${encodeURIComponent(selectedEmojiValue)}`);
     }
 
     return queryParams.length > 0 ? `${API_BASE}${currentApi.path}?${queryParams.join("&")}` : `${API_BASE}${currentApi.path}`;
@@ -797,7 +879,6 @@ function updateCode(lang){
     }
     codeSnippet.innerHTML = code;
 }
-
 
 function openModal(api){
     currentApi = api;
@@ -828,6 +909,12 @@ function openModal(api){
         customSelectContainer.style.display = "block";
     } else {
         customSelectContainer.style.display = "none";
+    }
+
+    if(api.hasEmojis){
+        emojiSelectContainer.style.display = "block";
+    } else {
+        emojiSelectContainer.style.display = "none";
     }
 
     responseBox.className = "response";
