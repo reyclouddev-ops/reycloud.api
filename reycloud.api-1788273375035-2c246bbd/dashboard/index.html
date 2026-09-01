@@ -1,0 +1,2660 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>ReyCloudSHP API Dashboard</title>
+
+<link rel="icon" type="image/jpeg"
+href="https://api.legionteknologi.my.id/r/fDwOxw.jpeg">
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root{
+    --bg:#030305;
+    --panel:rgba(12,12,16,.75);
+    --border:rgba(255,255,255,.08);
+    --border-hover:rgba(59,130,246,.4);
+
+    --blue-main:#3b82f6;
+    --blue-light:#93c5fd;
+    --blue-cyan:#38bdf8;
+
+    --green:#4ade80;
+    --yellow:#facc15;
+    --error:#f87171;
+
+    --text:#fff;
+    --muted:#94a3b8;
+
+    --radius:20px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    touch-action:manipulation;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    color:var(--text);
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(59,130,246,.08),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(56,189,248,.05),
+            transparent 45%
+        ),
+        var(--bg);
+
+    background-attachment:fixed;
+    overflow-y:auto;
+}
+
+button,
+input,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:disabled{
+    cursor:not-allowed;
+    opacity:.65;
+}
+
+::-webkit-scrollbar{
+    width:4px;
+    height:4px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.15);
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:var(--blue-main);
+}
+
+.app{
+    width:100%;
+    max-width:850px;
+    margin:auto;
+    padding:25px 20px 60px;
+}
+
+.glass{
+    background:var(--panel);
+    border:1px solid var(--border);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:24px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+}
+
+.brand-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.menu-btn,
+.mail-btn{
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+
+    color:#fff;
+
+    transition:.2s;
+}
+
+.menu-btn{
+    flex-direction:column;
+    gap:5px;
+}
+
+.menu-btn:hover,
+.mail-btn:hover{
+    border-color:var(--blue-main);
+    background:rgba(59,130,246,.08);
+}
+
+.menu-btn span{
+    width:18px;
+    height:2px;
+    background:#fff;
+    border-radius:2px;
+}
+
+.mail-btn svg{
+    width:18px;
+    height:18px;
+    fill:currentColor;
+}
+
+/* LOGO IMAGE */
+
+.logo{
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    background:#111;
+    border:1px solid var(--border);
+
+    box-shadow:
+        0 0 25px rgba(59,130,246,.12);
+}
+
+.logo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.brand h1{
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:-.3px;
+}
+
+.brand p{
+    margin-top:2px;
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* =========================================================
+   REQUEST MODAL
+========================================================= */
+
+.request-modal-overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(8px);
+
+    z-index:2999;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.25s;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+}
+
+.request-modal-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.request-modal{
+    width:100%;
+    max-width:420px;
+
+    background:#0d0d12;
+
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+
+    padding:24px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.8);
+
+    transform:translateY(20px) scale(.95);
+
+    transition:.25s;
+}
+
+.request-modal-overlay.active .request-modal{
+    transform:translateY(0) scale(1);
+}
+
+.req-modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:16px;
+}
+
+.req-modal-head h3{
+    font-size:15px;
+    font-weight:700;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.request-modal textarea{
+    width:100%;
+
+    background:rgba(0,0,0,.5);
+
+    border:1px solid var(--border);
+    border-radius:12px;
+
+    color:#fff;
+
+    padding:12px;
+
+    font-size:12px;
+
+    resize:none;
+    height:90px;
+
+    outline:none;
+
+    transition:.2s;
+
+    margin-bottom:14px;
+}
+
+.request-modal textarea:focus{
+    border-color:var(--blue-main);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(59,130,246,.15);
+}
+
+.request-modal button{
+    width:100%;
+
+    background:var(--blue-main);
+    color:#fff;
+
+    border:none;
+    border-radius:12px;
+
+    padding:11px;
+
+    font-size:12px;
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.request-modal button:hover{
+    background:var(--blue-cyan);
+    color:#000;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    padding:24px;
+    border-radius:var(--radius);
+    margin-bottom:20px;
+}
+
+.hero-title{
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:6px;
+}
+
+.hero-text{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.6;
+}
+
+/* =========================================================
+   BANNER VIDEO
+========================================================= */
+
+.video-banner{
+    position:relative;
+
+    width:100%;
+    height:190px;
+
+    margin-bottom:20px;
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+
+    border:1px solid var(--border);
+
+    background:#000;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.55);
+}
+
+.video-banner video{
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    opacity:.72;
+}
+
+.video-overlay{
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.15),
+            rgba(0,0,0,.28)
+        );
+}
+
+/* CLOCK */
+
+.banner-clock{
+    position:absolute;
+
+    right:24px;
+    bottom:24px;
+
+    text-align:right;
+
+    z-index:2;
+
+    text-shadow:
+        0 3px 15px rgba(0,0,0,.9);
+}
+
+.banner-time{
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:clamp(30px,6vw,46px);
+
+    font-weight:800;
+
+    line-height:1;
+
+    letter-spacing:-2px;
+}
+
+.banner-date{
+    margin-top:8px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    color:#fff;
+}
+
+.banner-day{
+    margin-top:3px;
+
+    font-size:10px;
+
+    color:rgba(255,255,255,.75);
+
+    text-transform:uppercase;
+
+    letter-spacing:1.5px;
+}
+
+/* =========================================================
+   DEVICE INFORMATION
+========================================================= */
+
+.device-info{
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:10px;
+
+    margin-bottom:24px;
+}
+
+.device-card{
+    min-width:0;
+
+    padding:13px 10px;
+
+    border-radius:16px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.025);
+
+    border:1px solid var(--border);
+
+    transition:.2s;
+}
+
+.device-card:hover{
+    border-color:
+        rgba(59,130,246,.35);
+
+    transform:translateY(-2px);
+}
+
+.device-icon{
+    font-size:18px;
+
+    margin-bottom:7px;
+}
+
+.device-label{
+    display:block;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:.8px;
+}
+
+.device-value{
+    display:block;
+
+    margin-top:5px;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+.charging-yes{
+    color:var(--green);
+}
+
+.charging-no{
+    color:var(--muted);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+
+    margin-bottom:24px;
+}
+
+.stat{
+    padding:16px 12px;
+
+    border-radius:16px;
+
+    text-align:center;
+}
+
+.stat span{
+    color:var(--muted);
+
+    font-size:9px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+.stat strong{
+    display:block;
+
+    margin-top:6px;
+
+    font-size:18px;
+
+    font-weight:800;
+}
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.category-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(260px,1fr)
+        );
+
+    gap:16px;
+}
+
+.category-card{
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    padding:22px;
+
+    border-radius:var(--radius);
+
+    text-decoration:none;
+
+    color:var(--text);
+
+    transition:.25s;
+
+    border:1px solid var(--border);
+
+    gap:16px;
+}
+
+.category-card:hover{
+    border-color:var(--blue-main);
+
+    transform:translateY(-3px);
+
+    background:
+        rgba(59,130,246,.02);
+
+    box-shadow:
+        0 15px 35px
+        rgba(59,130,246,.08);
+}
+
+.cat-info h3{
+    font-size:15px;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+}
+
+.cat-info p{
+    font-size:11px;
+
+    color:var(--muted);
+
+    line-height:1.5;
+}
+
+.cat-badge{
+    align-self:flex-start;
+
+    background:
+        rgba(59,130,246,.08);
+
+    border:
+        1px solid
+        rgba(59,130,246,.2);
+
+    color:var(--blue-light);
+
+    font-size:10px;
+
+    font-weight:700;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar-overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.75);
+
+    backdrop-filter:blur(8px);
+
+    z-index:1999;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.25s;
+}
+
+.sidebar-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.sidebar{
+    position:fixed;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:320px;
+
+    background:#070709;
+
+    border-right:
+        1px solid var(--border);
+
+    padding:24px;
+
+    z-index:2000;
+
+    transform:translateX(-100%);
+
+    transition:.25s;
+
+    overflow-y:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+}
+
+.sidebar.active{
+    transform:translateX(0);
+}
+
+.sidebar-head{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    padding-bottom:12px;
+}
+
+.sidebar-head h3{
+    font-size:15px;
+    font-weight:700;
+}
+
+.status-card-box{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+}
+
+.status-item{
+    background:
+        rgba(255,255,255,.02);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:10px 14px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:11px;
+}
+
+.status-item span:first-child{
+    color:var(--muted);
+}
+
+.status-item span:last-child{
+    color:#fff;
+
+    font-weight:700;
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+}
+
+.status-group-title{
+    font-size:10px;
+
+    color:var(--blue-cyan);
+
+    text-transform:uppercase;
+
+    font-weight:800;
+
+    margin-top:12px;
+
+    margin-bottom:4px;
+
+    letter-spacing:1px;
+}
+
+.sidebar-socials{
+    border-top:
+        1px solid var(--border);
+
+    padding-top:16px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+}
+
+.social-link{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:11px 14px;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.02);
+
+    border:
+        1px solid var(--border);
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.social-link:hover{
+    border-color:var(--blue-main);
+
+    background:
+        rgba(59,130,246,.08);
+}
+
+.social-link svg{
+    width:16px;
+    height:16px;
+
+    fill:currentColor;
+
+    flex-shrink:0;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+
+    left:50%;
+    bottom:24px;
+
+    transform:
+        translate(-50%,20px);
+
+    padding:11px 18px;
+
+    border-radius:30px;
+
+    background:#fff;
+
+    border:1px solid #fff;
+
+    color:#000;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.25s;
+
+    z-index:3000;
+
+    white-space:nowrap;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.5);
+}
+
+.toast.show{
+    opacity:1;
+
+    visibility:visible;
+
+    transform:
+        translate(-50%,0);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+    .device-info{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .device-card:nth-child(4),
+    .device-card:nth-child(5){
+        grid-column:span 1;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .app{
+        padding:20px 15px 50px;
+    }
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .category-grid{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        width:300px;
+    }
+
+    .video-banner{
+        height:200px;
+    }
+
+    .banner-clock{
+        right:20px;
+        bottom:20px;
+    }
+
+}
+
+@media(max-width:430px){
+
+    .device-info{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .video-banner{
+        height:205px;
+    }
+
+    .banner-time{
+        font-size:34px;
+    }
+
+}
+
+@media(max-width:360px){
+
+    .brand h1{
+        font-size:15px;
+    }
+
+    .brand p{
+        font-size:9px;
+    }
+
+    .logo,
+    .menu-btn,
+    .mail-btn{
+        width:40px;
+        height:40px;
+    }
+
+    .hero-title{
+        font-size:18px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =======================================================
+     SIDEBAR OVERLAY
+======================================================= -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay">
+</div>
+
+
+<!-- =======================================================
+     SIDEBAR
+======================================================= -->
+
+<aside
+    class="sidebar"
+    id="sidebar">
+
+    <div>
+
+        <div class="sidebar-head">
+
+            <h3>
+                📊 Server Live Status
+            </h3>
+
+            <button
+                id="closeSidebar"
+                style="
+                    background:rgba(255,255,255,.03);
+                    color:#fff;
+                    border:1px solid var(--border);
+                    border-radius:50%;
+                    width:32px;
+                    height:32px;
+                    font-size:13px;
+                "
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <div
+            id="statusStructuredView"
+            class="status-card-box"
+        >
+
+            <div
+                style="
+                    font-size:11px;
+                    color:var(--muted);
+                    text-align:center;
+                    padding:20px;
+                "
+            >
+                Memuat informasi server...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div>
+
+        <div class="sidebar-socials">
+
+            <a
+                href="https://wa.me/6281260512743"
+                target="_blank"
+                class="social-link"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+
+                </svg>
+
+                WhatsApp ReyCloud
+
+            </a>
+
+
+            <a
+                href="https://whatsapp.com/channel/0029Vb8AU5sEQIakiPGkOA2k"
+                target="_blank"
+                class="social-link"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.534.26l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.535-.196 1.006.128.832.941z"/>
+
+                </svg>
+
+                Channel ReyCloud
+
+            </a>
+
+
+            <a
+                href="https://t.me/ReyCloudShop"
+                target="_blank"
+                class="social-link"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.534.26l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.535-.196 1.006.128.832.941z"/>
+
+                </svg>
+
+                Telegram ReyCloud
+
+            </a>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =======================================================
+     REQUEST MODAL
+======================================================= -->
+
+<div
+    class="request-modal-overlay"
+    id="requestModalOverlay"
+>
+
+    <div class="request-modal">
+
+        <div class="req-modal-head">
+
+            <h3>
+                📬 Request Fitur / Tools
+            </h3>
+
+        </div>
+
+        <textarea
+            id="siteReqInput"
+            placeholder="Ketik pesan atau request fitur di sini..."
+        ></textarea>
+
+        <button
+            id="siteReqBtn"
+            onclick="submitWebsiteRequest()"
+        >
+            Kirim Request ke Owner
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     APP
+======================================================= -->
+
+<div class="app">
+
+
+<header class="header">
+
+    <div class="brand">
+
+        <button
+            class="menu-btn"
+            id="menuBtn"
+            title="Server Status"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+
+        <div class="logo">
+
+            <img
+                src="https://api.legionteknologi.my.id/r/fDwOxw.jpeg"
+                alt="ReyCloud"
+            >
+
+        </div>
+
+
+        <div>
+
+            <h1>
+                ReyCloudSHP API
+            </h1>
+
+            <p>
+                Developer Dashboard
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="brand-actions">
+
+        <button
+            class="mail-btn"
+            id="openReqModal"
+            title="Request Fitur"
+        >
+
+            <svg viewBox="0 0 24 24">
+
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-4V6l8 5 8-4v2z"/>
+
+            </svg>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<section class="hero glass">
+
+    <div class="hero-title">
+        API Categories 🚀
+    </div>
+
+    <div class="hero-text">
+        Pilih kategori dokumentasi endpoint API
+        yang ingin kamu jelajahi atau uji coba
+        di bawah ini.
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     VIDEO BANNER
+======================================================= -->
+
+<section class="video-banner">
+
+    <video
+        src="https://files.catbox.moe/nn24zj.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+    ></video>
+
+
+    <div class="video-overlay"></div>
+
+
+    <div class="banner-clock">
+
+        <div
+            class="banner-time"
+            id="bannerTime"
+        >
+            00:00:00
+        </div>
+
+        <div
+            class="banner-date"
+            id="bannerDate"
+        >
+            01 September 2026
+        </div>
+
+        <div
+            class="banner-day"
+            id="bannerDay"
+        >
+            SELASA
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     DEVICE INFORMATION
+     SATU-SATUNYA BAGIAN IP/BATTERY/DEVICE
+======================================================= -->
+
+<section class="device-info">
+
+    <div class="device-card glass">
+
+        <div class="device-icon">
+            🌐
+        </div>
+
+        <span class="device-label">
+            IP Public
+        </span>
+
+        <strong
+            class="device-value"
+            id="publicIp"
+        >
+            Checking...
+        </strong>
+
+    </div>
+
+
+    <div class="device-card glass">
+
+        <div class="device-icon">
+            🔋
+        </div>
+
+        <span class="device-label">
+            Battery
+        </span>
+
+        <strong
+            class="device-value"
+            id="batteryLevel"
+        >
+            Checking...
+        </strong>
+
+    </div>
+
+
+    <div class="device-card glass">
+
+        <div class="device-icon">
+            ⚡
+        </div>
+
+        <span class="device-label">
+            Charging
+        </span>
+
+        <strong
+            class="device-value"
+            id="chargingStatus"
+        >
+            Checking...
+        </strong>
+
+    </div>
+
+
+    <div class="device-card glass">
+
+        <div class="device-icon">
+            📱
+        </div>
+
+        <span class="device-label">
+            Device
+        </span>
+
+        <strong
+            class="device-value"
+            id="deviceInfo"
+        >
+            Detecting...
+        </strong>
+
+    </div>
+
+
+    <div class="device-card glass">
+
+        <div class="device-icon">
+            🌍
+        </div>
+
+        <span class="device-label">
+            Browser
+        </span>
+
+        <strong
+            class="device-value"
+            id="browserInfo"
+        >
+            Detecting...
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     STATS
+======================================================= -->
+
+<section class="stats">
+
+    <div class="stat glass">
+
+        <span>
+            Endpoints
+        </span>
+
+        <strong id="statTotal">
+            --
+        </strong>
+
+    </div>
+
+
+    <div class="stat glass">
+
+        <span>
+            Categories
+        </span>
+
+        <strong id="statCategories">
+            --
+        </strong>
+
+    </div>
+
+
+    <div class="stat glass">
+
+        <span>
+            RAM
+        </span>
+
+        <strong id="statRam">
+            --
+        </strong>
+
+    </div>
+
+
+    <div class="stat glass">
+
+        <span>
+            CPU
+        </span>
+
+        <strong id="statCpu">
+            --
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CATEGORY
+======================================================= -->
+
+<div
+    class="category-grid"
+    id="categoryGrid"
+></div>
+
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+>
+    Tersalin!
+</div>
+
+
+<script>
+
+/* =========================================================
+   API CONFIG
+========================================================= */
+
+const API_BASE =
+    "https://api.legionteknologi.my.id";
+
+
+/* =========================================================
+   API CATEGORIES
+========================================================= */
+
+const apiCategories = [
+
+    {
+        name:"AI Intelligence",
+
+        desc:
+            "Rayleigh AI, DeepAI Chat & Models, Image Generator, & Prompt Extractor",
+
+        icon:"🤖",
+
+        path:"docs/ai",
+
+        count:9
+    },
+
+
+    {
+        name:"Media Downloader",
+
+        desc:
+            "YouTube MP3/MP4, TikTok v1/v2, Instagram, MediaFire, TeraBox, Videy, & SaveFrom",
+
+        icon:"📥",
+
+        path:"docs/downloader",
+
+        count:9
+    },
+
+
+    {
+        name:"Tools & Utilities",
+
+        desc:
+            "TempMail, Remove BG, NSFW, Token Scraper, Wink Enhance, WA Auto React, & Bacon Bypass",
+
+        icon:"🛠️",
+
+        path:"docs/tools",
+
+        count:7
+    },
+
+
+    {
+        name:"Anime & Donghua",
+
+        desc:
+            "Samehadaku, Donghub, Tokusatsu & Nekopoi Directory",
+
+        icon:"🌸",
+
+        path:"docs/anime",
+
+        count:27
+    },
+
+
+    {
+        name:"Other APIs",
+
+        desc:
+            "Amprem Task Generator & Dapodik School Finder",
+
+        icon:"🌐",
+
+        path:"docs/other",
+
+        count:5
+    },
+
+
+    {
+        name:"Thanks To",
+
+        desc:
+            "Identitas REST API, Owner & Contributor ReyCloudSHP",
+
+        icon:"🚀",
+
+        path:"/thanksto"
+
+    }
+
+];
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+document.getElementById("statTotal").textContent =
+    apiCategories.reduce(
+        (sum,cat) =>
+            sum + (cat.count || 0),
+        0
+    );
+
+
+document.getElementById("statCategories").textContent =
+    apiCategories.length;
+
+
+/* =========================================================
+   RENDER CATEGORY
+========================================================= */
+
+const gridContainer =
+    document.getElementById(
+        "categoryGrid"
+    );
+
+
+apiCategories.forEach(cat => {
+
+    const card =
+        document.createElement("a");
+
+    card.href =
+        cat.path;
+
+    card.className =
+        "category-card glass";
+
+    card.innerHTML = `
+
+        <div class="cat-info">
+
+            <h3>
+                ${cat.icon}
+                ${cat.name}
+            </h3>
+
+            <p>
+                ${cat.desc}
+            </p>
+
+        </div>
+
+        ${
+            cat.count !== undefined
+            ? `
+                <div class="cat-badge">
+                    ${cat.count} Endpoints
+                </div>
+            `
+            : ""
+        }
+
+    `;
+
+    gridContainer.appendChild(card);
+
+});
+
+
+/* =========================================================
+   CLOCK
+========================================================= */
+
+function updateClock(){
+
+    const now =
+        new Date();
+
+
+    const time =
+        now.toLocaleTimeString(
+            "id-ID",
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit",
+                hour12:false
+            }
+        );
+
+
+    const date =
+        now.toLocaleDateString(
+            "id-ID",
+            {
+                day:"2-digit",
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+
+    const day =
+        now.toLocaleDateString(
+            "id-ID",
+            {
+                weekday:"long"
+            }
+        );
+
+
+    document.getElementById(
+        "bannerTime"
+    ).textContent =
+        time;
+
+
+    document.getElementById(
+        "bannerDate"
+    ).textContent =
+        date;
+
+
+    document.getElementById(
+        "bannerDay"
+    ).textContent =
+        day.toUpperCase();
+
+}
+
+
+updateClock();
+
+setInterval(
+    updateClock,
+    1000
+);
+
+
+/* =========================================================
+   DEVICE DETECTION
+========================================================= */
+
+function detectDevice(){
+
+    const ua =
+        navigator.userAgent;
+
+
+    let device =
+        "Unknown";
+
+
+    if(
+        /Android/i.test(ua)
+    ){
+
+        device =
+            "Android";
+
+    }
+    else if(
+        /iPhone|iPad|iPod/i.test(ua)
+    ){
+
+        device =
+            "iOS";
+
+    }
+    else if(
+        /Windows/i.test(ua)
+    ){
+
+        device =
+            "Windows";
+
+    }
+    else if(
+        /Macintosh/i.test(ua)
+    ){
+
+        device =
+            "macOS";
+
+    }
+    else if(
+        /Linux/i.test(ua)
+    ){
+
+        device =
+            "Linux";
+
+    }
+
+
+    document.getElementById(
+        "deviceInfo"
+    ).textContent =
+        device;
+
+}
+
+
+function detectBrowser(){
+
+    const ua =
+        navigator.userAgent;
+
+
+    let browser =
+        "Unknown";
+
+
+    if(
+        /Edg\//i.test(ua)
+    ){
+
+        browser =
+            "Edge";
+
+    }
+    else if(
+        /OPR\//i.test(ua)
+    ){
+
+        browser =
+            "Opera";
+
+    }
+    else if(
+        /Chrome\//i.test(ua)
+    ){
+
+        browser =
+            "Chrome";
+
+    }
+    else if(
+        /Firefox\//i.test(ua)
+    ){
+
+        browser =
+            "Firefox";
+
+    }
+    else if(
+        /Safari\//i.test(ua)
+    ){
+
+        browser =
+            "Safari";
+
+    }
+
+
+    document.getElementById(
+        "browserInfo"
+    ).textContent =
+        browser;
+
+}
+
+
+detectDevice();
+
+detectBrowser();
+
+
+/* =========================================================
+   PUBLIC IP
+========================================================= */
+
+async function loadPublicIP(){
+
+    const el =
+        document.getElementById(
+            "publicIp"
+        );
+
+
+    try{
+
+        const res =
+            await fetch(
+                "https://api.ipify.org?format=json",
+                {
+                    cache:"no-store"
+                }
+            );
+
+
+        if(!res.ok)
+            throw new Error(
+                "IP unavailable"
+            );
+
+
+        const data =
+            await res.json();
+
+
+        el.textContent =
+            data.ip ||
+            "N/A";
+
+    }
+    catch{
+
+        el.textContent =
+            "N/A";
+
+    }
+
+}
+
+
+loadPublicIP();
+
+
+/* =========================================================
+   BATTERY
+========================================================= */
+
+async function loadBattery(){
+
+    const levelEl =
+        document.getElementById(
+            "batteryLevel"
+        );
+
+    const chargingEl =
+        document.getElementById(
+            "chargingStatus"
+        );
+
+
+    if(
+        !navigator.getBattery
+    ){
+
+        levelEl.textContent =
+            "N/A";
+
+        chargingEl.textContent =
+            "N/A";
+
+        return;
+
+    }
+
+
+    try{
+
+        const battery =
+            await navigator.getBattery();
+
+
+        function updateBattery(){
+
+            levelEl.textContent =
+                Math.round(
+                    battery.level * 100
+                ) + "%";
+
+
+            if(
+                battery.charging
+            ){
+
+                chargingEl.textContent =
+                    "Charging";
+
+                chargingEl.className =
+                    "device-value charging-yes";
+
+            }
+            else{
+
+                chargingEl.textContent =
+                    "Not Charging";
+
+                chargingEl.className =
+                    "device-value charging-no";
+
+            }
+
+        }
+
+
+        updateBattery();
+
+
+        battery.addEventListener(
+            "levelchange",
+            updateBattery
+        );
+
+
+        battery.addEventListener(
+            "chargingchange",
+            updateBattery
+        );
+
+    }
+    catch{
+
+        levelEl.textContent =
+            "N/A";
+
+        chargingEl.textContent =
+            "N/A";
+
+    }
+
+}
+
+
+loadBattery();
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+
+const sidebar =
+    document.getElementById(
+        "sidebar"
+    );
+
+
+const sidebarOverlay =
+    document.getElementById(
+        "sidebarOverlay"
+    );
+
+
+const closeSidebar =
+    document.getElementById(
+        "closeSidebar"
+    );
+
+
+menuBtn.addEventListener(
+    "click",
+    () => {
+
+        sidebar.classList.add(
+            "active"
+        );
+
+        sidebarOverlay.classList.add(
+            "active"
+        );
+
+        loadSidebarStatus();
+
+    }
+);
+
+
+function closeSidebarFunc(){
+
+    sidebar.classList.remove(
+        "active"
+    );
+
+    sidebarOverlay.classList.remove(
+        "active"
+    );
+
+}
+
+
+closeSidebar.addEventListener(
+    "click",
+    closeSidebarFunc
+);
+
+
+sidebarOverlay.addEventListener(
+    "click",
+    closeSidebarFunc
+);
+
+
+/* =========================================================
+   REQUEST MODAL
+========================================================= */
+
+const reqModalOverlay =
+    document.getElementById(
+        "requestModalOverlay"
+    );
+
+
+const openReqModalBtn =
+    document.getElementById(
+        "openReqModal"
+    );
+
+
+openReqModalBtn.addEventListener(
+    "click",
+    () => {
+
+        reqModalOverlay.classList.add(
+            "active"
+        );
+
+    }
+);
+
+
+function closeReqModalFunc(){
+
+    reqModalOverlay.classList.remove(
+        "active"
+    );
+
+}
+
+
+reqModalOverlay.addEventListener(
+    "click",
+    e => {
+
+        if(
+            e.target ===
+            reqModalOverlay
+        ){
+
+            closeReqModalFunc();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SIDEBAR STATUS
+========================================================= */
+
+async function loadSidebarStatus(){
+
+    const containerBox =
+        document.getElementById(
+            "statusStructuredView"
+        );
+
+
+    containerBox.innerHTML = `
+
+        <div
+            style="
+                font-size:11px;
+                color:var(--muted);
+                text-align:center;
+                padding:20px;
+            "
+        >
+            Memuat informasi server...
+        </div>
+
+    `;
+
+
+    try{
+
+        const res =
+            await fetch(
+                `${API_BASE}/status`,
+                {
+                    cache:"no-store"
+                }
+            );
+
+
+        const data =
+            await res.json();
+
+
+        containerBox.innerHTML = `
+
+            <div class="status-item">
+                <span>Service Name</span>
+
+                <span>
+                    ${
+                        data.service ||
+                        "ReyCloudSHP API"
+                    }
+                </span>
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    Version
+                </span>
+
+                <span>
+                    ${
+                        data.version ||
+                        "2.2.0"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    Platform
+                </span>
+
+                <span>
+                    ${
+                        data.platform ||
+                        "Node.js"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    Node Version
+                </span>
+
+                <span>
+                    ${
+                        data.nodeVersion ||
+                        "v20+"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="status-group-title">
+                Uptime
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    Server Uptime
+                </span>
+
+                <span>
+                    ${
+                        data.uptime?.server ||
+                        "N/A"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    VPS Uptime
+                </span>
+
+                <span>
+                    ${
+                        data.uptime?.vps ||
+                        "N/A"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="status-group-title">
+                Memory (RAM)
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    Used
+                </span>
+
+                <span>
+                    ${
+                        data.memory?.used ||
+                        "N/A"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    Free
+                </span>
+
+                <span>
+                    ${
+                        data.memory?.free ||
+                        "N/A"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    Total
+                </span>
+
+                <span>
+                    ${
+                        data.memory?.total ||
+                        "N/A"
+                    }
+                </span>
+
+            </div>
+
+
+            <div class="status-group-title">
+                CPU Hardware
+            </div>
+
+
+            <div class="status-item">
+
+                <span>
+                    Cores
+                </span>
+
+                <span>
+                    ${
+                        data.cpu?.cores ||
+                        "N/A"
+                    }
+                    Cores
+                </span>
+
+            </div>
+
+
+            <div
+                class="status-item"
+                style="
+                    flex-direction:column;
+                    align-items:flex-start;
+                    gap:4px;
+                "
+            >
+
+                <span>
+                    Model
+                </span>
+
+                <span
+                    style="
+                        font-size:9px;
+                        color:var(--blue-cyan);
+                        word-break:break-all;
+                    "
+                >
+                    ${
+                        data.cpu?.model ||
+                        "N/A"
+                    }
+                </span>
+
+            </div>
+
+        `;
+
+    }
+    catch(err){
+
+        console.error(
+            "[STATUS ERROR]",
+            err
+        );
+
+
+        containerBox.innerHTML = `
+
+            <div
+                style="
+                    font-size:11px;
+                    color:var(--error);
+                    text-align:center;
+                    padding:20px;
+                "
+            >
+                Gagal terhubung ke server status.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   WEBSITE REQUEST
+========================================================= */
+
+async function submitWebsiteRequest(){
+
+    const textarea =
+        document.getElementById(
+            "siteReqInput"
+        );
+
+
+    const btn =
+        document.getElementById(
+            "siteReqBtn"
+        );
+
+
+    const message =
+        textarea.value.trim();
+
+
+    if(!message){
+
+        showToast(
+            "Pesan request tidak boleh kosong!"
+        );
+
+        return;
+
+    }
+
+
+    btn.disabled =
+        true;
+
+
+    btn.textContent =
+        "Mengirim...";
+
+
+    try{
+
+        const res =
+            await fetch(
+                `${API_BASE}/api/request`,
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            message
+                        })
+                }
+            );
+
+
+        const json =
+            await res.json();
+
+
+        if(json.status){
+
+            showToast(
+                "✅ Berhasil dikirim ke Telegram Owner!"
+            );
+
+
+            textarea.value =
+                "";
+
+
+            closeReqModalFunc();
+
+        }
+        else{
+
+            showToast(
+                "❌ " +
+                (
+                    json.message ||
+                    "Gagal mengirim"
+                )
+            );
+
+        }
+
+    }
+    catch(err){
+
+        console.error(
+            "[REQUEST ERROR]",
+            err
+        );
+
+
+        showToast(
+            "❌ Gagal terhubung ke server"
+        );
+
+    }
+    finally{
+
+        btn.disabled =
+            false;
+
+
+        btn.textContent =
+            "Kirim Request ke Owner";
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message = "Tersalin!"
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () =>
+            toast.classList.remove(
+                "show"
+            ),
+        1800
+    );
+
+}
+
+
+/* =========================================================
+   SERVER STATS
+========================================================= */
+
+async function fetchServerStatus(){
+
+    try{
+
+        const res =
+            await fetch(
+                `${API_BASE}/status`,
+                {
+                    cache:"no-store"
+                }
+            );
+
+
+        if(!res.ok)
+            throw new Error(
+                "Offline"
+            );
+
+
+        const data =
+            await res.json();
+
+
+        document.getElementById(
+            "statRam"
+        ).textContent =
+            data.memory?.used ||
+            "Stable";
+
+
+        document.getElementById(
+            "statCpu"
+        ).textContent =
+            data.cpu?.cores
+                ? `${data.cpu.cores} Cores`
+                : "Active";
+
+    }
+    catch{
+
+        document.getElementById(
+            "statRam"
+        ).textContent =
+            "N/A";
+
+
+        document.getElementById(
+            "statCpu"
+        ).textContent =
+            "N/A";
+
+    }
+
+}
+
+
+fetchServerStatus();
+
+
+setInterval(
+    fetchServerStatus,
+    30000
+);
+
+</script>
+
+</body>
+</html>
