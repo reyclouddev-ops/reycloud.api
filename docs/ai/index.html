@@ -3,717 +3,4288 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>AI Intelligence - ReyCloudSHP API</title>
+
+<link rel="icon"
+      type="image/jpeg"
+      href="https://api.legionteknologi.my.id/r/fDwOxw.jpeg">
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root{
-    --bg: #030305;
-    --panel: rgba(12, 12, 16, 0.75);
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(59, 130, 246, 0.4);
-    --blue-main: #3b82f6;
-    --blue-light: #93c5fd;
-    --blue-cyan: #38bdf8;
-    --error: #f87171;
-    --text: #ffffff;
-    --muted: #94a3b8;
-    --radius: 20px;
+    --bg:#030305;
+    --panel:rgba(12,12,16,.76);
+    --panel-2:#0b0b0f;
+    --panel-3:#111116;
+
+    --border:rgba(255,255,255,.08);
+    --border-light:rgba(255,255,255,.13);
+
+    --blue:#3b82f6;
+    --blue-light:#93c5fd;
+    --cyan:#38bdf8;
+
+    --green:#4ade80;
+    --yellow:#facc15;
+    --red:#f87171;
+
+    --text:#fff;
+    --muted:#94a3b8;
+
+    --radius:18px;
 }
 
-*{ margin:0; padding:0; box-sizing:border-box; font-family:Inter,sans-serif; -webkit-font-smoothing:antialiased; touch-action: manipulation; }
-html{ scroll-behavior:smooth; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    touch-action:manipulation;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     min-height:100vh;
     color:var(--text);
+
     background:
-        radial-gradient(circle at 10% 10%, rgba(59,130,246, 0.08), transparent 45%),
-        radial-gradient(circle at 90% 90%, rgba(56,189,248, 0.05), transparent 45%),
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(59,130,246,.09),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 95% 95%,
+            rgba(56,189,248,.06),
+            transparent 38%
+        ),
         var(--bg);
+
     background-attachment:fixed;
     overflow-y:auto;
 }
 
-button, input, textarea{ font:inherit; }
-button{ cursor:pointer; }
-button:disabled{ cursor:not-allowed; opacity:.65; }
+button,
+input,
+textarea{
+    font:inherit;
+}
 
-::-webkit-scrollbar{ width:4px; height:4px; }
-::-webkit-scrollbar-track{ background:transparent; }
-::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.15); border-radius:20px; }
-::-webkit-scrollbar-thumb:hover{ background:var(--blue-main); }
+button{
+    cursor:pointer;
+}
 
-.app{ width:100%; max-width:850px; margin:auto; padding:25px 20px 60px; }
+button:disabled{
+    cursor:not-allowed;
+    opacity:.55;
+}
+
+a{
+    color:inherit;
+}
+
+::-webkit-scrollbar{
+    width:4px;
+    height:4px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.14);
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:var(--blue);
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    width:100%;
+    max-width:880px;
+    margin:auto;
+    padding:22px 18px 60px;
+}
 
 .glass{
     background:var(--panel);
     border:1px solid var(--border);
+
     backdrop-filter:blur(20px);
     -webkit-backdrop-filter:blur(20px);
-    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.45);
 }
 
-.header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:24px; }
-.brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    min-width:0;
+}
 
 .back-btn{
-    width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid var(--border); color:#fff; text-decoration:none; transition:.2s;
+    width:43px;
+    height:43px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+
+    color:#fff;
+    text-decoration:none;
+
+    transition:.2s;
 }
-.back-btn:hover{ border-color:var(--blue-main); background:rgba(59,130,246,0.08); }
-.back-btn svg{ width:18px; height:18px; fill:currentColor; }
+
+.back-btn:hover{
+    background:rgba(59,130,246,.1);
+    border-color:var(--blue);
+    transform:translateX(-2px);
+}
+
+.back-btn svg{
+    width:18px;
+    height:18px;
+    fill:currentColor;
+}
+
+/* =========================================================
+   AI LOGO
+========================================================= */
 
 .logo{
-    width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    border-radius:14px; background:linear-gradient(135deg, #ffffff, #94a3b8); color: #000;
-    font-size:20px; font-weight:800; box-shadow:0 0 25px rgba(255,255,255,0.1);
-}
-.brand h1{ font-size:17px; font-weight:800; letter-spacing:-0.3px; }
-.brand p{ margin-top:2px; color:var(--muted); font-size:10px; }
+    width:43px;
+    height:43px;
 
-.hero{ padding:24px; border-radius:var(--radius); margin-bottom:24px; }
-.hero-title{ font-size:20px; font-weight:800; margin-bottom:6px; color:#fff; }
-.hero-text{ color:var(--muted); font-size:12px; line-height:1.6; }
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    color:#fff;
+
+    font-size:12px;
+    font-weight:800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #38bdf8
+        );
+
+    box-shadow:
+        0 0 28px rgba(59,130,246,.22);
+}
+
+.brand h1{
+    font-size:16px;
+    font-weight:800;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.brand p{
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+
+    padding:23px;
+
+    border-radius:var(--radius);
+
+    margin-bottom:22px;
+
+    overflow:hidden;
+}
+
+.hero:after{
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:130px;
+
+    right:-45px;
+    top:-55px;
+
+    border-radius:50%;
+
+    background:
+        rgba(59,130,246,.08);
+
+    filter:blur(5px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:1;
+}
+
+.hero-title{
+    font-size:20px;
+    font-weight:800;
+
+    margin-bottom:7px;
+}
+
+.hero-text{
+    max-width:700px;
+
+    color:var(--muted);
+
+    font-size:11px;
+    line-height:1.7;
+}
+
+/* =========================================================
+   ENDPOINT HEADER
+========================================================= */
+
+.endpoint-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin:0 3px 11px;
+}
 
 .category{
-    margin:25px 4px 12px; display:flex; align-items:center; gap:10px;
-    color:var(--blue-light); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1.5px;
+    display:flex;
+    align-items:center;
+
+    gap:9px;
+
+    color:var(--blue-light);
+
+    font-size:10px;
+    font-weight:800;
+
+    text-transform:uppercase;
+    letter-spacing:1.4px;
 }
-.category:after{ content:""; height:1px; flex:1; background:linear-gradient(90deg, var(--border), transparent); }
+
+.category:after{
+    content:"";
+
+    width:80px;
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--border),
+            transparent
+        );
+}
+
+.endpoint-count{
+    color:var(--muted);
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:9px;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-wrap{
+    margin-bottom:15px;
+}
+
+.search{
+    width:100%;
+
+    padding:13px 15px;
+
+    color:#fff;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    outline:none;
+
+    font-size:11px;
+
+    transition:.2s;
+}
+
+.search::placeholder{
+    color:#64748b;
+}
+
+.search:focus{
+    border-color:var(--blue);
+
+    background:
+        rgba(59,130,246,.035);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(59,130,246,.1);
+}
+
+/* =========================================================
+   ENDPOINT CARD
+========================================================= */
 
 .endpoint{
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding:16px 20px; margin-bottom:12px; border-radius:16px; transition:.2s;
-}
-.endpoint:hover{ border-color:var(--blue-main); transform:translateY(-1px); background:rgba(59,130,246,0.02); }
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-.endpoint-info{ min-width:0; }
-.endpoint-info h4{ font-size:14px; font-weight:700; margin-bottom:4px; color:#fff; }
+    gap:15px;
+
+    padding:16px 18px;
+
+    margin-bottom:10px;
+
+    border-radius:16px;
+
+    transition:.2s;
+}
+
+.endpoint:hover{
+    transform:translateY(-2px);
+
+    border-color:
+        rgba(59,130,246,.45);
+
+    background:
+        rgba(59,130,246,.025);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.3);
+}
+
+.endpoint-info{
+    min-width:0;
+}
+
+.endpoint-top{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    margin-bottom:5px;
+}
+
+.endpoint-icon{
+    width:26px;
+    height:26px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:8px;
+
+    background:
+        rgba(59,130,246,.08);
+
+    border:
+        1px solid
+        rgba(59,130,246,.13);
+
+    font-size:13px;
+}
+
+.endpoint-info h4{
+    font-size:13px;
+    font-weight:700;
+
+    color:#fff;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
 .endpoint-info p{
-    color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px;
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    color:var(--muted);
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:9px;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.endpoint-desc{
+    margin-top:5px;
+
+    color:#64748b;
+
+    font-size:9px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.endpoint-meta{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.method{
+    padding:5px 7px;
+
+    border-radius:7px;
+
+    background:
+        rgba(74,222,128,.07);
+
+    border:
+        1px solid
+        rgba(74,222,128,.12);
+
+    color:var(--green);
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:8px;
+    font-weight:700;
 }
 
 .try-btn{
-    flex-shrink:0; padding:8px 16px; border:1px solid rgba(255,255,255,0.2); border-radius:30px;
-    color:white; background:#000; font-size:11px; font-weight:700; transition:.2s;
+    flex-shrink:0;
+
+    padding:8px 14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    border-radius:30px;
+
+    color:#fff;
+
+    background:#000;
+
+    font-size:10px;
+    font-weight:700;
+
+    transition:.2s;
 }
-.try-btn:hover{ background:var(--blue-main); border-color:var(--blue-main); color:#fff; }
+
+.try-btn:hover{
+    background:var(--blue);
+    border-color:var(--blue);
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    padding:35px 20px;
+
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    border-radius:16px;
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
 
 .overlay{
-    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-    padding:15px; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px);
-    z-index:999; opacity:0; visibility:hidden; transition:.2s;
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:12px;
+
+    background:
+        rgba(0,0,0,.84);
+
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+
+    z-index:999;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.22s;
 }
-.overlay.active{ opacity:1; visibility:visible; }
+
+.overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal{
-    width:100%; max-width:510px; max-height:95vh; display:flex; flex-direction:column;
-    background:#0a0a0e; border:1px solid var(--border); border-radius:var(--radius);
-    overflow:hidden; transform:translateY(20px) scale(.97); transition:.2s;
-    box-shadow:0 30px 80px rgba(0,0,0,.8);
+    width:100%;
+    max-width:540px;
+
+    max-height:
+        min(94vh,760px);
+
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+
+    background:
+        #09090d;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    box-shadow:
+        0 35px 100px rgba(0,0,0,.85);
+
+    transform:
+        translateY(18px)
+        scale(.97);
+
+    transition:.22s;
 }
-.overlay.active .modal{ transform:translateY(0) scale(1); }
+
+.overlay.active .modal{
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
 
 .modal-head{
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-    padding:16px 20px; border-bottom:1px solid var(--border); background:#111116;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    padding:15px 18px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.025);
 }
-.modal-title-wrap{ min-width:0; }
-.modal-head h3{ font-size:15px; font-weight:700; color:#fff; }
-.modal-head p{ color:var(--blue-light); font-family:'JetBrains Mono',monospace; font-size:9px; margin-top:4px; word-break:break-all; }
+
+.modal-title-wrap{
+    min-width:0;
+}
+
+.modal-head h3{
+    font-size:14px;
+    font-weight:800;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.modal-head p{
+    margin-top:4px;
+
+    color:var(--blue-light);
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:8px;
+
+    word-break:break-all;
+}
 
 .close{
-    width:32px; height:32px; flex-shrink:0; border:1px solid var(--border); border-radius:50%;
-    color:white; background:#000; transition:.2s; font-size:14px; display:flex; align-items:center; justify-content:center;
-}
-.close:hover{ background:#fff; color:#000; }
+    width:31px;
+    height:31px;
 
-.modal-body{ padding:20px; overflow-y:auto; }
-.label{ display:block; margin-bottom:8px; color:var(--muted); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:50%;
+
+    background:#000;
+    color:#fff;
+
+    font-size:12px;
+
+    transition:.2s;
+}
+
+.close:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* =========================================================
+   MODAL BODY
+========================================================= */
+
+.modal-body{
+    padding:18px;
+
+    overflow-y:auto;
+}
+
+.label{
+    display:block;
+
+    margin-bottom:7px;
+
+    color:var(--muted);
+
+    font-size:9px;
+    font-weight:700;
+
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
 
 .input{
-    width:100%; padding:14px; margin-bottom:16px; color:white;
-    background:#000; border:1px solid var(--border); border-radius:12px;
-    outline:none; font-size:12px; transition:.2s;
-}
-.input:focus{ border-color:var(--blue-main); box-shadow:0 0 0 2px rgba(59,130,246,.2); }
+    width:100%;
 
-/* CUSTOM DROPDOWN MODEL AI */
-.custom-select-container { position:relative; margin-bottom:16px; display:none; }
-.custom-select-trigger {
-    width:100%; padding:14px; background:#000; border:1px solid var(--border); border-radius:12px;
-    color:#fff; font-size:12px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; transition:.2s;
+    padding:13px;
+
+    margin-bottom:15px;
+
+    color:#fff;
+
+    background:#000;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+
+    outline:none;
+
+    font-size:11px;
+
+    transition:.2s;
 }
-.custom-select-trigger:hover { border-color:var(--blue-main); }
-.custom-options {
-    position:absolute; top:calc(100% + 6px); left:0; right:0; background:#0d0d12;
-    border:1px solid var(--border); border-radius:12px; max-height:200px; overflow-y:auto;
-    z-index:60; display:none; box-shadow:0 15px 30px rgba(0,0,0,0.7);
+
+.input:focus{
+    border-color:var(--blue);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(59,130,246,.12);
 }
-.custom-options.open { display:block; }
-.custom-option {
-    padding:12px 15px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--muted);
-    cursor:pointer; transition:.15s; border-bottom:1px solid rgba(255,255,255,0.03);
+
+input[type="file"]{
+    cursor:pointer;
 }
-.custom-option:hover { background:rgba(59,130,246,0.15); color:#fff; }
-.custom-option.selected { color:var(--blue-cyan); font-weight:700; background:rgba(59,130,246,0.08); }
+
+/* =========================================================
+   CUSTOM MODEL
+========================================================= */
+
+.custom-select-container{
+    position:relative;
+
+    display:none;
+
+    margin-bottom:15px;
+}
+
+.custom-select-trigger{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:13px;
+
+    background:#000;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+
+    color:#fff;
+
+    font-size:11px;
+
+    transition:.2s;
+}
+
+.custom-select-trigger:hover{
+    border-color:var(--blue);
+}
+
+.custom-options{
+    position:absolute;
+
+    top:calc(100% + 6px);
+    left:0;
+    right:0;
+
+    z-index:50;
+
+    display:none;
+
+    max-height:200px;
+
+    overflow-y:auto;
+
+    background:#0d0d12;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+
+    box-shadow:
+        0 18px 40px
+        rgba(0,0,0,.8);
+}
+
+.custom-options.open{
+    display:block;
+}
+
+.custom-option{
+    padding:11px 13px;
+
+    color:var(--muted);
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:9px;
+
+    cursor:pointer;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.035);
+
+    transition:.15s;
+}
+
+.custom-option:hover{
+    color:#fff;
+    background:
+        rgba(59,130,246,.12);
+}
+
+.custom-option.selected{
+    color:var(--cyan);
+
+    background:
+        rgba(59,130,246,.07);
+
+    font-weight:700;
+}
+
+/* =========================================================
+   TABS
+========================================================= */
 
 .tabs{
-    display:flex; gap:8px; overflow-x:auto; padding-bottom:8px;
-    border-bottom:1px solid var(--border); margin-bottom:15px;
-}
-.tab{
-    padding:8px 12px; border:1px solid transparent; border-radius:8px;
-    background:transparent; color:var(--muted); font-size:10px; font-weight:600; white-space:nowrap; transition:.2s;
-}
-.tab:hover{ color:#fff; }
-.tab.active{ background:rgba(255,255,255,0.05); color:#fff; border-color:var(--border); }
+    display:flex;
 
-.code-wrap{ position:relative; margin-bottom:20px; }
-.code{
-    padding:15px; padding-right:60px; min-height:58px; max-height:170px; overflow:auto;
-    background:#000; border:1px solid var(--border); border-radius:12px;
-    color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.6;
-    white-space:pre-wrap; word-break:break-all;
+    gap:6px;
+
+    overflow-x:auto;
+
+    padding-bottom:8px;
+
+    margin-bottom:13px;
+
+    border-bottom:
+        1px solid var(--border);
 }
-.code span.highlight { color: #fff; }
+
+.tab{
+    padding:7px 11px;
+
+    flex-shrink:0;
+
+    border:
+        1px solid transparent;
+
+    border-radius:8px;
+
+    background:transparent;
+
+    color:var(--muted);
+
+    font-size:9px;
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.tab:hover{
+    color:#fff;
+}
+
+.tab.active{
+    color:#fff;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border-color:
+        var(--border);
+}
+
+/* =========================================================
+   CODE
+========================================================= */
+
+.code-wrap{
+    position:relative;
+
+    margin-bottom:18px;
+}
+
+.code{
+    min-height:58px;
+    max-height:180px;
+
+    overflow:auto;
+
+    padding:14px;
+    padding-right:65px;
+
+    background:#000;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+
+    color:var(--muted);
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:9px;
+    line-height:1.7;
+
+    white-space:pre-wrap;
+    word-break:break-all;
+}
+
+.code span.highlight{
+    color:#fff;
+}
 
 .copy-code{
-    position:absolute; right:8px; top:8px; padding:6px 10px; border:1px solid var(--border);
-    border-radius:8px; background:#111; color:white; font-size:9px; font-weight:600;
-}
-.copy-code:hover{ background:#fff; color:#000; }
+    position:absolute;
 
-.response-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
-.response-actions{ display:flex; gap:6px; }
+    top:7px;
+    right:7px;
+
+    padding:6px 9px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:7px;
+
+    background:#111;
+
+    color:#fff;
+
+    font-size:8px;
+    font-weight:700;
+}
+
+.copy-code:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* =========================================================
+   RESPONSE
+========================================================= */
+
+.response-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:8px;
+
+    margin-bottom:8px;
+}
+
+.response-actions{
+    display:flex;
+    gap:5px;
+}
 
 .small-btn{
-    border:1px solid var(--border); background:#050505; color:var(--muted);
-    border-radius:8px; padding:7px 10px; font-size:9px; font-weight:600; white-space:nowrap; transition:.2s;
+    padding:6px 8px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:7px;
+
+    background:#050505;
+
+    color:var(--muted);
+
+    font-size:8px;
+    font-weight:700;
+
+    transition:.2s;
 }
-.small-btn:hover{ border-color:var(--blue-main); color:#fff; }
+
+.small-btn:hover{
+    border-color:var(--blue);
+    color:#fff;
+}
 
 .response{
-    min-height:120px; max-height:280px; overflow:auto; padding:15px;
-    background:#000; border:1px solid var(--border); border-radius:12px;
-    color:#fff; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.65;
-    white-space:pre-wrap; word-break:break-word;
+    min-height:115px;
+    max-height:270px;
+
+    overflow:auto;
+
+    padding:14px;
+
+    background:#000;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+
+    color:#fff;
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:9px;
+    line-height:1.7;
+
+    white-space:pre-wrap;
+    word-break:break-word;
 }
-.response.loading{ color:var(--blue-light); border-color:rgba(59,130,246,0.3); }
-.response.error{ color:var(--error); border-color:rgba(239,68,68,.3); }
 
-.media{ display:none; margin-top:12px; padding:10px; border:1px solid var(--border); border-radius:12px; background:#000; }
-.media.active{ display:block; }
-.media img, .media video{ display:block; width:100%; max-height:310px; object-fit:contain; border-radius:8px; background:#050505; border:1px solid var(--border); }
-.media-url{ display:block; margin-top:10px; color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:9px; line-height:1.5; word-break:break-all; }
-.media-buttons{ display:flex; gap:8px; margin-top:10px; }
-.media-buttons button{ flex:1; }
+.response.loading{
+    color:var(--blue-light);
 
-.modal-foot{ padding:16px 20px; display:flex; gap:10px; border-top:1px solid var(--border); background:#111116; }
-.execute-btn{ flex:1; padding:12px; border:0; border-radius:10px; color:#000; background:#fff; font-size:12px; font-weight:700; transition:.2s; }
-.execute-btn:hover{ background:var(--blue-light); }
+    border-color:
+        rgba(59,130,246,.35);
+}
 
-.open-btn{ padding:12px 16px; border:1px solid var(--border); border-radius:10px; color:white; background:#000; font-size:11px; font-weight:700; }
-.open-btn:hover{ background:rgba(255,255,255,0.1); }
+.response.error{
+    color:var(--red);
+
+    border-color:
+        rgba(239,68,68,.3);
+}
+
+/* =========================================================
+   MEDIA
+========================================================= */
+
+.media{
+    display:none;
+
+    margin-top:10px;
+
+    padding:9px;
+
+    background:#000;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:11px;
+}
+
+.media.active{
+    display:block;
+}
+
+.media img,
+.media video{
+    display:block;
+
+    width:100%;
+
+    max-height:300px;
+
+    object-fit:contain;
+
+    background:#050505;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:8px;
+}
+
+.media-url{
+    display:block;
+
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:8px;
+    line-height:1.5;
+
+    word-break:break-all;
+}
+
+.media-buttons{
+    display:flex;
+
+    gap:7px;
+
+    margin-top:8px;
+}
+
+.media-buttons button{
+    flex:1;
+}
+
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
+
+.modal-foot{
+    display:flex;
+
+    gap:8px;
+
+    padding:14px 18px;
+
+    border-top:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.execute-btn{
+    flex:1;
+
+    padding:11px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:#fff;
+
+    color:#000;
+
+    font-size:10px;
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.execute-btn:hover{
+    background:var(--blue-light);
+}
+
+.open-btn{
+    padding:11px 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:10px;
+
+    background:#000;
+
+    color:#fff;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.open-btn:hover{
+    background:rgba(255,255,255,.08);
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast{
-    position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px);
-    padding:11px 18px; border-radius:30px; background:#fff; border:1px solid #fff;
-    color:#000; font-size:11px; font-weight:700; opacity:0; visibility:hidden;
-    transition:.25s; z-index:2000; white-space:nowrap; box-shadow:0 10px 30px rgba(0,0,0,.5);
+    position:fixed;
+
+    left:50%;
+    bottom:22px;
+
+    z-index:2000;
+
+    padding:10px 16px;
+
+    border-radius:30px;
+
+    background:#fff;
+    border:1px solid #fff;
+
+    color:#000;
+
+    font-size:10px;
+    font-weight:800;
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:
+        translate(-50%,20px);
+
+    transition:.25s;
+
+    white-space:nowrap;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.5);
 }
-.toast.show{ opacity:1; visibility:visible; transform:translate(-50%,0); }
+
+.toast.show{
+    opacity:1;
+    visibility:visible;
+
+    transform:
+        translate(-50%,0);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    .app{
+        padding:
+            18px
+            13px
+            45px;
+    }
+
+    .hero{
+        padding:19px;
+    }
+
+    .hero-title{
+        font-size:18px;
+    }
+
+    .hero-text{
+        font-size:10px;
+    }
+
+    .endpoint{
+        padding:14px;
+    }
+
+    .endpoint-desc{
+        display:none;
+    }
+
+    .endpoint-meta{
+        gap:5px;
+    }
+
+    .method{
+        display:none;
+    }
+
+    .try-btn{
+        padding:
+            8px
+            11px;
+    }
+
+    .modal-body{
+        padding:15px;
+    }
+
+    .response-actions{
+        flex-wrap:wrap;
+        justify-content:flex-end;
+    }
+
+}
+
+@media(max-width:430px){
+
+    .brand h1{
+        font-size:14px;
+    }
+
+    .brand p{
+        font-size:8px;
+    }
+
+    .logo,
+    .back-btn{
+        width:40px;
+        height:40px;
+    }
+
+    .endpoint{
+        gap:9px;
+    }
+
+    .endpoint-info h4{
+        font-size:11px;
+    }
+
+    .endpoint-info p{
+        font-size:8px;
+    }
+
+    .try-btn{
+        font-size:8px;
+        padding:7px 9px;
+    }
+
+    .modal-foot{
+        padding:
+            12px 14px;
+    }
+
+}
+
+@media(max-width:350px){
+
+    .brand{
+        gap:7px;
+    }
+
+    .back-btn{
+        width:36px;
+        height:36px;
+    }
+
+    .logo{
+        width:36px;
+        height:36px;
+    }
+
+    .brand h1{
+        font-size:12px;
+    }
+
+    .endpoint-info h4{
+        font-size:10px;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <div class="app">
-<header class="header">
-    <div class="brand">
-        <a href="/dashboard" class="back-btn" title="Kembali">
-            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-        </a>
-        <div class="logo">AI</div>
-        <div>
-            <h1>AI Intelligence</h1>
-            <p>ReyCloudSHP API Docs</p>
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <a
+                href="/dashboard"
+                class="back-btn"
+                title="Kembali ke Dashboard"
+            >
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+            </a>
+
+            <div class="logo">
+                AI
+            </div>
+
+            <div>
+
+                <h1>
+                    AI Intelligence
+                </h1>
+
+                <p>
+                    ReyCloudSHP API Docs
+                </p>
+
+            </div>
+
         </div>
-    </div>
-</header>
 
-<section class="hero glass">
-    <div class="hero-title">🤖 AI Intelligence Endpoints</div>
-    <div class="hero-text">
-        Kumpulan endpoint kecerdasan buatan seperti Rayleigh AI, DeepAI Chat, Image Generator, Prompt Extractor, dan lainnya dengan live testing.
-    </div>
-</section>
+    </header>
 
-<div class="category">Endpoints List</div>
-<div id="apiListContainer"></div>
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero glass">
+
+        <div class="hero-content">
+
+            <div class="hero-title">
+                🤖 AI Intelligence Endpoints
+            </div>
+
+            <div class="hero-text">
+                Kumpulan endpoint AI ReyCloudSHP untuk
+                conversational AI, multi-model chat,
+                image generation, image processing,
+                prompt extraction, dan utilities AI lainnya.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ENDPOINT HEADER
+    ====================================================== -->
+
+    <div class="endpoint-head">
+
+        <div class="category">
+            Endpoints List
+        </div>
+
+        <div
+            class="endpoint-count"
+            id="endpointCount"
+        >
+            0 endpoints
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SEARCH
+    ====================================================== -->
+
+    <div class="search-wrap">
+
+        <input
+            id="endpointSearch"
+            class="search"
+            type="search"
+            autocomplete="off"
+            placeholder="🔎 Cari endpoint AI..."
+        >
+
+    </div>
+
+
+    <!-- =====================================================
+         ENDPOINT LIST
+    ====================================================== -->
+
+    <div id="apiListContainer"></div>
+
 </div>
 
-<div class="overlay" id="apiModal">
-<div class="modal">
-    <div class="modal-head">
-        <div class="modal-title-wrap">
-            <h3 id="modalTitle">Endpoint</h3>
-            <p id="modalEndpoint">/endpoint</p>
+
+<!-- =========================================================
+     API MODAL
+========================================================= -->
+
+<div
+    class="overlay"
+    id="apiModal"
+>
+
+    <div class="modal">
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-head">
+
+            <div class="modal-title-wrap">
+
+                <h3 id="modalTitle">
+                    Endpoint
+                </h3>
+
+                <p id="modalEndpoint">
+                    /endpoint
+                </p>
+
+            </div>
+
+            <button
+                class="close"
+                id="closeModal"
+                type="button"
+            >
+                ✕
+            </button>
+
         </div>
-        <button class="close" id="closeModal">✕</button>
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body">
+
+            <!-- INPUT -->
+
+            <label
+                class="label"
+                id="inputLabel"
+            >
+                Query Parameter
+            </label>
+
+            <input
+                id="apiInput"
+                class="input"
+                type="text"
+                autocomplete="off"
+                placeholder="Masukkan value..."
+            >
+
+
+            <!-- FILE -->
+
+            <input
+                id="apiFileInput"
+                class="input"
+                type="file"
+                style="display:none"
+            >
+
+
+            <!-- AI MODEL -->
+
+            <div
+                class="custom-select-container"
+                id="customSelectContainer"
+            >
+
+                <label class="label">
+                    Pilih Model AI
+                </label>
+
+                <div
+                    class="custom-select-trigger"
+                    id="selectTrigger"
+                >
+
+                    <span id="selectedModelText">
+                        standard (Default)
+                    </span>
+
+                    <span>
+                        ▾
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="custom-options"
+                    id="customOptions"
+                >
+
+                    <div
+                        class="custom-option selected"
+                        data-value="standard"
+                    >
+                        standard (Default)
+                    </div>
+
+                    <div
+                        class="custom-option"
+                        data-value="deepseek-v3.2"
+                    >
+                        deepseek-v3.2
+                    </div>
+
+                    <div
+                        class="custom-option"
+                        data-value="gemini-2.5-flash-lite"
+                    >
+                        gemini-2.5-flash-lite
+                    </div>
+
+                    <div
+                        class="custom-option"
+                        data-value="gemma-4"
+                    >
+                        gemma-4
+                    </div>
+
+                    <div
+                        class="custom-option"
+                        data-value="llama-3.3-70b-instruct"
+                    >
+                        llama-3.3-70b-instruct
+                    </div>
+
+                    <div
+                        class="custom-option"
+                        data-value="gpt-oss-120b"
+                    >
+                        gpt-oss-120b
+                    </div>
+
+                    <div
+                        class="custom-option"
+                        data-value="gpt-5-nano"
+                    >
+                        gpt-5-nano
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CODE TABS -->
+
+            <div class="tabs">
+
+                <button
+                    class="tab active"
+                    data-lang="curl"
+                    type="button"
+                >
+                    cURL
+                </button>
+
+                <button
+                    class="tab"
+                    data-lang="javascript"
+                    type="button"
+                >
+                    Node.js
+                </button>
+
+                <button
+                    class="tab"
+                    data-lang="python"
+                    type="button"
+                >
+                    Python
+                </button>
+
+                <button
+                    class="tab"
+                    data-lang="php"
+                    type="button"
+                >
+                    PHP
+                </button>
+
+            </div>
+
+
+            <!-- CODE -->
+
+            <div class="code-wrap">
+
+                <pre
+                    class="code"
+                    id="codeSnippet"
+                >...</pre>
+
+                <button
+                    class="copy-code"
+                    id="copyCode"
+                    type="button"
+                >
+                    Salin
+                </button>
+
+            </div>
+
+
+            <!-- RESPONSE HEADER -->
+
+            <div class="response-head">
+
+                <label
+                    class="label"
+                    style="margin:0"
+                >
+                    API Response
+                </label>
+
+                <div class="response-actions">
+
+                    <button
+                        class="small-btn"
+                        id="copyEndpoint"
+                        type="button"
+                    >
+                        🔗 Endpoint
+                    </button>
+
+                    <button
+                        class="small-btn"
+                        id="copyResponse"
+                        type="button"
+                    >
+                        📋 Response
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESPONSE -->
+
+            <div
+                class="response"
+                id="apiResponse"
+            >
+                // Klik Execute Request untuk menjalankan API...
+            </div>
+
+
+            <!-- MEDIA -->
+
+            <div
+                class="media"
+                id="mediaPreview"
+            ></div>
+
+        </div>
+
+
+        <!-- MODAL FOOT -->
+
+        <div class="modal-foot">
+
+            <button
+                class="open-btn"
+                id="openEndpoint"
+                type="button"
+            >
+                ↗ Buka
+            </button>
+
+            <button
+                class="execute-btn"
+                id="executeRequest"
+                type="button"
+            >
+                Execute Request
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="modal-body">
-        <label class="label" id="inputLabel">Query Parameter / File</label>
-        <input id="apiInput" class="input" type="text" autocomplete="off" placeholder="Masukkan value...">
-        <input id="apiFileInput" class="input" type="file" style="display:none; padding:10px;">
-
-        <div class="custom-select-container" id="customSelectContainer">
-            <label class="label">Pilih Model AI</label>
-            <div class="custom-select-trigger" id="selectTrigger">
-                <span id="selectedModelText">standard (Default)</span>
-                <span>▾</span>
-            </div>
-            <div class="custom-options" id="customOptions">
-                <div class="custom-option selected" data-value="standard">standard (Default)</div>
-                <div class="custom-option" data-value="deepseek-v3.2">deepseek-v3.2</div>
-                <div class="custom-option" data-value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</div>
-                <div class="custom-option" data-value="gemma-4">gemma-4</div>
-                <div class="custom-option" data-value="llama-3.3-70b-instruct">llama-3.3-70b-instruct</div>
-                <div class="custom-option" data-value="gpt-oss-120b">gpt-oss-120b</div>
-                <div class="custom-option" data-value="gpt-5-nano">gpt-5-nano</div>
-            </div>
-        </div>
-
-        <div class="tabs">
-            <button class="tab active" data-lang="curl">cURL</button>
-            <button class="tab" data-lang="javascript">Node.js</button>
-            <button class="tab" data-lang="python">Python</button>
-            <button class="tab" data-lang="php">PHP</button>
-        </div>
-
-        <div class="code-wrap">
-            <pre class="code" id="codeSnippet">...</pre>
-            <button class="copy-code" id="copyCode">Salin</button>
-        </div>
-
-        <div class="response-head">
-            <label class="label" style="margin:0">API Response</label>
-            <div class="response-actions">
-                <button class="small-btn" id="copyEndpoint">🔗 Salin Endpoint</button>
-                <button class="small-btn" id="copyResponse">📋 Salin Response</button>
-            </div>
-        </div>
-
-        <div class="response" id="apiResponse">// Klik Execute Request untuk menjalankan API...</div>
-        <div class="media" id="mediaPreview"></div>
-    </div>
-
-    <div class="modal-foot">
-        <button class="open-btn" id="openEndpoint">↗ Buka</button>
-        <button class="execute-btn" id="executeRequest">Execute Request</button>
-    </div>
 </div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    Tersalin!
 </div>
 
-<div class="toast" id="toast">Tersalin!</div>
 
 <script>
-const API_BASE = "https://api.legionteknologi.my.id";
+"use strict";
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const CONFIG = {
+
+    API_BASE:
+        "https://api.legionteknologi.my.id",
+
+    DEFAULT_MODEL:
+        "standard",
+
+    REQUEST_TIMEOUT:
+        30000,
+
+    MAX_RESPONSE_LENGTH:
+        50000
+
+};
+
+
+/* =========================================================
+   AI ENDPOINT DATABASE
+   Tinggal tambah object di sini kalau ada API baru.
+========================================================= */
 
 const aiApiList = [
-    { title: "Rayleigh AI", desc: "Advanced conversational assistant", path: "/ai/rayleigh", param: "text", placeholder: "Jelaskan cara kerja VPS" },
-    { title: "DeepAI Chat Advanced", desc: "Multi-model chat with deepai", path: "/ai/deepai/chat", param: "text", placeholder: "Halo, apa kabar?", hasModel: true },
-    { title: "DeepAI Models List", desc: "Get available DeepAI models", path: "/ai/deepai/models", param: "none", placeholder: "" },
-    { title: "Img 2 Prompt", desc: "Extract prompt from image URL", path: "/ai/imgtoprompt", param: "file", placeholder: "Pilih file atau masukkan URL" },
-    { title: "Img 2 Img AI", desc: "Modify image using AI", path: "/ai/img2img", param: "prompt", placeholder: "Contoh: ubah menjadi anime" },
-    { title: "Imagen Generate", desc: "Generate image using Imagen AI", path: "/ai/imagen", param: "prompt", placeholder: "robot futuristik" },
-    { title: "Imagen Image", desc: "Generate and return binary image", path: "/ai/imagen/image", param: "prompt", placeholder: "robot futuristik" },
-    { title: "Imagen Styles", desc: "Get available Imagen styles", path: "/ai/imagen/styles", param: "none", placeholder: "" },
-    { title: "Imagen Ratios", desc: "Get available image ratios", path: "/ai/imagen/ratios", param: "none", placeholder: "" }
+
+    {
+        title:
+            "Rayleigh AI",
+
+        desc:
+            "Advanced conversational assistant",
+
+        icon:
+            "🤖",
+
+        path:
+            "/ai/rayleigh",
+
+        method:
+            "GET",
+
+        param:
+            "text",
+
+        placeholder:
+            "Jelaskan cara kerja VPS"
+    },
+
+
+    {
+        title:
+            "DeepAI Chat Advanced",
+
+        desc:
+            "Multi-model conversational AI",
+
+        icon:
+            "🧠",
+
+        path:
+            "/ai/deepai/chat",
+
+        method:
+            "GET",
+
+        param:
+            "text",
+
+        placeholder:
+            "Halo, apa kabar?",
+
+        hasModel:
+            true
+    },
+
+
+    {
+        title:
+            "DeepAI Models List",
+
+        desc:
+            "Get available DeepAI models",
+
+        icon:
+            "📚",
+
+        path:
+            "/ai/deepai/models",
+
+        method:
+            "GET",
+
+        param:
+            "none",
+
+        placeholder:
+            ""
+    },
+
+
+    {
+        title:
+            "Img 2 Prompt",
+
+        desc:
+            "Extract prompt from image",
+
+        icon:
+            "🖼️",
+
+        path:
+            "/ai/imgtoprompt",
+
+        method:
+            "POST",
+
+        param:
+            "file",
+
+        placeholder:
+            "Pilih file"
+    },
+
+
+    {
+        title:
+            "Img 2 Img AI",
+
+        desc:
+            "Modify image using AI",
+
+        icon:
+            "🎨",
+
+        path:
+            "/ai/img2img",
+
+        method:
+            "GET",
+
+        param:
+            "prompt",
+
+        placeholder:
+            "Contoh: ubah menjadi anime"
+    },
+
+
+    {
+        title:
+            "Imagen Generate",
+
+        desc:
+            "Generate image using Imagen AI",
+
+        icon:
+            "✨",
+
+        path:
+            "/ai/imagen",
+
+        method:
+            "GET",
+
+        param:
+            "prompt",
+
+        placeholder:
+            "robot futuristik"
+    },
+
+
+    {
+        title:
+            "Imagen Image",
+
+        desc:
+            "Generate binary image",
+
+        icon:
+            "🌌",
+
+        path:
+            "/ai/imagen/image",
+
+        method:
+            "GET",
+
+        param:
+            "prompt",
+
+        placeholder:
+            "robot futuristik"
+    },
+
+
+    {
+        title:
+            "Imagen Styles",
+
+        desc:
+            "Get available Imagen styles",
+
+        icon:
+            "🎭",
+
+        path:
+            "/ai/imagen/styles",
+
+        method:
+            "GET",
+
+        param:
+            "none",
+
+        placeholder:
+            ""
+    },
+
+
+    {
+        title:
+            "Imagen Ratios",
+
+        desc:
+            "Get available image ratios",
+
+        icon:
+            "📐",
+
+        path:
+            "/ai/imagen/ratios",
+
+        method:
+            "GET",
+
+        param:
+            "none",
+
+        placeholder:
+            ""
+    }
+
 ];
 
-const modal = document.getElementById("apiModal");
-const input = document.getElementById("apiInput");
-const fileInput = document.getElementById("apiFileInput");
 
-const customSelectContainer = document.getElementById("customSelectContainer");
-const selectTrigger = document.getElementById("selectTrigger");
-const customOptions = document.getElementById("customOptions");
-const selectedModelText = document.getElementById("selectedModelText");
+/* =========================================================
+   DOM
+========================================================= */
 
-const responseBox = document.getElementById("apiResponse");
-const mediaPreview = document.getElementById("mediaPreview");
-const codeSnippet = document.getElementById("codeSnippet");
-const executeButton = document.getElementById("executeRequest");
+const modal =
+    document.getElementById(
+        "apiModal"
+    );
 
-let currentApi = null;
-let currentUrl = "";
-let currentResponse = "";
-let requestRunning = false;
-let selectedModelValue = "standard";
-let toastTimer = null;
+const input =
+    document.getElementById(
+        "apiInput"
+    );
 
-// Render List Endpoints
-function renderList(){
-    const container = document.getElementById("apiListContainer");
-    container.innerHTML = "";
-    const fragment = document.createDocumentFragment();
+const fileInput =
+    document.getElementById(
+        "apiFileInput"
+    );
 
-    aiApiList.forEach(api => {
-        const card = document.createElement("div");
-        card.className = "endpoint glass";
+const customSelectContainer =
+    document.getElementById(
+        "customSelectContainer"
+    );
 
-        const info = document.createElement("div");
-        info.className = "endpoint-info";
+const selectTrigger =
+    document.getElementById(
+        "selectTrigger"
+    );
 
-        const title = document.createElement("h4");
-        title.textContent = api.title;
+const customOptions =
+    document.getElementById(
+        "customOptions"
+    );
 
-        const path = document.createElement("p");
-        path.textContent = api.path;
+const selectedModelText =
+    document.getElementById(
+        "selectedModelText"
+    );
 
-        info.appendChild(title);
-        info.appendChild(path);
+const responseBox =
+    document.getElementById(
+        "apiResponse"
+    );
 
-        const button = document.createElement("button");
-        button.className = "try-btn";
-        button.textContent = "Test API";
-        button.addEventListener("click", () => openModal(api));
+const mediaPreview =
+    document.getElementById(
+        "mediaPreview"
+    );
 
-        card.appendChild(info);
-        card.appendChild(button);
-        fragment.appendChild(card);
-    });
-    container.appendChild(fragment);
+const codeSnippet =
+    document.getElementById(
+        "codeSnippet"
+    );
+
+const executeButton =
+    document.getElementById(
+        "executeRequest"
+    );
+
+const searchInput =
+    document.getElementById(
+        "endpointSearch"
+    );
+
+const endpointCount =
+    document.getElementById(
+        "endpointCount"
+    );
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentApi =
+    null;
+
+let currentUrl =
+    "";
+
+let currentResponse =
+    "";
+
+let requestRunning =
+    false;
+
+let selectedModelValue =
+    CONFIG.DEFAULT_MODEL;
+
+let toastTimer =
+    null;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function sleep(ms){
+
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                ms
+            )
+    );
+
 }
+
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   RENDER ENDPOINTS
+========================================================= */
+
+function renderList(
+    keyword = ""
+){
+
+    const container =
+        document.getElementById(
+            "apiListContainer"
+        );
+
+    container.innerHTML =
+        "";
+
+    const normalized =
+        keyword
+            .trim()
+            .toLowerCase();
+
+    const filtered =
+        aiApiList.filter(api => {
+
+            if(!normalized)
+                return true;
+
+            return [
+                api.title,
+                api.desc,
+                api.path,
+                api.param
+            ]
+            .join(" ")
+            .toLowerCase()
+            .includes(normalized);
+
+        });
+
+
+    endpointCount.textContent =
+        `${filtered.length} endpoint${filtered.length !== 1 ? "s" : ""}`;
+
+
+    if(!filtered.length){
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "empty glass";
+
+        empty.textContent =
+            "🔎 Endpoint tidak ditemukan.";
+
+        container.appendChild(
+            empty
+        );
+
+        return;
+
+    }
+
+
+    const fragment =
+        document.createDocumentFragment();
+
+
+    filtered.forEach(api => {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+        card.className =
+            "endpoint glass";
+
+
+        const info =
+            document.createElement(
+                "div"
+            );
+
+        info.className =
+            "endpoint-info";
+
+
+        const top =
+            document.createElement(
+                "div"
+            );
+
+        top.className =
+            "endpoint-top";
+
+
+        const icon =
+            document.createElement(
+                "div"
+            );
+
+        icon.className =
+            "endpoint-icon";
+
+        icon.textContent =
+            api.icon || "🤖";
+
+
+        const title =
+            document.createElement(
+                "h4"
+            );
+
+        title.textContent =
+            api.title;
+
+
+        top.appendChild(
+            icon
+        );
+
+        top.appendChild(
+            title
+        );
+
+
+        const path =
+            document.createElement(
+                "p"
+            );
+
+        path.textContent =
+            api.path;
+
+
+        const desc =
+            document.createElement(
+                "div"
+            );
+
+        desc.className =
+            "endpoint-desc";
+
+        desc.textContent =
+            api.desc;
+
+
+        info.appendChild(
+            top
+        );
+
+        info.appendChild(
+            path
+        );
+
+        info.appendChild(
+            desc
+        );
+
+
+        const meta =
+            document.createElement(
+                "div"
+            );
+
+        meta.className =
+            "endpoint-meta";
+
+
+        const method =
+            document.createElement(
+                "span"
+            );
+
+        method.className =
+            "method";
+
+        method.textContent =
+            api.method || "GET";
+
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+        button.className =
+            "try-btn";
+
+        button.type =
+            "button";
+
+        button.textContent =
+            "Test API";
+
+
+        button.addEventListener(
+            "click",
+            () =>
+                openModal(api)
+        );
+
+
+        meta.appendChild(
+            method
+        );
+
+        meta.appendChild(
+            button
+        );
+
+
+        card.appendChild(
+            info
+        );
+
+        card.appendChild(
+            meta
+        );
+
+
+        fragment.appendChild(
+            card
+        );
+
+    });
+
+
+    container.appendChild(
+        fragment
+    );
+
+}
+
+
+/* =========================================================
+   BUILD URL
+========================================================= */
+
+function buildUrl(){
+
+    if(!currentApi)
+        return CONFIG.API_BASE;
+
+
+    const base =
+        CONFIG.API_BASE +
+        currentApi.path;
+
+
+    if(
+        currentApi.param === "none" ||
+        currentApi.param === "file"
+    ){
+
+        return base;
+
+    }
+
+
+    const params =
+        new URLSearchParams();
+
+
+    const value =
+        input.value.trim();
+
+
+    if(value){
+
+        params.set(
+            currentApi.param,
+            value
+        );
+
+    }
+
+
+    if(currentApi.hasModel){
+
+        params.set(
+            "model",
+            selectedModelValue
+        );
+
+    }
+
+
+    const query =
+        params.toString();
+
+
+    return query
+        ? `${base}?${query}`
+        : base;
+
+}
+
+
+/* =========================================================
+   CODE GENERATOR
+========================================================= */
+
+function updateCode(
+    lang = "curl"
+){
+
+    currentUrl =
+        buildUrl();
+
+
+    if(!currentApi){
+
+        codeSnippet.textContent =
+            "...";
+
+        return;
+
+    }
+
+
+    let code = "";
+
+
+    if(
+        currentApi.param === "file"
+    ){
+
+        if(lang === "curl"){
+
+            code =
+`curl -X POST "${CONFIG.API_BASE}${currentApi.path}" \\
+  -F "file=@/path/to/file"`;
+
+        }
+        else if(lang === "javascript"){
+
+            code =
+`const axios = require("axios");
+const fs = require("fs");
+
+(async () => {
+  try {
+    const form = new FormData();
+
+    form.append(
+      "file",
+      fs.createReadStream("/path/to/file")
+    );
+
+    const res = await axios.post(
+      "${CONFIG.API_BASE}${currentApi.path}",
+      form,
+      {
+        headers: form.getHeaders()
+      }
+    );
+
+    console.log(res.data);
+
+  } catch (err) {
+    console.error(err.message);
+  }
+})();`;
+
+        }
+        else if(lang === "python"){
+
+            code =
+`import requests
+
+with open("/path/to/file", "rb") as f:
+    res = requests.post(
+        "${CONFIG.API_BASE}${currentApi.path}",
+        files={"file": f}
+    )
+
+print(res.json())`;
+
+        }
+        else if(lang === "php"){
+
+            code =
+`$ch = curl_init(
+    "${CONFIG.API_BASE}${currentApi.path}"
+);
+
+curl_setopt(
+    $ch,
+    CURLOPT_POST,
+    true
+);
+
+curl_setopt(
+    $ch,
+    CURLOPT_POSTFIELDS,
+    [
+        "file" => new CURLFile(
+            "/path/to/file"
+        )
+    ]
+);
+
+curl_setopt(
+    $ch,
+    CURLOPT_RETURNTRANSFER,
+    true
+);
+
+$response = curl_exec($ch);
+
+curl_close($ch);
+
+echo $response;`;
+
+        }
+
+    }
+    else{
+
+        if(lang === "curl"){
+
+            code =
+`curl -X ${currentApi.method || "GET"} "${currentUrl}"`;
+
+        }
+
+
+        else if(lang === "javascript"){
+
+            code =
+`const axios = require("axios");
+
+(async () => {
+  try {
+
+    const res = await axios.${(
+        currentApi.method || "GET"
+    ).toLowerCase()}(
+      "${currentUrl}"
+    );
+
+    console.log(res.data);
+
+  } catch (err) {
+
+    console.error(
+      err.message
+    );
+
+  }
+})();`;
+
+        }
+
+
+        else if(lang === "python"){
+
+            code =
+`import requests
+
+res = requests.${(
+                currentApi.method || "GET"
+            ).toLowerCase()}(
+    "${currentUrl}"
+)
+
+print(res.json())`;
+
+        }
+
+
+        else if(lang === "php"){
+
+            code =
+`$ch = curl_init(
+    "${currentUrl}"
+);
+
+curl_setopt(
+    $ch,
+    CURLOPT_RETURNTRANSFER,
+    true
+);
+
+$response =
+    curl_exec($ch);
+
+curl_close($ch);
+
+echo $response;`;
+
+        }
+
+    }
+
+
+    codeSnippet.innerHTML =
+        escapeHtml(code)
+        .replace(
+            escapeHtml(currentUrl),
+            `<span class="highlight">${
+                escapeHtml(currentUrl)
+            }</span>`
+        );
+
+}
+
+
+/* =========================================================
+   OPEN MODAL
+========================================================= */
+
+function openModal(api){
+
+    currentApi =
+        api;
+
+    currentUrl =
+        "";
+
+    currentResponse =
+        "";
+
+    selectedModelValue =
+        CONFIG.DEFAULT_MODEL;
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        api.title;
+
+
+    document.getElementById(
+        "modalEndpoint"
+    ).textContent =
+        CONFIG.API_BASE +
+        api.path;
+
+
+    input.value =
+        "";
+
+    input.placeholder =
+        api.placeholder ||
+        "Masukkan value...";
+
+
+    fileInput.value =
+        "";
+
+
+    if(api.param === "none"){
+
+        document.getElementById(
+            "inputLabel"
+        ).textContent =
+            "No Parameter Required";
+
+        input.style.display =
+            "none";
+
+        fileInput.style.display =
+            "none";
+
+    }
+
+    else if(api.param === "file"){
+
+        document.getElementById(
+            "inputLabel"
+        ).textContent =
+            "Upload File / Multipart";
+
+        input.style.display =
+            "none";
+
+        fileInput.style.display =
+            "block";
+
+    }
+
+    else{
+
+        document.getElementById(
+            "inputLabel"
+        ).textContent =
+            "Enter " +
+            api.param.toUpperCase();
+
+        input.style.display =
+            "block";
+
+        fileInput.style.display =
+            "none";
+
+    }
+
+
+    customSelectContainer.style.display =
+        api.hasModel
+            ? "block"
+            : "none";
+
+
+    selectedModelText.textContent =
+        "standard (Default)";
+
+
+    customOptions
+        .querySelectorAll(".custom-option")
+        .forEach(option => {
+
+            option.classList.toggle(
+                "selected",
+                option.dataset.value ===
+                    CONFIG.DEFAULT_MODEL
+            );
+
+        });
+
+
+    responseBox.className =
+        "response";
+
+    responseBox.textContent =
+        "// Klik Execute Request untuk menjalankan API...";
+
+
+    mediaPreview.innerHTML =
+        "";
+
+    mediaPreview.classList.remove(
+        "active"
+    );
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab =>
+            tab.classList.remove(
+                "active"
+            )
+        );
+
+
+    document
+        .querySelector(
+            '.tab[data-lang="curl"]'
+        )
+        .classList.add(
+            "active"
+        );
+
+
+    updateCode(
+        "curl"
+    );
+
+
+    modal.classList.add(
+        "active"
+    );
+
+
+    setTimeout(
+        () => {
+
+            if(
+                api.param !== "none" &&
+                api.param !== "file"
+            ){
+
+                input.focus();
+
+            }
+
+        },
+        150
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function closeModal(){
+
+    if(requestRunning)
+        return;
+
+    modal.classList.remove(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   MODAL EVENTS
+========================================================= */
+
+document
+    .getElementById("closeModal")
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+modal.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target === modal &&
+            !requestRunning
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "Escape" &&
+            modal.classList.contains("active") &&
+            !requestRunning
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    () =>
+        renderList(
+            searchInput.value
+        )
+);
+
+
+/* =========================================================
+   INPUT CHANGE
+========================================================= */
+
+input.addEventListener(
+    "input",
+    () => {
+
+        const active =
+            document.querySelector(
+                ".tab.active"
+            );
+
+        updateCode(
+            active
+                ? active.dataset.lang
+                : "curl"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   FILE CHANGE
+========================================================= */
+
+fileInput.addEventListener(
+    "change",
+    () => {
+
+        if(
+            fileInput.files.length
+        ){
+
+            responseBox.className =
+                "response";
+
+            responseBox.textContent =
+                `📁 File selected:
+
+${fileInput.files[0].name}
+
+Size:
+${formatBytes(
+    fileInput.files[0].size
+)}
+
+Type:
+${fileInput.files[0].type || "unknown"}
+
+Klik Execute Request untuk mengirim file.`;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+document
+    .querySelectorAll(".tab")
+    .forEach(tab => {
+
+        tab.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".tab")
+                    .forEach(item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                    );
+
+                tab.classList.add(
+                    "active"
+                );
+
+                updateCode(
+                    tab.dataset.lang
+                );
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   CUSTOM MODEL
+========================================================= */
+
+selectTrigger.addEventListener(
+    "click",
+    () => {
+
+        customOptions.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+customOptions
+    .querySelectorAll(".custom-option")
+    .forEach(option => {
+
+        option.addEventListener(
+            "click",
+            () => {
+
+                customOptions
+                    .querySelectorAll(
+                        ".custom-option"
+                    )
+                    .forEach(item =>
+                        item.classList.remove(
+                            "selected"
+                        )
+                    );
+
+
+                option.classList.add(
+                    "selected"
+                );
+
+
+                selectedModelValue =
+                    option.dataset.value;
+
+
+                selectedModelText.textContent =
+                    option.textContent;
+
+
+                customOptions.classList.remove(
+                    "open"
+                );
+
+
+                const active =
+                    document.querySelector(
+                        ".tab.active"
+                    );
+
+
+                updateCode(
+                    active
+                        ? active.dataset.lang
+                        : "curl"
+                );
+
+            }
+        );
+
+    });
+
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if(
+            customSelectContainer &&
+            !customSelectContainer.contains(
+                event.target
+            )
+        ){
+
+            customOptions.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message = "Tersalin!"
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () =>
+                toast.classList.remove(
+                    "show"
+                ),
+            1800
+        );
+
+}
+
+
+/* =========================================================
+   COPY
+========================================================= */
+
+async function copyText(
+    text,
+    message
+){
+
+    if(!text){
+
+        showToast(
+            "Tidak ada data"
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            text
+        );
+
+    }
+    catch{
+
+        const textarea =
+            document.createElement(
+                "textarea"
+            );
+
+        textarea.value =
+            text;
+
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.opacity =
+            "0";
+
+        document.body.appendChild(
+            textarea
+        );
+
+        textarea.focus();
+        textarea.select();
+
+        document.execCommand(
+            "copy"
+        );
+
+        textarea.remove();
+
+    }
+
+
+    showToast(
+        message
+    );
+
+}
+
+
+document
+    .getElementById("copyEndpoint")
+    .addEventListener(
+        "click",
+        () =>
+            copyText(
+                currentUrl ||
+                buildUrl(),
+                "Endpoint tersalin!"
+            )
+    );
+
+
+document
+    .getElementById("copyResponse")
+    .addEventListener(
+        "click",
+        () =>
+            copyText(
+                currentResponse,
+                "Response tersalin!"
+            )
+    );
+
+
+document
+    .getElementById("copyCode")
+    .addEventListener(
+        "click",
+        () =>
+            copyText(
+                codeSnippet.innerText,
+                "Code tersalin!"
+            )
+    );
+
+
+/* =========================================================
+   OPEN ENDPOINT
+========================================================= */
+
+document
+    .getElementById("openEndpoint")
+    .addEventListener(
+        "click",
+        () => {
+
+            const url =
+                currentUrl ||
+                buildUrl();
+
+
+            if(
+                !url ||
+                !currentApi
+            ){
+
+                showToast(
+                    "Endpoint belum siap"
+                );
+
+                return;
+
+            }
+
+
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   FORMAT BYTES
+========================================================= */
+
+function formatBytes(
+    bytes
+){
+
+    if(!bytes)
+        return "0 Bytes";
+
+
+    const units =
+        [
+            "Bytes",
+            "KB",
+            "MB",
+            "GB"
+        ];
+
+
+    const index =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+
+    return (
+        bytes /
+        Math.pow(
+            1024,
+            index
+        )
+    )
+    .toFixed(2) +
+    " " +
+    units[index];
+
+}
+
+
+/* =========================================================
+   MEDIA DETECTION
+========================================================= */
+
+function isImage(
+    contentType = "",
+    url = ""
+){
+
+    return (
+        contentType.includes(
+            "image/"
+        ) ||
+        /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i
+            .test(url)
+    );
+
+}
+
+
+function isVideo(
+    contentType = "",
+    url = ""
+){
+
+    return (
+        contentType.includes(
+            "video/"
+        ) ||
+        /\.(mp4|webm|mov|mkv|avi)(\?|$)/i
+            .test(url)
+    );
+
+}
+
+
+function extractUrls(
+    text
+){
+
+    if(
+        typeof text !==
+        "string"
+    ){
+
+        return [];
+
+    }
+
+
+    return (
+        text.match(
+            /https?:\/\/[^\s"'<>]+/gi
+        ) ||
+        []
+    );
+
+}
+
+
+/* =========================================================
+   DEEP MEDIA FINDER
+========================================================= */
+
+function findMediaUrlDeep(
+    data
+){
+
+    if(!data)
+        return null;
+
+
+    if(
+        typeof data ===
+        "string"
+    ){
+
+        const urls =
+            extractUrls(
+                data
+            );
+
+
+        for(
+            const url of urls
+        ){
+
+            if(
+                isImage("",url) ||
+                isVideo("",url)
+            ){
+
+                return url;
+
+            }
+
+        }
+
+
+        if(
+            /^https?:\/\//i
+                .test(
+                    data.trim()
+                )
+        ){
+
+            return data.trim();
+
+        }
+
+
+        return null;
+
+    }
+
+
+    if(
+        Array.isArray(data)
+    ){
+
+        for(
+            const item of data
+        ){
+
+            const result =
+                findMediaUrlDeep(
+                    item
+                );
+
+
+            if(result)
+                return result;
+
+        }
+
+
+        return null;
+
+    }
+
+
+    if(
+        typeof data ===
+        "object"
+    ){
+
+        const priorityKeys = [
+
+            "url",
+            "image",
+            "imageUrl",
+            "image_url",
+            "img",
+            "photo",
+            "picture",
+            "thumbnail",
+            "thumbnailUrl",
+            "thumbnail_url",
+            "media",
+            "mediaUrl",
+            "media_url",
+            "video",
+            "videoUrl",
+            "video_url",
+            "download",
+            "downloadUrl",
+            "download_url",
+            "result",
+            "data",
+            "displayUrl"
+
+        ];
+
+
+        for(
+            const key of priorityKeys
+        ){
+
+            if(
+                data[key] !==
+                    undefined &&
+                data[key] !==
+                    null
+            ){
+
+                const result =
+                    findMediaUrlDeep(
+                        data[key]
+                    );
+
+
+                if(result)
+                    return result;
+
+            }
+
+        }
+
+
+        for(
+            const key of Object.keys(data)
+        ){
+
+            const result =
+                findMediaUrlDeep(
+                    data[key]
+                );
+
+
+            if(result)
+                return result;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   SHOW MEDIA
+========================================================= */
+
+function showMedia(
+    url,
+    type = ""
+){
+
+    mediaPreview.innerHTML =
+        "";
+
+
+    let element =
+        null;
+
+
+    if(
+        isImage(
+            type,
+            url
+        )
+    ){
+
+        element =
+            document.createElement(
+                "img"
+            );
+
+        element.src =
+            url;
+
+        element.alt =
+            "API Image Response";
+
+        element.loading =
+            "lazy";
+
+    }
+
+
+    else if(
+        isVideo(
+            type,
+            url
+        )
+    ){
+
+        element =
+            document.createElement(
+                "video"
+            );
+
+        element.src =
+            url;
+
+        element.controls =
+            true;
+
+        element.playsInline =
+            true;
+
+    }
+
+
+    if(!element)
+        return;
+
+
+    mediaPreview.appendChild(
+        element
+    );
+
+
+    const urlText =
+        document.createElement(
+            "span"
+        );
+
+    urlText.className =
+        "media-url";
+
+    urlText.textContent =
+        url;
+
+
+    mediaPreview.appendChild(
+        urlText
+    );
+
+
+    const buttons =
+        document.createElement(
+            "div"
+        );
+
+    buttons.className =
+        "media-buttons";
+
+
+    const copy =
+        document.createElement(
+            "button"
+        );
+
+    copy.className =
+        "small-btn";
+
+    copy.textContent =
+        "🔗 Salin URL";
+
+    copy.type =
+        "button";
+
+    copy.onclick =
+        () =>
+            copyText(
+                url,
+                "URL media tersalin!"
+            );
+
+
+    const open =
+        document.createElement(
+            "button"
+        );
+
+    open.className =
+        "small-btn";
+
+    open.textContent =
+        "↗ Buka Media";
+
+    open.type =
+        "button";
+
+    open.onclick =
+        () =>
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+
+    buttons.appendChild(
+        copy
+    );
+
+    buttons.appendChild(
+        open
+    );
+
+
+    mediaPreview.appendChild(
+        buttons
+    );
+
+
+    mediaPreview.classList.add(
+        "active"
+    );
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+async function showProgress(
+    message
+){
+
+    responseBox.className =
+        "response loading";
+
+    responseBox.textContent =
+        message;
+
+    await sleep(
+        300
+    );
+
+}
+
+
+/* =========================================================
+   FETCH WITH TIMEOUT
+========================================================= */
+
+async function fetchWithTimeout(
+    url,
+    options = {}
+){
+
+    const controller =
+        new AbortController();
+
+
+    const timer =
+        setTimeout(
+            () =>
+                controller.abort(),
+            CONFIG.REQUEST_TIMEOUT
+        );
+
+
+    try{
+
+        return await fetch(
+            url,
+            {
+                ...options,
+                signal:
+                    controller.signal
+            }
+        );
+
+    }
+    finally{
+
+        clearTimeout(
+            timer
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   EXECUTE REQUEST
+========================================================= */
+
+executeButton.addEventListener(
+    "click",
+    async () => {
+
+        if(
+            requestRunning ||
+            !currentApi
+        ){
+
+            return;
+
+        }
+
+
+        requestRunning =
+            true;
+
+        executeButton.disabled =
+            true;
+
+        executeButton.textContent =
+            "Processing...";
+
+
+        currentUrl =
+            buildUrl();
+
+        currentResponse =
+            "";
+
+
+        mediaPreview.innerHTML =
+            "";
+
+        mediaPreview.classList.remove(
+            "active"
+        );
+
+
+        try{
+
+            /*
+             * FILE REQUEST
+             */
+
+            await showProgress(
+                "⏳ Connecting to API..."
+            );
+
+
+            const start =
+                performance.now();
+
+
+            let res;
+
+
+            try{
+
+                if(
+                    currentApi.param ===
+                        "file"
+                ){
+
+                    if(
+                        !fileInput.files.length
+                    ){
+
+                        throw new Error(
+                            "Pilih file terlebih dahulu."
+                        );
+
+                    }
+
+
+                    const formData =
+                        new FormData();
+
+
+                    formData.append(
+                        "file",
+                        fileInput.files[0]
+                    );
+
+
+                    res =
+                        await fetchWithTimeout(
+                            `${CONFIG.API_BASE}${currentApi.path}`,
+                            {
+                                method:"POST",
+                                body:formData
+                            }
+                        );
+
+                }
+
+                else{
+
+                    res =
+                        await fetchWithTimeout(
+                            currentUrl,
+                            {
+                                method:
+                                    currentApi.method ||
+                                    "GET",
+
+                                cache:
+                                    "no-store",
+
+                                headers:{
+                                    "Accept":
+                                        "*/*"
+                                }
+                            }
+                        );
+
+                }
+
+            }
+            catch(error){
+
+                if(
+                    error.name ===
+                    "AbortError"
+                ){
+
+                    throw new Error(
+                        "Request timeout. Server terlalu lama merespons."
+                    );
+
+                }
+
+
+                throw new Error(
+                    "Gagal terhubung ke API. Periksa CORS atau status server."
+                );
+
+            }
+
+
+            const elapsed =
+                Math.round(
+                    performance.now() -
+                    start
+                );
+
+
+            const contentType =
+                (
+                    res.headers.get(
+                        "content-type"
+                    ) ||
+                    ""
+                )
+                .toLowerCase();
+
+
+            /*
+             * IMAGE RESPONSE
+             */
+
+            if(
+                contentType.includes(
+                    "image/"
+                )
+            ){
+
+                const blob =
+                    await res.blob();
+
+
+                const blobUrl =
+                    URL.createObjectURL(
+                        blob
+                    );
+
+
+                currentResponse =
+`HTTP ${res.status} ${res.statusText}
+Content-Type: ${contentType}
+Response time: ${elapsed} ms
+
+Image response received.`;
+
+
+                showMedia(
+                    blobUrl,
+                    contentType
+                );
+
+
+                responseBox.className =
+                    res.ok
+                        ? "response"
+                        : "response error";
+
+
+                responseBox.textContent =
+`🖼️ Image Response
+
+HTTP ${res.status} ${res.statusText}
+Response time: ${elapsed} ms
+
+✅ Request completed`;
+
+
+                return;
+
+            }
+
+
+            /*
+             * VIDEO RESPONSE
+             */
+
+            if(
+                contentType.includes(
+                    "video/"
+                )
+            ){
+
+                const blob =
+                    await res.blob();
+
+
+                const blobUrl =
+                    URL.createObjectURL(
+                        blob
+                    );
+
+
+                currentResponse =
+`HTTP ${res.status} ${res.statusText}
+Content-Type: ${contentType}
+Response time: ${elapsed} ms
+
+Video response received.`;
+
+
+                showMedia(
+                    blobUrl,
+                    contentType
+                );
+
+
+                responseBox.className =
+                    res.ok
+                        ? "response"
+                        : "response error";
+
+
+                responseBox.textContent =
+`🎬 Video Response
+
+HTTP ${res.status} ${res.statusText}
+Response time: ${elapsed} ms
+
+✅ Request completed`;
+
+
+                return;
+
+            }
+
+
+            /*
+             * TEXT / JSON RESPONSE
+             */
+
+            const raw =
+                await res.text();
+
+
+            let data;
+
+
+            try{
+
+                data =
+                    JSON.parse(
+                        raw
+                    );
+
+            }
+            catch{
+
+                data =
+                    raw;
+
+            }
+
+
+            let mediaUrl =
+                findMediaUrlDeep(
+                    data
+                );
+
+
+            if(
+                mediaUrl
+            ){
+
+                let mediaType =
+                    "";
+
+
+                /*
+                 * HEAD request optional.
+                 * Jika gagal, extension tetap
+                 * digunakan sebagai fallback.
+                 */
+
+                try{
+
+                    const mediaResponse =
+                        await fetchWithTimeout(
+                            mediaUrl,
+                            {
+                                method:
+                                    "HEAD",
+
+                                cache:
+                                    "no-store"
+                            }
+                        );
+
+
+                    mediaType =
+                        (
+                            mediaResponse
+                                .headers
+                                .get(
+                                    "content-type"
+                                ) ||
+                            ""
+                        )
+                        .toLowerCase();
+
+                }
+                catch{}
+
+
+                if(
+                    mediaType ||
+                    isImage(
+                        "",
+                        mediaUrl
+                    ) ||
+                    isVideo(
+                        "",
+                        mediaUrl
+                    )
+                ){
+
+                    showMedia(
+                        mediaUrl,
+                        mediaType
+                    );
+
+                }
+
+            }
+
+
+            let formattedResponse;
+
+
+            if(
+                data &&
+                typeof data ===
+                    "object"
+            ){
+
+                formattedResponse =
+                    JSON.stringify(
+                        data,
+                        null,
+                        2
+                    );
+
+            }
+            else{
+
+                formattedResponse =
+                    String(data);
+
+            }
+
+
+            if(
+                formattedResponse.length >
+                CONFIG.MAX_RESPONSE_LENGTH
+            ){
+
+                formattedResponse =
+                    formattedResponse.slice(
+                        0,
+                        CONFIG.MAX_RESPONSE_LENGTH
+                    ) +
+                    "\n\n...[response dipotong]";
+
+            }
+
+
+            currentResponse =
+                formattedResponse;
+
+
+            responseBox.className =
+                res.ok
+                    ? "response"
+                    : "response error";
+
+
+            responseBox.textContent =
+`${res.ok ? "✅" : "❌"} Request completed
+
+HTTP ${res.status} ${res.statusText}
+Response time: ${elapsed} ms
+
+${formattedResponse}`;
+
+        }
+        catch(error){
+
+            currentResponse =
+                error?.message ||
+                "Unknown error";
+
+
+            responseBox.className =
+                "response error";
+
+
+            responseBox.textContent =
+`❌ API Request Failed
+
+${currentResponse}
+
+Endpoint:
+${currentUrl}`;
+
+        }
+        finally{
+
+            requestRunning =
+                false;
+
+            executeButton.disabled =
+                false;
+
+            executeButton.textContent =
+                "Execute Request";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 renderList();
 
-// Custom Select Logic (AI Model)
-selectTrigger.onclick = () => {
-    customOptions.classList.toggle("open");
-};
-customOptions.querySelectorAll(".custom-option").forEach(opt => {
-    opt.onclick = () => {
-        customOptions.querySelectorAll(".custom-option").forEach(o => o.classList.remove("selected"));
-        opt.classList.add("selected");
-        selectedModelValue = opt.dataset.value;
-        selectedModelText.textContent = opt.textContent;
-        customOptions.classList.remove("open");
-        updateCode(document.querySelector(".tab.active").dataset.lang);
-    };
-});
-document.addEventListener("click", e => {
-    if(!customSelectContainer.contains(e.target)) customOptions.classList.remove("open");
-});
 
-function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
+/* =========================================================
+   DEBUG
+========================================================= */
 
-function buildUrl(){
-    if(!currentApi) return API_BASE;
-    if(currentApi.param === "none" || currentApi.param === "file") return API_BASE + currentApi.path;
-    
-    let queryParams = [];
-    const value = input.value.trim();
-    if(value) queryParams.push(`${encodeURIComponent(currentApi.param)}=${encodeURIComponent(value)}`);
-    
-    if(currentApi.hasModel){
-        queryParams.push(`model=${encodeURIComponent(selectedModelValue)}`);
-    }
+console.log(
+    "[ReyCloudSHP] AI Docs loaded:",
+    aiApiList.length,
+    "endpoints"
+);
 
-    return queryParams.length > 0 ? `${API_BASE}${currentApi.path}?${queryParams.join("&")}` : `${API_BASE}${currentApi.path}`;
-}
-
-function updateCode(lang){
-    currentUrl = buildUrl();
-    let code = "";
-    if(currentApi && currentApi.param === "file"){
-        code = `curl -X POST "${API_BASE}${currentApi.path}" \\\n  -F "file=@/path/to/file"`;
-    } else {
-        switch(lang){
-            case "curl": 
-                code = `curl -X GET <span class="highlight">"${currentUrl}"</span>`; 
-                break;
-            case "javascript": 
-                code = `const axios = require('axios');\n\n(async () => {\n  try {\n    const res = await axios.get(<span class="highlight">"${currentUrl}"</span>);\n    console.log(res.data);\n  } catch (err) {\n    console.error(err.message);\n  }\n})();`; 
-                break;
-            case "python": 
-                code = `import requests\n\nres = requests.get(<span class="highlight">"${currentUrl}"</span>)\nprint(res.json())`; 
-                break;
-            case "php": 
-                code = `$ch = curl_init(<span class="highlight">"${currentUrl}"</span>);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\n\nencho $response;`; 
-                break;
-        }
-    }
-    codeSnippet.innerHTML = code;
-}
-
-function openModal(api){
-    currentApi = api;
-    currentUrl = "";
-    currentResponse = "";
-    document.getElementById("modalTitle").textContent = api.title;
-    document.getElementById("modalEndpoint").textContent = API_BASE + api.path;
-    
-    input.value = "";
-    fileInput.value = "";
-
-    if(api.param === "none"){
-        document.getElementById("inputLabel").textContent = "No Parameter Required";
-        input.style.display = "none";
-        fileInput.style.display = "none";
-    } else if(api.param === "file"){
-        document.getElementById("inputLabel").textContent = "Upload File / Multipart";
-        input.style.display = "none";
-        fileInput.style.display = "block";
-    } else {
-        document.getElementById("inputLabel").textContent = "Enter " + api.param.toUpperCase();
-        input.placeholder = api.placeholder || "";
-        input.style.display = "block";
-        fileInput.style.display = "none";
-    }
-
-    if(api.hasModel){
-        customSelectContainer.style.display = "block";
-    } else {
-        customSelectContainer.style.display = "none";
-    }
-
-    responseBox.className = "response";
-    responseBox.textContent = "// Klik Execute Request untuk menjalankan API...";
-    
-    mediaPreview.innerHTML = "";
-    mediaPreview.classList.remove("active");
-
-    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-    const curlTab = document.querySelector('.tab[data-lang="curl"]');
-    curlTab.classList.add("active");
-    updateCode("curl");
-
-    modal.classList.add("active");
-}
-
-function closeModal(){
-    if(requestRunning) return;
-    modal.classList.remove("active");
-}
-
-document.getElementById("closeModal").addEventListener("click", closeModal);
-modal.addEventListener("click", event => {
-    if(event.target === modal && !requestRunning) closeModal();
-});
-
-input.addEventListener("input", () => {
-    const active = document.querySelector(".tab.active");
-    updateCode(active ? active.dataset.lang : "curl");
-});
-
-document.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
-        tab.classList.add("active");
-        updateCode(tab.dataset.lang);
-    });
-});
-
-function showToast(message = "Tersalin!"){
-    const toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
-}
-
-async function copyText(text, message){
-    if(!text){ showToast("Tidak ada data"); return; }
-    try{
-        await navigator.clipboard.writeText(text);
-    }catch{
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-        document.execCommand("copy");
-        textarea.remove();
-    }
-    showToast(message);
-}
-
-document.getElementById("copyEndpoint").addEventListener("click", () => copyText(currentUrl || buildUrl(), "Endpoint tersalin!"));
-document.getElementById("copyResponse").addEventListener("click", () => copyText(currentResponse, "Response tersalin!"));
-document.getElementById("copyCode").addEventListener("click", () => copyText(codeSnippet.innerText, "Code tersalin!"));
-document.getElementById("openEndpoint").addEventListener("click", () => {
-    const url = currentUrl || buildUrl();
-    window.open(url, "_blank", "noopener,noreferrer");
-});
-
-function isImage(contentType = "", url = ""){ return contentType.includes("image/") || /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i.test(url); }
-function isVideo(contentType = "", url = ""){ return contentType.includes("video/") || /\.(mp4|webm|mov|mkv|avi)(\?|$)/i.test(url); }
-function extractUrls(text){ if(typeof text !== "string") return []; return text.match(/https?:\/\/[^\s"'<>]+/gi) || []; }
-
-function findMediaUrlDeep(data){
-    if(!data) return null;
-    if(typeof data === "string"){
-        const urls = extractUrls(data);
-        for(const url of urls){ if(isImage("",url) || isVideo("",url)) return url; }
-        if(/^https?:\/\//i.test(data.trim())) return data.trim();
-        return null;
-    }
-    if(Array.isArray(data)){
-        for(const item of data){ const result = findMediaUrlDeep(item); if(result) return result; }
-        return null;
-    }
-    if(typeof data === "object"){
-        const priorityKeys = ["url", "image", "imageUrl", "image_url", "img", "photo", "picture", "thumbnail", "thumbnailUrl", "thumbnail_url", "media", "mediaUrl", "media_url", "video", "videoUrl", "video_url", "download", "downloadUrl", "download_url", "result", "data", "displayUrl"];
-        for(const key of priorityKeys){
-            if(data[key] !== undefined && data[key] !== null){
-                const result = findMediaUrlDeep(data[key]);
-                if(result) return result;
-            }
-        }
-        for(const key of Object.keys(data)){
-            const result = findMediaUrlDeep(data[key]);
-            if(result) return result;
-        }
-    }
-    return null;
-}
-
-function showMedia(url, type = ""){
-    mediaPreview.innerHTML = "";
-    let element = null;
-    if(isImage(type,url)){
-        element = document.createElement("img");
-        element.src = url;
-        element.alt = "API Image Response";
-        element.loading = "lazy";
-    }else if(isVideo(type,url)){
-        element = document.createElement("video");
-        element.src = url;
-        element.controls = true;
-        element.playsInline = true;
-    }
-    if(!element) return;
-    
-    mediaPreview.appendChild(element);
-    
-    const urlText = document.createElement("span");
-    urlText.className = "media-url";
-    urlText.textContent = url;
-    mediaPreview.appendChild(urlText);
-    
-    const buttons = document.createElement("div");
-    buttons.className = "media-buttons";
-    
-    const copy = document.createElement("button");
-    copy.className = "small-btn";
-    copy.textContent = "🔗 Salin URL";
-    copy.onclick = () => copyText(url, "URL media tersalin!");
-    
-    const open = document.createElement("button");
-    open.className = "small-btn";
-    open.textContent = "↗ Buka Media";
-    open.onclick = () => window.open(url, "_blank", "noopener,noreferrer");
-    
-    buttons.appendChild(copy);
-    buttons.appendChild(open);
-    mediaPreview.appendChild(buttons);
-    mediaPreview.classList.add("active");
-}
-
-async function showProgress(message){
-    responseBox.className = "response loading";
-    responseBox.textContent = message;
-    await sleep(350);
-}
-
-executeButton.addEventListener("click", async () => {
-    if(requestRunning) return;
-
-    requestRunning = true;
-    executeButton.disabled = true;
-    executeButton.textContent = "Processing...";
-    
-    currentUrl = buildUrl();
-    currentResponse = "";
-    mediaPreview.innerHTML = "";
-    mediaPreview.classList.remove("active");
-
-    try{
-        await showProgress("⏳ Connecting to API...");
-        const start = performance.now();
-        let res;
-
-        try{
-            if(currentApi.param === "file" && fileInput.files.length > 0){
-                const formData = new FormData();
-                formData.append("file", fileInput.files[0]);
-                res = await fetch(`${API_BASE}${currentApi.path}`, {
-                    method: "POST",
-                    body: formData
-                });
-            } else {
-                res = await fetch(currentUrl, { method:"GET", cache:"no-store", headers:{ "Accept": "*/*" } });
-            }
-        }catch(error){
-            throw new Error("Gagal terhubung ke API. Periksa CORS atau status server.");
-        }
-
-        const elapsed = Math.round(performance.now() - start);
-        const contentType = (res.headers.get("content-type") || "").toLowerCase();
-
-        if(contentType.includes("image/")){
-            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nMedia URL:\n${currentUrl}`;
-            showMedia(currentUrl, contentType);
-            responseBox.className = "response";
-            responseBox.textContent = `🖼️ Image Response\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n✅ Request completed`;
-            return;
-        }
-
-        if(contentType.includes("video/")){
-            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nMedia URL:\n${currentUrl}`;
-            showMedia(currentUrl, contentType);
-            responseBox.className = "response";
-            responseBox.textContent = `🎬 Video Response\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n✅ Request completed`;
-            return;
-        }
-
-        const raw = await res.text();
-        let data;
-        try{ data = JSON.parse(raw); }catch{ data = raw; }
-
-        let mediaUrl = (data && typeof data === "object") ? findMediaUrlDeep(data) : findMediaUrlDeep(raw);
-        if(mediaUrl){
-            let mediaType = "";
-            try{
-                const mediaResponse = await fetch(mediaUrl, { method:"HEAD", cache:"no-store" });
-                mediaType = (mediaResponse.headers.get("content-type") || "").toLowerCase();
-            }catch{}
-            if(mediaType || isImage("", mediaUrl) || isVideo("", mediaUrl)){
-                showMedia(mediaUrl, mediaType);
-            }
-        }
-
-        currentResponse = (data && typeof data === "object") ? JSON.stringify(data, null, 2) : String(data);
-        responseBox.className = res.ok ? "response" : "response error";
-        responseBox.textContent = `✅ Request completed\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n` + currentResponse;
-
-    }catch(error){
-        currentResponse = error?.message || "Unknown error";
-        responseBox.className = "response error";
-        responseBox.textContent = `❌ API Request Failed\n\n` + currentResponse + `\n\nEndpoint:\n` + currentUrl;
-    }finally{
-        requestRunning = false;
-        executeButton.disabled = false;
-        executeButton.textContent = "Execute Request";
-    }
-});
 </script>
 
 </body>

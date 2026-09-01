@@ -2,11 +2,19 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>ReyCloudSHP API</title>
 
-<link rel="icon" type="image/png" href="https://files.catbox.moe/e5x49o.png">
+<link
+    rel="icon"
+    type="image/png"
+    href="https://files.catbox.moe/e5x49o.png"
+>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
@@ -15,10 +23,13 @@
     --bg:#050505;
     --card:rgba(15,15,18,.82);
     --border:rgba(255,255,255,.12);
+
     --text:#fff;
     --muted:#a1a1aa;
+
     --blue:#3b82f6;
     --blue-light:#93c5fd;
+
     --green:#22c55e;
     --red:#ef4444;
 }
@@ -27,11 +38,17 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
+
     font-family:Inter,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
     min-height:100vh;
+
     background:
         radial-gradient(
             circle at 10% 10%,
@@ -44,20 +61,25 @@ body{
             transparent 35%
         ),
         var(--bg);
+
     color:var(--text);
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     overflow:hidden;
 }
 
-/* =========================
+/* =========================================================
    SPLASH
-========================= */
+========================================================= */
 
 .splash{
     position:fixed;
+
     inset:0;
+
     z-index:9999;
 
     display:flex;
@@ -67,8 +89,8 @@ body{
     background:#050505;
 
     transition:
-        opacity .6s ease,
-        visibility .6s ease;
+        opacity .7s ease,
+        visibility .7s ease;
 }
 
 .splash.hide{
@@ -79,8 +101,13 @@ body{
 
 .splash-box{
     width:min(90%,360px);
+
     text-align:center;
 }
+
+/* =========================================================
+   SPLASH LOGO
+========================================================= */
 
 .logo{
     width:110px;
@@ -90,64 +117,97 @@ body{
 
     border-radius:28px;
 
-    border:2px solid var(--border);
+    border:
+        2px solid
+        var(--border);
 
     box-shadow:
-        0 0 45px rgba(59,130,246,.3);
+        0 0 45px
+        rgba(59,130,246,.3);
 
     animation:
         floating 1.8s ease-in-out infinite;
 }
 
 @keyframes floating{
-    0%,100%{
-        transform:translateY(0);
+
+    0%,
+    100%{
+        transform:
+            translateY(0);
     }
 
     50%{
-        transform:translateY(-8px);
+        transform:
+            translateY(-8px);
     }
+
 }
+
+/* =========================================================
+   BRAND
+========================================================= */
 
 .brand{
     margin-top:22px;
 
     font-size:20px;
+
     font-weight:800;
+
+    letter-spacing:-.4px;
 }
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .status{
     margin-top:10px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     gap:8px;
 
     color:var(--muted);
 
     font-size:12px;
+
+    min-height:18px;
 }
 
 .status-dot{
     width:8px;
     height:8px;
 
+    flex-shrink:0;
+
     border-radius:50%;
 
     background:var(--blue);
 
     box-shadow:
-        0 0 12px rgba(59,130,246,.8);
+        0 0 12px
+        rgba(59,130,246,.8);
 
-    animation:pulse 1s infinite;
+    animation:
+        pulse 1s infinite;
 }
 
 @keyframes pulse{
+
     50%{
         opacity:.35;
     }
+
 }
+
+/* =========================================================
+   PROGRESS
+========================================================= */
 
 .progress-wrap{
     margin-top:24px;
@@ -159,7 +219,8 @@ body{
         rgba(255,255,255,.08);
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     border-radius:20px;
 
@@ -168,15 +229,29 @@ body{
 
 .progress{
     width:0%;
+
     height:100%;
 
-    background:var(--blue);
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--blue-light)
+        );
 
     border-radius:20px;
 
     transition:
-        width .15s ease;
+        width .35s ease;
+
+    box-shadow:
+        0 0 15px
+        rgba(59,130,246,.45);
 }
+
+/* =========================================================
+   PERCENT
+========================================================= */
 
 .percent{
     margin-top:9px;
@@ -190,9 +265,9 @@ body{
     color:var(--muted);
 }
 
-/* =========================
+/* =========================================================
    MAIN
-========================= */
+========================================================= */
 
 .main{
     width:min(92%,600px);
@@ -200,17 +275,25 @@ body{
     text-align:center;
 
     opacity:0;
-    transform:translateY(20px);
+
+    transform:
+        translateY(20px);
 
     transition:
-        opacity .7s ease,
-        transform .7s ease;
+        opacity .8s ease,
+        transform .8s ease;
 }
 
 .main.show{
     opacity:1;
-    transform:translateY(0);
+
+    transform:
+        translateY(0);
 }
+
+/* =========================================================
+   AVATAR
+========================================================= */
 
 .avatar{
     width:135px;
@@ -220,11 +303,18 @@ body{
 
     border-radius:34px;
 
-    border:2px solid var(--border);
+    border:
+        2px solid
+        var(--border);
 
     box-shadow:
-        0 20px 50px rgba(0,0,0,.65);
+        0 20px 50px
+        rgba(0,0,0,.65);
 }
+
+/* =========================================================
+   BADGE
+========================================================= */
 
 .badge{
     display:inline-flex;
@@ -232,7 +322,8 @@ body{
     margin-top:25px;
     margin-bottom:15px;
 
-    padding:7px 13px;
+    padding:
+        7px 13px;
 
     border-radius:30px;
 
@@ -240,17 +331,23 @@ body{
         rgba(59,130,246,.1);
 
     border:
-        1px solid rgba(59,130,246,.25);
+        1px solid
+        rgba(59,130,246,.25);
 
     color:var(--blue-light);
 
     font-size:10px;
+
     font-weight:800;
 
     letter-spacing:1px;
 
     text-transform:uppercase;
 }
+
+/* =========================================================
+   TITLE
+========================================================= */
 
 .title{
     font-size:
@@ -267,6 +364,10 @@ body{
     color:var(--blue);
 }
 
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
 .description{
     max-width:470px;
 
@@ -280,9 +381,9 @@ body{
     line-height:1.7;
 }
 
-/* =========================
-   VALIDATION CARD
-========================= */
+/* =========================================================
+   VALIDATION
+========================================================= */
 
 .validation{
     margin:
@@ -293,7 +394,8 @@ body{
     padding:15px;
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     border-radius:16px;
 
@@ -303,15 +405,21 @@ body{
     backdrop-filter:
         blur(15px);
 
+    -webkit-backdrop-filter:
+        blur(15px);
+
     text-align:left;
 }
 
 .validation-title{
     display:flex;
+
     align-items:center;
+
     gap:8px;
 
     font-size:12px;
+
     font-weight:700;
 
     margin-bottom:12px;
@@ -319,6 +427,7 @@ body{
 
 .check{
     display:flex;
+
     align-items:center;
     justify-content:space-between;
 
@@ -345,12 +454,16 @@ body{
         monospace;
 
     font-size:10px;
+
     color:var(--green);
+
+    transition:
+        color .2s ease;
 }
 
-/* =========================
+/* =========================================================
    BUTTON
-========================= */
+========================================================= */
 
 .enter{
     display:inline-flex;
@@ -374,6 +487,7 @@ body{
     text-decoration:none;
 
     font-size:12px;
+
     font-weight:800;
 
     transition:
@@ -401,21 +515,23 @@ body{
         scale(.97);
 }
 
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media(max-width:480px){
 
     .logo{
         width:95px;
         height:95px;
+
         border-radius:24px;
     }
 
     .avatar{
         width:115px;
         height:115px;
+
         border-radius:30px;
     }
 
@@ -426,17 +542,22 @@ body{
     .validation{
         max-width:100%;
     }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- =========================
+<!-- =======================================================
      SPLASH SCREEN
-========================= -->
+======================================================= -->
 
-<div class="splash" id="splash">
+<div
+    class="splash"
+    id="splash"
+>
 
     <div class="splash-box">
 
@@ -444,7 +565,6 @@ body{
             src="https://files.catbox.moe/e5x49o.png"
             class="logo"
             alt="ReyCloud"
-            id="splashLogo"
         >
 
         <div class="brand">
@@ -459,7 +579,7 @@ body{
             ></span>
 
             <span id="statusText">
-                Checking system...
+                Initializing system...
             </span>
 
         </div>
@@ -485,11 +605,14 @@ body{
 </div>
 
 
-<!-- =========================
+<!-- =======================================================
      MAIN CONTENT
-========================= -->
+======================================================= -->
 
-<main class="main" id="main">
+<main
+    class="main"
+    id="main"
+>
 
     <img
         src="https://files.catbox.moe/e5x49o.png"
@@ -502,24 +625,35 @@ body{
     </div>
 
     <h1 class="title">
+
         Welcome to
-        <span>ReyCloudSHP API</span>
+        <span>
+            ReyCloudSHP API
+        </span>
+
     </h1>
 
     <p class="description">
+
         Platform API digital terintegrasi untuk berbagai
         kebutuhan tools, artificial intelligence,
         downloader, dan scraper berkecepatan tinggi.
+
     </p>
 
 
-    <!-- VALIDATION -->
+    <!-- ===================================================
+         VALIDATION
+    =================================================== -->
 
     <div class="validation">
 
         <div class="validation-title">
+
             🛡️ System Validation
+
         </div>
+
 
         <div class="check">
 
@@ -536,6 +670,7 @@ body{
 
         </div>
 
+
         <div class="check">
 
             <span class="check-name">
@@ -551,6 +686,7 @@ body{
 
         </div>
 
+
         <div class="check">
 
             <span class="check-name">
@@ -565,6 +701,7 @@ body{
             </span>
 
         </div>
+
 
         <div class="check">
 
@@ -584,7 +721,9 @@ body{
     </div>
 
 
-    <!-- TETAP KE /dashboard -->
+    <!-- ===================================================
+         ENTER DASHBOARD
+    =================================================== -->
 
     <a
         href="/dashboard"
@@ -601,193 +740,355 @@ body{
 
     "use strict";
 
+
+    /* =====================================================
+       DOM
+    ===================================================== */
+
     const splash =
-        document.getElementById("splash");
+        document.getElementById(
+            "splash"
+        );
 
     const main =
-        document.getElementById("main");
+        document.getElementById(
+            "main"
+        );
 
     const progress =
-        document.getElementById("progress");
+        document.getElementById(
+            "progress"
+        );
 
     const percent =
-        document.getElementById("percent");
+        document.getElementById(
+            "percent"
+        );
 
     const statusText =
-        document.getElementById("statusText");
+        document.getElementById(
+            "statusText"
+        );
 
     const browserCheck =
-        document.getElementById("browserCheck");
+        document.getElementById(
+            "browserCheck"
+        );
 
     const jsCheck =
-        document.getElementById("jsCheck");
+        document.getElementById(
+            "jsCheck"
+        );
 
     const apiCheck =
-        document.getElementById("apiCheck");
+        document.getElementById(
+            "apiCheck"
+        );
 
     const uiCheck =
-        document.getElementById("uiCheck");
+        document.getElementById(
+            "uiCheck"
+        );
 
 
-    /*
-     * ==========================================
-     * SAFE VALIDATION
-     * ==========================================
-     *
-     * Tidak menggunakan endpoint tambahan.
-     * Jadi tidak akan error karena route API
-     * yang belum tersedia.
-     */
-
-
-    function setCheck(element, text){
-
-        if(!element) return;
-
-        element.textContent = text;
-
-    }
-
+    /* =====================================================
+       HELPER
+    ===================================================== */
 
     function sleep(ms){
 
         return new Promise(
-            resolve => setTimeout(resolve, ms)
+            resolve =>
+                setTimeout(
+                    resolve,
+                    ms
+                )
         );
 
     }
 
 
+    function setCheck(
+        element,
+        text,
+        color
+    ){
+
+        if(!element)
+            return;
+
+        element.textContent =
+            text;
+
+        if(color){
+
+            element.style.color =
+                color;
+
+        }
+
+    }
+
+
+    function setProgress(value){
+
+        value =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    value
+                )
+            );
+
+        progress.style.width =
+            value + "%";
+
+        percent.textContent =
+            value + "%";
+
+    }
+
+
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
+
     async function validate(){
 
-        let value = 0;
+        try{
+
+            /* =============================================
+               STEP 1
+            ============================================= */
+
+            statusText.textContent =
+                "Initializing system...";
+
+            setProgress(5);
+
+            await sleep(500);
 
 
-        // 1. Browser
+            /* =============================================
+               STEP 2 — BROWSER
+            ============================================= */
 
-        statusText.textContent =
-            "Checking browser...";
-
-        setCheck(
-            browserCheck,
-            "CHECKING"
-        );
-
-        await sleep(250);
-
-        if(
-            navigator &&
-            document
-        ){
+            statusText.textContent =
+                "Checking browser...";
 
             setCheck(
                 browserCheck,
+                "CHECKING"
+            );
+
+            setProgress(10);
+
+            await sleep(650);
+
+
+            if(
+                typeof navigator !==
+                    "undefined" &&
+                typeof document !==
+                    "undefined"
+            ){
+
+                setCheck(
+                    browserCheck,
+                    "OK"
+                );
+
+            }
+            else{
+
+                setCheck(
+                    browserCheck,
+                    "FAILED",
+                    "#ef4444"
+                );
+
+            }
+
+            setProgress(20);
+
+            await sleep(350);
+
+
+            /* =============================================
+               STEP 3 — JAVASCRIPT
+            ============================================= */
+
+            statusText.textContent =
+                "Checking JavaScript...";
+
+            setCheck(
+                jsCheck,
+                "CHECKING"
+            );
+
+            setProgress(28);
+
+            await sleep(700);
+
+
+            setCheck(
+                jsCheck,
                 "OK"
             );
 
-        }else{
+            setProgress(45);
+
+            await sleep(350);
+
+
+            /* =============================================
+               STEP 4 — API GATEWAY
+            ============================================= */
+
+            statusText.textContent =
+                "Checking API gateway...";
 
             setCheck(
-                browserCheck,
-                "FAILED"
+                apiCheck,
+                "CHECKING"
+            );
+
+            setProgress(52);
+
+            await sleep(850);
+
+
+            /*
+             * Tidak melakukan fetch.
+             *
+             * Halaman landing sudah berhasil
+             * diberikan oleh server.
+             */
+
+            setCheck(
+                apiCheck,
+                "ONLINE"
+            );
+
+            setProgress(70);
+
+            await sleep(450);
+
+
+            /* =============================================
+               STEP 5 — INTERFACE
+            ============================================= */
+
+            statusText.textContent =
+                "Checking interface...";
+
+            setCheck(
+                uiCheck,
+                "CHECKING"
+            );
+
+            setProgress(78);
+
+            await sleep(750);
+
+
+            if(
+                document.body &&
+                splash &&
+                main &&
+                progress
+            ){
+
+                setCheck(
+                    uiCheck,
+                    "READY"
+                );
+
+            }
+            else{
+
+                setCheck(
+                    uiCheck,
+                    "FAILED",
+                    "#ef4444"
+                );
+
+            }
+
+            setProgress(92);
+
+            await sleep(500);
+
+
+            /* =============================================
+               STEP 6 — FINAL
+            ============================================= */
+
+            statusText.textContent =
+                "Finalizing system...";
+
+            setProgress(96);
+
+            await sleep(650);
+
+
+            setProgress(100);
+
+            statusText.textContent =
+                "System ready";
+
+            await sleep(900);
+
+
+            /* =============================================
+               SHOW MAIN
+            ============================================= */
+
+            splash.classList.add(
+                "hide"
+            );
+
+            main.classList.add(
+                "show"
+            );
+
+
+        }
+        catch(error){
+
+            console.error(
+                "[REYCLOUD SPLASH]",
+                error
+            );
+
+
+            statusText.textContent =
+                "System ready";
+
+
+            setProgress(100);
+
+
+            await sleep(700);
+
+
+            splash.classList.add(
+                "hide"
+            );
+
+            main.classList.add(
+                "show"
             );
 
         }
 
-        value = 20;
-
-        progress.style.width =
-            value + "%";
-
-        percent.textContent =
-            value + "%";
-
-
-        // 2. JavaScript
-
-        statusText.textContent =
-            "Checking JavaScript...";
-
-        await sleep(250);
-
-        setCheck(
-            jsCheck,
-            "OK"
-        );
-
-        value = 45;
-
-        progress.style.width =
-            value + "%";
-
-        percent.textContent =
-            value + "%";
-
-
-        // 3. Gateway
-        //
-        // Tidak melakukan fetch.
-        // Halaman ini sendiri sudah berhasil
-        // dimuat oleh server.
-
-        statusText.textContent =
-            "Checking API gateway...";
-
-        await sleep(300);
-
-        setCheck(
-            apiCheck,
-            "ONLINE"
-        );
-
-        value = 70;
-
-        progress.style.width =
-            value + "%";
-
-        percent.textContent =
-            value + "%";
-
-
-        // 4. UI
-
-        statusText.textContent =
-            "Checking interface...";
-
-        await sleep(250);
-
-        setCheck(
-            uiCheck,
-            "READY"
-        );
-
-        value = 100;
-
-        progress.style.width =
-            value + "%";
-
-        percent.textContent =
-            value + "%";
-
-
-        // selesai
-
-        statusText.textContent =
-            "System ready";
-
-        await sleep(500);
-
-
-        splash.classList.add("hide");
-
-        main.classList.add("show");
-
     }
 
 
-    /*
-     * Jalankan setelah DOM siap.
-     */
+    /* =====================================================
+       START
+    ===================================================== */
 
     if(
         document.readyState ===
@@ -796,14 +1097,32 @@ body{
 
         document.addEventListener(
             "DOMContentLoaded",
-            validate
+            validate,
+            {
+                once:true
+            }
         );
 
-    }else{
+    }
+    else{
 
         validate();
 
     }
+
+
+    /* =====================================================
+       DEBUG
+    ===================================================== */
+
+    console.log(
+        "%c ReyCloudSHP API ",
+        "background:#3b82f6;color:#fff;font-weight:800;padding:6px 10px;border-radius:6px"
+    );
+
+    console.log(
+        "Landing page initialized."
+    );
 
 })();
 </script>

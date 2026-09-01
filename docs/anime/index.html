@@ -3,678 +3,4079 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Anime & Donghua - ReyCloudSHP API</title>
+
+<title>Anime & Entertainment API V2 - ReyCloudSHP</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
 :root{
-    --bg: #030305;
-    --panel: rgba(12, 12, 16, 0.75);
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(59, 130, 246, 0.4);
-    --blue-main: #3b82f6;
-    --blue-light: #93c5fd;
-    --blue-cyan: #38bdf8;
-    --error: #f87171;
-    --text: #ffffff;
-    --muted: #94a3b8;
-    --radius: 20px;
+    --bg:#05070b;
+    --bg-soft:#090c12;
+    --card:rgba(13,17,24,.78);
+    --card-hover:rgba(18,24,34,.95);
+
+    --border:rgba(255,255,255,.075);
+    --border-hover:rgba(96,165,250,.38);
+
+    --blue:#3b82f6;
+    --blue-light:#93c5fd;
+    --cyan:#38bdf8;
+
+    --green:#34d399;
+    --yellow:#fbbf24;
+    --red:#f87171;
+
+    --text:#f8fafc;
+    --muted:#8b98aa;
+    --muted-2:#64748b;
+
+    --radius:18px;
 }
 
-*{ margin:0; padding:0; box-sizing:border-box; font-family:Inter,sans-serif; -webkit-font-smoothing:antialiased; touch-action: manipulation; }
-html{ scroll-behavior:smooth; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    touch-action:manipulation;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     min-height:100vh;
     color:var(--text);
+
     background:
-        radial-gradient(circle at 10% 10%, rgba(59,130,246, 0.08), transparent 45%),
-        radial-gradient(circle at 90% 90%, rgba(56,189,248, 0.05), transparent 45%),
-        var(--bg);
-    background-attachment:fixed;
+        radial-gradient(
+            circle at 15% 5%,
+            rgba(59,130,246,.10),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 40%,
+            rgba(56,189,248,.055),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #040507 0%,
+            #06080d 100%
+        );
+
+    overflow-x:hidden;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:disabled{
+    cursor:not-allowed;
+    opacity:.55;
+}
+
+::-webkit-scrollbar{
+    width:4px;
+    height:4px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.12);
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:var(--blue);
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    width:100%;
+    max-width:980px;
+    margin:auto;
+    padding:22px 18px 70px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:22px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    min-width:0;
+}
+
+.back-btn{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    color:#fff;
+    text-decoration:none;
+
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    transition:.2s ease;
+}
+
+.back-btn:hover{
+    border-color:var(--border-hover);
+    background:rgba(59,130,246,.09);
+    transform:translateX(-2px);
+}
+
+.back-btn svg{
+    width:18px;
+    height:18px;
+    fill:currentColor;
+}
+
+.logo{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:13px;
+
+    color:#06101e;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dbeafe,
+            #60a5fa
+        );
+
+    box-shadow:
+        0 0 30px rgba(59,130,246,.16);
+
+    font-size:18px;
+}
+
+.brand-text{
+    min-width:0;
+}
+
+.brand-text h1{
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:-.35px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.brand-text p{
+    margin-top:3px;
+
+    color:var(--muted);
+    font-size:9px;
+
+    white-space:nowrap;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    padding:7px 10px;
+
+    border:1px solid rgba(52,211,153,.13);
+    border-radius:999px;
+
+    background:rgba(52,211,153,.045);
+
+    color:#86efac;
+
+    font-size:9px;
+    font-weight:700;
+
+    white-space:nowrap;
+}
+
+.status-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 0 4px rgba(52,211,153,.08),
+        0 0 12px rgba(52,211,153,.5);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+
+    padding:25px;
+
+    border:1px solid var(--border);
+    border-radius:23px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(16,24,38,.9),
+            rgba(8,11,17,.8)
+        );
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.28);
+
+    margin-bottom:16px;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    right:-80px;
+    top:-90px;
+
+    border-radius:50%;
+
+    background:rgba(59,130,246,.11);
+
+    filter:blur(15px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:1;
+}
+
+.hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+
+    padding:6px 9px;
+
+    margin-bottom:13px;
+
+    border:1px solid rgba(96,165,250,.15);
+    border-radius:999px;
+
+    color:var(--blue-light);
+
+    background:rgba(59,130,246,.055);
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.hero-title{
+    font-size:24px;
+    line-height:1.2;
+
+    font-weight:800;
+
+    letter-spacing:-.8px;
+
+    margin-bottom:8px;
+}
+
+.hero-text{
+    max-width:720px;
+
+    color:var(--muted);
+
+    font-size:11px;
+    line-height:1.7;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+
+    margin-bottom:16px;
+}
+
+.stat{
+    padding:15px 16px;
+
+    border:1px solid var(--border);
+    border-radius:16px;
+
+    background:rgba(10,13,19,.72);
+}
+
+.stat-label{
+    color:var(--muted-2);
+
+    font-size:9px;
+    font-weight:600;
+
+    margin-bottom:6px;
+}
+
+.stat-value{
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:-.4px;
+}
+
+.stat-value.online{
+    color:#6ee7b7;
+    font-size:12px;
+    letter-spacing:.5px;
+}
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar{
+    display:flex;
+    gap:9px;
+
+    margin-bottom:20px;
+}
+
+.search-box{
+    position:relative;
+    flex:1;
+}
+
+.search-box svg{
+    position:absolute;
+
+    left:13px;
+    top:50%;
+
+    width:16px;
+    height:16px;
+
+    transform:translateY(-50%);
+
+    fill:var(--muted-2);
+}
+
+.search{
+    width:100%;
+
+    padding:13px 14px 13px 39px;
+
+    color:#fff;
+
+    outline:none;
+
+    background:rgba(8,11,16,.85);
+
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    font-size:11px;
+
+    transition:.2s;
+}
+
+.search::placeholder{
+    color:var(--muted-2);
+}
+
+.search:focus{
+    border-color:rgba(59,130,246,.45);
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,.07);
+}
+
+/* FILTER */
+
+.filter-wrap{
+    position:relative;
+}
+
+.filter-btn{
+    height:100%;
+
+    min-width:145px;
+
+    padding:0 13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+
+    color:#cbd5e1;
+
+    background:rgba(8,11,16,.85);
+
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    font-size:10px;
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.filter-btn:hover{
+    border-color:var(--border-hover);
+}
+
+.filter-arrow{
+    color:var(--muted);
+    transition:.2s;
+}
+
+.filter-wrap.open .filter-arrow{
+    transform:rotate(180deg);
+}
+
+.filter-menu{
+    position:absolute;
+
+    top:calc(100% + 7px);
+    right:0;
+
+    width:205px;
+
+    padding:5px;
+
+    background:#0b0f16;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.65);
+
+    z-index:100;
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:translateY(-5px);
+
+    transition:.16s;
+}
+
+.filter-wrap.open .filter-menu{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+.filter-option{
+    width:100%;
+
+    padding:10px 11px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    color:var(--muted);
+
+    background:transparent;
+
+    border:0;
+    border-radius:9px;
+
+    text-align:left;
+
+    font-size:10px;
+
+    transition:.15s;
+}
+
+.filter-option:hover{
+    color:#fff;
+    background:rgba(255,255,255,.045);
+}
+
+.filter-option.active{
+    color:#93c5fd;
+    background:rgba(59,130,246,.08);
+}
+
+.check{
+    opacity:0;
+}
+
+.filter-option.active .check{
+    opacity:1;
+}
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.category{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    margin:24px 2px 11px;
+}
+
+.category-icon{
+    width:25px;
+    height:25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:8px;
+
+    background:rgba(59,130,246,.08);
+
+    font-size:12px;
+}
+
+.category-info{
+    min-width:0;
+}
+
+.category-title{
+    font-size:11px;
+    font-weight:800;
+
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+}
+
+.category-count{
+    margin-top:2px;
+
+    color:var(--muted-2);
+
+    font-size:8px;
+}
+
+.category-line{
+    height:1px;
+    flex:1;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--border),
+            transparent
+        );
+}
+
+/* =========================================================
+   ENDPOINT CARD
+========================================================= */
+
+.endpoint-list{
+    display:grid;
+    gap:8px;
+}
+
+.endpoint{
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px;
+
+    border:1px solid var(--border);
+    border-radius:15px;
+
+    background:var(--card);
+
+    transition:
+        transform .2s,
+        border-color .2s,
+        background .2s;
+}
+
+.endpoint:hover{
+    transform:translateY(-1px);
+
+    border-color:var(--border-hover);
+
+    background:var(--card-hover);
+}
+
+.endpoint-icon{
+    width:37px;
+    height:37px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:11px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.045);
+
+    font-size:15px;
+}
+
+.endpoint-main{
+    min-width:0;
+    flex:1;
+}
+
+.endpoint-title-row{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    min-width:0;
+}
+
+.endpoint-title{
+    font-size:11px;
+    font-weight:700;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.method{
+    flex-shrink:0;
+
+    padding:3px 6px;
+
+    border-radius:5px;
+
+    color:#93c5fd;
+
+    background:rgba(59,130,246,.08);
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.endpoint-path{
+    margin-top:4px;
+
+    color:var(--muted-2);
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:8px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.endpoint-desc{
+    margin-top:4px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.test-btn{
+    flex-shrink:0;
+
+    padding:8px 11px;
+
+    color:#dbeafe;
+
+    background:rgba(59,130,246,.07);
+
+    border:1px solid rgba(59,130,246,.13);
+
+    border-radius:9px;
+
+    font-size:9px;
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.test-btn:hover{
+    color:#fff;
+
+    background:var(--blue);
+
+    border-color:var(--blue);
+}
+
+/* =========================================================
+   CLOSED CARD
+========================================================= */
+
+.closed-card{
+    padding:16px;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    border:1px dashed rgba(248,113,113,.18);
+    border-radius:15px;
+
+    background:rgba(248,113,113,.025);
+}
+
+.closed-icon{
+    width:38px;
+    height:38px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:11px;
+
+    background:rgba(248,113,113,.06);
+
+    font-size:15px;
+}
+
+.closed-content{
+    min-width:0;
+}
+
+.closed-title{
+    font-size:11px;
+    font-weight:700;
+
+    color:#fca5a5;
+}
+
+.closed-text{
+    margin-top:4px;
+
+    color:var(--muted-2);
+
+    font-size:8px;
+    line-height:1.5;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    display:none;
+
+    padding:35px 20px;
+
+    text-align:center;
+
+    border:1px solid var(--border);
+    border-radius:16px;
+
+    background:rgba(10,13,19,.65);
+}
+
+.empty.show{
+    display:block;
+}
+
+.empty-icon{
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.empty-title{
+    font-size:12px;
+    font-weight:700;
+}
+
+.empty-text{
+    margin-top:4px;
+
+    color:var(--muted);
+
+    font-size:9px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:14px;
+
+    background:rgba(0,0,0,.76);
+
+    backdrop-filter:blur(13px);
+    -webkit-backdrop-filter:blur(13px);
+
+    z-index:999;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.2s;
+}
+
+.overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal{
+    width:100%;
+    max-width:560px;
+    max-height:94vh;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow:hidden;
+
+    background:#090c12;
+
+    border:1px solid rgba(255,255,255,.09);
+
+    border-radius:20px;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.8);
+
+    transform:translateY(15px) scale(.98);
+
+    transition:.2s;
+}
+
+.overlay.active .modal{
+    transform:translateY(0) scale(1);
+}
+
+/* MODAL HEAD */
+
+.modal-head{
+    padding:16px 17px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    border-bottom:1px solid var(--border);
+
+    background:#0c1017;
+}
+
+.modal-title-wrap{
+    min-width:0;
+}
+
+.modal-title{
+    font-size:13px;
+    font-weight:800;
+}
+
+.modal-endpoint{
+    margin-top:4px;
+
+    color:var(--blue-light);
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:8px;
+
+    word-break:break-all;
+}
+
+.close{
+    width:31px;
+    height:31px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    color:#94a3b8;
+
+    background:#05070a;
+
+    border:1px solid var(--border);
+
+    border-radius:9px;
+
+    font-size:13px;
+
+    transition:.2s;
+}
+
+.close:hover{
+    color:#fff;
+    border-color:rgba(255,255,255,.2);
+}
+
+/* MODAL BODY */
+
+.modal-body{
+    padding:17px;
+
     overflow-y:auto;
 }
 
-button, input, textarea{ font:inherit; }
-button{ cursor:pointer; }
-button:disabled{ cursor:not-allowed; opacity:.65; }
-
-::-webkit-scrollbar{ width:4px; height:4px; }
-::-webkit-scrollbar-track{ background:transparent; }
-::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.15); border-radius:20px; }
-::-webkit-scrollbar-thumb:hover{ background:var(--blue-main); }
-
-.app{ width:100%; max-width:850px; margin:auto; padding:25px 20px 60px; }
-
-.glass{
-    background:var(--panel);
-    border:1px solid var(--border);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+.input-group{
+    margin-bottom:16px;
 }
 
-.header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:24px; }
-.brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+.label{
+    display:block;
 
-.back-btn{
-    width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid var(--border); color:#fff; text-decoration:none; transition:.2s;
+    margin-bottom:7px;
+
+    color:var(--muted);
+
+    font-size:8px;
+    font-weight:700;
+
+    text-transform:uppercase;
+    letter-spacing:.8px;
 }
-.back-btn:hover{ border-color:var(--blue-main); background:rgba(59,130,246,0.08); }
-.back-btn svg{ width:18px; height:18px; fill:currentColor; }
-
-.logo{
-    width:44px; height:44px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    border-radius:14px; background:linear-gradient(135deg, #ffffff, #94a3b8); color: #000;
-    font-size:20px; font-weight:800; box-shadow:0 0 25px rgba(255,255,255,0.1);
-}
-.brand h1{ font-size:17px; font-weight:800; letter-spacing:-0.3px; }
-.brand p{ margin-top:2px; color:var(--muted); font-size:10px; }
-
-.hero{ padding:24px; border-radius:var(--radius); margin-bottom:24px; }
-.hero-title{ font-size:20px; font-weight:800; margin-bottom:6px; color:#fff; }
-.hero-text{ color:var(--muted); font-size:12px; line-height:1.6; }
-
-.category{
-    margin:25px 4px 12px; display:flex; align-items:center; gap:10px;
-    color:var(--blue-light); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1.5px;
-}
-.category:after{ content:""; height:1px; flex:1; background:linear-gradient(90deg, var(--border), transparent); }
-
-.endpoint{
-    display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding:16px 20px; margin-bottom:12px; border-radius:16px; transition:.2s;
-}
-.endpoint:hover{ border-color:var(--blue-main); transform:translateY(-1px); background:rgba(59,130,246,0.02); }
-
-.endpoint-info{ min-width:0; }
-.endpoint-info h4{ font-size:14px; font-weight:700; margin-bottom:4px; color:#fff; }
-.endpoint-info p{
-    color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px;
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-}
-
-.try-btn{
-    flex-shrink:0; padding:8px 16px; border:1px solid rgba(255,255,255,0.2); border-radius:30px;
-    color:white; background:#000; font-size:11px; font-weight:700; transition:.2s;
-}
-.try-btn:hover{ background:var(--blue-main); border-color:var(--blue-main); color:#fff; }
-
-.overlay{
-    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-    padding:15px; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px);
-    z-index:999; opacity:0; visibility:hidden; transition:.2s;
-}
-.overlay.active{ opacity:1; visibility:visible; }
-
-.modal{
-    width:100%; max-width:510px; max-height:95vh; display:flex; flex-direction:column;
-    background:#0a0a0e; border:1px solid var(--border); border-radius:var(--radius);
-    overflow:hidden; transform:translateY(20px) scale(.97); transition:.2s;
-    box-shadow:0 30px 80px rgba(0,0,0,.8);
-}
-.overlay.active .modal{ transform:translateY(0) scale(1); }
-
-.modal-head{
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-    padding:16px 20px; border-bottom:1px solid var(--border); background:#111116;
-}
-.modal-title-wrap{ min-width:0; }
-.modal-head h3{ font-size:15px; font-weight:700; color:#fff; }
-.modal-head p{ color:var(--blue-light); font-family:'JetBrains Mono',monospace; font-size:9px; margin-top:4px; word-break:break-all; }
-
-.close{
-    width:32px; height:32px; flex-shrink:0; border:1px solid var(--border); border-radius:50%;
-    color:white; background:#000; transition:.2s; font-size:14px; display:flex; align-items:center; justify-content:center;
-}
-.close:hover{ background:#fff; color:#000; }
-
-.modal-body{ padding:20px; overflow-y:auto; }
-.label{ display:block; margin-bottom:8px; color:var(--muted); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
 
 .input{
-    width:100%; padding:14px; margin-bottom:16px; color:white;
-    background:#000; border:1px solid var(--border); border-radius:12px;
-    outline:none; font-size:12px; transition:.2s;
+    width:100%;
+
+    padding:12px 13px;
+
+    color:#fff;
+
+    outline:none;
+
+    background:#05070a;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    font-size:10px;
+
+    transition:.2s;
 }
-.input:focus{ border-color:var(--blue-main); box-shadow:0 0 0 2px rgba(59,130,246,.2); }
+
+.input:focus{
+    border-color:rgba(59,130,246,.45);
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,.06);
+}
+
+.file-input{
+    padding:9px;
+}
+
+/* TABS */
 
 .tabs{
-    display:flex; gap:8px; overflow-x:auto; padding-bottom:8px;
-    border-bottom:1px solid var(--border); margin-bottom:15px;
-}
-.tab{
-    padding:8px 12px; border:1px solid transparent; border-radius:8px;
-    background:transparent; color:var(--muted); font-size:10px; font-weight:600; white-space:nowrap; transition:.2s;
-}
-.tab:hover{ color:#fff; }
-.tab.active{ background:rgba(255,255,255,0.05); color:#fff; border-color:var(--border); }
+    display:flex;
+    gap:5px;
 
-.code-wrap{ position:relative; margin-bottom:20px; }
-.code{
-    padding:15px; padding-right:60px; min-height:58px; max-height:170px; overflow:auto;
-    background:#000; border:1px solid var(--border); border-radius:12px;
-    color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.6;
-    white-space:pre-wrap; word-break:break-all;
+    padding-bottom:9px;
+
+    margin-bottom:11px;
+
+    border-bottom:1px solid var(--border);
+
+    overflow-x:auto;
 }
-.code span.highlight { color: #fff; }
+
+.tab{
+    padding:7px 10px;
+
+    color:var(--muted);
+
+    background:transparent;
+
+    border:1px solid transparent;
+
+    border-radius:7px;
+
+    font-size:8px;
+    font-weight:700;
+
+    white-space:nowrap;
+
+    transition:.15s;
+}
+
+.tab:hover{
+    color:#fff;
+}
+
+.tab.active{
+    color:#fff;
+
+    background:rgba(255,255,255,.045);
+
+    border-color:var(--border);
+}
+
+/* CODE */
+
+.code-wrap{
+    position:relative;
+
+    margin-bottom:15px;
+}
+
+.code{
+    min-height:55px;
+    max-height:185px;
+
+    padding:14px;
+    padding-right:55px;
+
+    overflow:auto;
+
+    color:#94a3b8;
+
+    background:#030405;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:8px;
+    line-height:1.7;
+
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.code .highlight{
+    color:#fff;
+}
 
 .copy-code{
-    position:absolute; right:8px; top:8px; padding:6px 10px; border:1px solid var(--border);
-    border-radius:8px; background:#111; color:white; font-size:9px; font-weight:600;
-}
-.copy-code:hover{ background:#fff; color:#000; }
+    position:absolute;
 
-.response-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
-.response-actions{ display:flex; gap:6px; }
+    right:7px;
+    top:7px;
+
+    padding:6px 8px;
+
+    color:#cbd5e1;
+
+    background:#10141a;
+
+    border:1px solid var(--border);
+
+    border-radius:7px;
+
+    font-size:7px;
+    font-weight:700;
+}
+
+.copy-code:hover{
+    color:#000;
+    background:#fff;
+}
+
+/* RESPONSE */
+
+.response-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:8px;
+
+    margin-bottom:7px;
+}
+
+.response-label{
+    color:var(--muted);
+
+    font-size:8px;
+    font-weight:700;
+
+    text-transform:uppercase;
+    letter-spacing:.8px;
+}
+
+.response-actions{
+    display:flex;
+    gap:5px;
+}
 
 .small-btn{
-    border:1px solid var(--border); background:#050505; color:var(--muted);
-    border-radius:8px; padding:7px 10px; font-size:9px; font-weight:600; white-space:nowrap; transition:.2s;
+    padding:6px 8px;
+
+    color:var(--muted);
+
+    background:#05070a;
+
+    border:1px solid var(--border);
+
+    border-radius:7px;
+
+    font-size:7px;
+    font-weight:700;
+
+    white-space:nowrap;
+
+    transition:.15s;
 }
-.small-btn:hover{ border-color:var(--blue-main); color:#fff; }
+
+.small-btn:hover{
+    color:#fff;
+    border-color:var(--border-hover);
+}
 
 .response{
-    min-height:120px; max-height:280px; overflow:auto; padding:15px;
-    background:#000; border:1px solid var(--border); border-radius:12px;
-    color:#fff; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.65;
-    white-space:pre-wrap; word-break:break-word;
+    min-height:120px;
+    max-height:270px;
+
+    padding:13px;
+
+    overflow:auto;
+
+    color:#e2e8f0;
+
+    background:#030405;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:8px;
+    line-height:1.7;
+
+    white-space:pre-wrap;
+    word-break:break-word;
 }
-.response.loading{ color:var(--blue-light); border-color:rgba(59,130,246,0.3); }
-.response.error{ color:var(--error); border-color:rgba(239,68,68,.3); }
 
-.media{ display:none; margin-top:12px; padding:10px; border:1px solid var(--border); border-radius:12px; background:#000; }
-.media.active{ display:block; }
-.media img, .media video{ display:block; width:100%; max-height:310px; object-fit:contain; border-radius:8px; background:#050505; border:1px solid var(--border); }
-.media-url{ display:block; margin-top:10px; color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:9px; line-height:1.5; word-break:break-all; }
-.media-buttons{ display:flex; gap:8px; margin-top:10px; }
-.media-buttons button{ flex:1; }
+.response.loading{
+    color:var(--blue-light);
 
-.modal-foot{ padding:16px 20px; display:flex; gap:10px; border-top:1px solid var(--border); background:#111116; }
-.execute-btn{ flex:1; padding:12px; border:0; border-radius:10px; color:#000; background:#fff; font-size:12px; font-weight:700; transition:.2s; }
-.execute-btn:hover{ background:var(--blue-light); }
+    border-color:rgba(59,130,246,.25);
+}
 
-.open-btn{ padding:12px 16px; border:1px solid var(--border); border-radius:10px; color:white; background:#000; font-size:11px; font-weight:700; }
-.open-btn:hover{ background:rgba(255,255,255,0.1); }
+.response.error{
+    color:#fca5a5;
+
+    border-color:rgba(248,113,113,.25);
+}
+
+/* MEDIA */
+
+.media{
+    display:none;
+
+    margin-top:10px;
+
+    padding:9px;
+
+    background:#030405;
+
+    border:1px solid var(--border);
+
+    border-radius:11px;
+}
+
+.media.active{
+    display:block;
+}
+
+.media img,
+.media video{
+    display:block;
+
+    width:100%;
+    max-height:300px;
+
+    object-fit:contain;
+
+    background:#000;
+
+    border-radius:8px;
+}
+
+.media-url{
+    display:block;
+
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:7px;
+    line-height:1.5;
+
+    word-break:break-all;
+}
+
+.media-buttons{
+    display:flex;
+    gap:6px;
+
+    margin-top:8px;
+}
+
+.media-buttons button{
+    flex:1;
+}
+
+/* MODAL FOOT */
+
+.modal-foot{
+    display:flex;
+    gap:7px;
+
+    padding:13px 17px;
+
+    border-top:1px solid var(--border);
+
+    background:#0c1017;
+}
+
+.open-btn{
+    padding:11px 13px;
+
+    color:#cbd5e1;
+
+    background:#05070a;
+
+    border:1px solid var(--border);
+
+    border-radius:9px;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.open-btn:hover{
+    color:#fff;
+    border-color:rgba(255,255,255,.18);
+}
+
+.execute-btn{
+    flex:1;
+
+    padding:11px;
+
+    color:#06101c;
+
+    background:#e2e8f0;
+
+    border:0;
+
+    border-radius:9px;
+
+    font-size:9px;
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.execute-btn:hover{
+    background:#93c5fd;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast{
-    position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px);
-    padding:11px 18px; border-radius:30px; background:#fff; border:1px solid #fff;
-    color:#000; font-size:11px; font-weight:700; opacity:0; visibility:hidden;
-    transition:.2s; z-index:2000; white-space:nowrap; box-shadow:0 10px 30px rgba(0,0,0,.5);
+    position:fixed;
+
+    left:50%;
+    bottom:22px;
+
+    transform:translate(-50%,20px);
+
+    padding:10px 15px;
+
+    color:#06101c;
+
+    background:#f8fafc;
+
+    border:1px solid #fff;
+
+    border-radius:999px;
+
+    font-size:9px;
+    font-weight:800;
+
+    opacity:0;
+    visibility:hidden;
+
+    z-index:2000;
+
+    transition:.22s;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.45);
+
+    white-space:nowrap;
 }
-.toast.show{ opacity:1; visibility:visible; transform:translate(-50%,0); }
+
+.toast.show{
+    opacity:1;
+    visibility:visible;
+
+    transform:translate(-50%,0);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:650px){
+
+    .app{
+        padding:17px 13px 55px;
+    }
+
+    .header{
+        margin-bottom:17px;
+    }
+
+    .status{
+        display:none;
+    }
+
+    .hero{
+        padding:20px;
+        border-radius:20px;
+    }
+
+    .hero-title{
+        font-size:20px;
+    }
+
+    .hero-text{
+        font-size:10px;
+    }
+
+    .stats{
+        gap:7px;
+    }
+
+    .stat{
+        padding:12px;
+    }
+
+    .stat-label{
+        font-size:7px;
+    }
+
+    .stat-value{
+        font-size:15px;
+    }
+
+    .stat-value.online{
+        font-size:9px;
+    }
+
+    .toolbar{
+        flex-direction:column;
+    }
+
+    .filter-btn{
+        width:100%;
+        min-height:42px;
+    }
+
+    .filter-menu{
+        width:100%;
+        left:0;
+        right:auto;
+    }
+
+    .endpoint{
+        padding:12px;
+    }
+
+    .endpoint-icon{
+        width:34px;
+        height:34px;
+    }
+
+    .endpoint-desc{
+        display:none;
+    }
+
+    .test-btn{
+        padding:7px 9px;
+    }
+
+    .modal{
+        max-height:95vh;
+        border-radius:18px;
+    }
+
+    .modal-body{
+        padding:14px;
+    }
+
+    .response-head{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .response-actions{
+        width:100%;
+    }
+
+    .response-actions button{
+        flex:1;
+    }
+}
+
+@media(max-width:390px){
+
+    .brand-text h1{
+        font-size:13px;
+    }
+
+    .brand-text p{
+        font-size:8px;
+    }
+
+    .logo,
+    .back-btn{
+        width:38px;
+        height:38px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat:last-child{
+        grid-column:span 2;
+    }
+
+    .endpoint-title{
+        font-size:10px;
+    }
+
+    .method{
+        display:none;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <div class="app">
-<header class="header">
-    <div class="brand">
-        <a href="/dashboard" class="back-btn" title="Kembali ke Dashboard">
-            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-        </a>
-        <div class="logo">🌸</div>
-        <div>
-            <h1>Anime & Donghua</h1>
-            <p>ReyCloudSHP API Docs</p>
-        </div>
-    </div>
-</header>
 
-<section class="hero glass">
-    <div class="hero-title">🌸 Anime, Donghua & Tokusatsu</div>
-    <div class="hero-text">
-        Kumpulan endpoint direktori Samehadaku, Donghub, Tokusatsu, Alight Motion, dan Nekopoi dengan live testing.
-    </div>
-</section>
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-<div class="category">Samehadaku Anime</div>
-<div id="samehadakuList"></div>
+    <header class="header">
 
-<div class="category">Donghub Donghua</div>
-<div id="donghubList"></div>
+        <div class="brand">
 
-<div class="category">Tokusatsu & Alight Motion</div>
-<div id="tokusatsuList"></div>
+            <a
+                href="/dashboard"
+                class="back-btn"
+                title="Kembali ke Dashboard"
+            >
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+            </a>
 
-<div class="category">Nekopoi Directory</div>
-<div id="nekopoiList"></div>
-</div>
+            <div class="logo">
+                🌸
+            </div>
 
-<!-- MODAL PLAYGROUND -->
-<div class="overlay" id="apiModal">
-<div class="modal">
-    <div class="modal-head">
-        <div class="modal-title-wrap">
-            <h3 id="modalTitle">Endpoint</h3>
-            <p id="modalEndpoint">/endpoint</p>
-        </div>
-        <button class="close" id="closeModal">✕</button>
-    </div>
+            <div class="brand-text">
+                <h1>Anime & Entertainment V2</h1>
+                <p>ReyCloudSHP API Documentation</p>
+            </div>
 
-    <div class="modal-body">
-        <label class="label" id="inputLabel">Query Parameter / File</label>
-        <input id="apiInput" class="input" type="text" autocomplete="off" placeholder="Masukkan value...">
-        <input id="apiFileInput" class="input" type="file" style="display:none; padding:10px;">
-
-        <div class="tabs">
-            <button class="tab active" data-lang="curl">cURL</button>
-            <button class="tab" data-lang="javascript">Node.js</button>
-            <button class="tab" data-lang="python">Python</button>
-            <button class="tab" data-lang="php">PHP</button>
         </div>
 
-        <div class="code-wrap">
-            <pre class="code" id="codeSnippet">...</pre>
-            <button class="copy-code" id="copyCode">Salin</button>
+        <div class="status">
+            <span class="status-dot"></span>
+            API ONLINE
         </div>
 
-        <div class="response-head">
-            <label class="label" style="margin:0">API Response</label>
-            <div class="response-actions">
-                <button class="small-btn" id="copyEndpoint">🔗 Salin Endpoint</button>
-                <button class="small-btn" id="copyResponse">📋 Salin Response</button>
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                <span class="status-dot"></span>
+                LIVE API PLAYGROUND
+            </div>
+
+            <h2 class="hero-title">
+                🌸 Anime, Donghua & Entertainment API
+            </h2>
+
+            <p class="hero-text">
+                Dokumentasi API ReyCloudSHP dengan playground interaktif.
+                Cari endpoint, lihat parameter, jalankan testing langsung,
+                dan salin contoh kode integrasi dengan mudah.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATS
+    ====================================================== -->
+
+    <section class="stats">
+
+        <div class="stat">
+            <div class="stat-label">
+                Total Endpoint
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalEndpoint"
+            >
+                0
             </div>
         </div>
 
-        <div class="response" id="apiResponse">// Klik Execute Request untuk menjalankan API...</div>
-        <div class="media" id="mediaPreview"></div>
+
+        <div class="stat">
+            <div class="stat-label">
+                Kategori
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalCategory"
+            >
+                3
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="stat-label">
+                API Base
+            </div>
+
+            <div class="stat-value online">
+                ONLINE
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TOOLBAR
+    ====================================================== -->
+
+    <section class="toolbar">
+
+        <div class="search-box">
+
+            <svg viewBox="0 0 24 24">
+                <path d="M9.5 3a6.5 6.5 0 1 0 4.08 11.56l4.43 4.43 1.41-1.41-4.43-4.43A6.5 6.5 0 0 0 9.5 3zm0 2a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9z"/>
+            </svg>
+
+            <input
+                id="searchInput"
+                class="search"
+                type="search"
+                autocomplete="off"
+                placeholder="Cari endpoint, nama API, atau path..."
+            >
+
+        </div>
+
+
+        <div
+            class="filter-wrap"
+            id="filterWrap"
+        >
+
+            <button
+                class="filter-btn"
+                id="filterButton"
+            >
+                <span id="filterText">
+                    Semua Kategori
+                </span>
+
+                <span class="filter-arrow">
+                    ▾
+                </span>
+            </button>
+
+
+            <div
+                class="filter-menu"
+                id="filterMenu"
+            >
+
+                <button
+                    class="filter-option active"
+                    data-filter="all"
+                >
+                    <span>Semua Kategori</span>
+                    <span class="check">✓</span>
+                </button>
+
+                <button
+                    class="filter-option"
+                    data-filter="samehadaku"
+                >
+                    <span>Samehadaku Anime</span>
+                    <span class="check">✓</span>
+                </button>
+
+                <button
+                    class="filter-option"
+                    data-filter="donghub"
+                >
+                    <span>Donghub Donghua</span>
+                    <span class="check">✓</span>
+                </button>
+
+                <button
+                    class="filter-option"
+                    data-filter="tokusatsu"
+                >
+                    <span>Tokusatsu</span>
+                    <span class="check">✓</span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         API CONTAINER
+    ====================================================== -->
+
+    <main id="apiContainer"></main>
+
+
+    <!-- EMPTY SEARCH -->
+    <div
+        class="empty"
+        id="emptyState"
+    >
+
+        <div class="empty-icon">
+            🔎
+        </div>
+
+        <div class="empty-title">
+            Endpoint tidak ditemukan
+        </div>
+
+        <div class="empty-text">
+            Coba gunakan kata kunci atau kategori lainnya.
+        </div>
+
     </div>
 
-    <div class="modal-foot">
-        <button class="open-btn" id="openEndpoint">↗ Buka</button>
-        <button class="execute-btn" id="executeRequest">Execute Request</button>
+
+    <!-- =====================================================
+         CLOSED CONTENT
+    ====================================================== -->
+
+    <section
+        class="category"
+        style="margin-top:28px;"
+    >
+
+        <div class="category-icon">
+            🔒
+        </div>
+
+        <div class="category-info">
+            <div class="category-title">
+                Restricted
+            </div>
+
+            <div class="category-count">
+                Developer controlled access
+            </div>
+        </div>
+
+        <div class="category-line"></div>
+
+    </section>
+
+
+    <div class="closed-card">
+
+        <div class="closed-icon">
+            🔒
+        </div>
+
+        <div class="closed-content">
+
+            <div class="closed-title">
+                Restricted Directory
+            </div>
+
+            <div class="closed-text">
+                Akses endpoint untuk kategori ini ditutup oleh developer.
+            </div>
+
+        </div>
+
     </div>
-</div>
+
 </div>
 
-<div class="toast" id="toast">Tersalin!</div>
+
+<!-- =========================================================
+     MODAL PLAYGROUND
+========================================================= -->
+
+<div
+    class="overlay"
+    id="apiModal"
+>
+
+    <div class="modal">
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-head">
+
+            <div class="modal-title-wrap">
+
+                <div
+                    class="modal-title"
+                    id="modalTitle"
+                >
+                    Endpoint
+                </div>
+
+                <div
+                    class="modal-endpoint"
+                    id="modalEndpoint"
+                >
+                    /endpoint
+                </div>
+
+            </div>
+
+            <button
+                class="close"
+                id="closeModal"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body">
+
+            <div
+                class="input-group"
+                id="inputGroup"
+            >
+
+                <label
+                    class="label"
+                    id="inputLabel"
+                >
+                    Parameter
+                </label>
+
+                <input
+                    id="apiInput"
+                    class="input"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Masukkan value..."
+                >
+
+                <input
+                    id="apiFileInput"
+                    class="input file-input"
+                    type="file"
+                    style="display:none;"
+                >
+
+            </div>
+
+
+            <!-- CODE TABS -->
+
+            <div class="tabs">
+
+                <button
+                    class="tab active"
+                    data-lang="curl"
+                >
+                    cURL
+                </button>
+
+                <button
+                    class="tab"
+                    data-lang="javascript"
+                >
+                    Node.js
+                </button>
+
+                <button
+                    class="tab"
+                    data-lang="python"
+                >
+                    Python
+                </button>
+
+                <button
+                    class="tab"
+                    data-lang="php"
+                >
+                    PHP
+                </button>
+
+            </div>
+
+
+            <!-- CODE -->
+
+            <div class="code-wrap">
+
+                <pre
+                    class="code"
+                    id="codeSnippet"
+                >...</pre>
+
+                <button
+                    class="copy-code"
+                    id="copyCode"
+                >
+                    Salin
+                </button>
+
+            </div>
+
+
+            <!-- RESPONSE -->
+
+            <div class="response-head">
+
+                <div class="response-label">
+                    API Response
+                </div>
+
+                <div class="response-actions">
+
+                    <button
+                        class="small-btn"
+                        id="copyEndpoint"
+                    >
+                        🔗 Endpoint
+                    </button>
+
+                    <button
+                        class="small-btn"
+                        id="copyResponse"
+                    >
+                        📋 Response
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="response"
+                id="apiResponse"
+            >// Klik Execute Request untuk menjalankan API...</div>
+
+
+            <div
+                class="media"
+                id="mediaPreview"
+            ></div>
+
+        </div>
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-foot">
+
+            <button
+                class="open-btn"
+                id="openEndpoint"
+            >
+                ↗ Buka
+            </button>
+
+            <button
+                class="execute-btn"
+                id="executeRequest"
+            >
+                Execute Request
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    Tersalin!
+</div>
+
 
 <script>
-const API_BASE = "https://api.legionteknologi.my.id";
 
-const samehadakuApis = [
-    { title: "Samehadaku Home", desc: "Mengambil data anime terbaru", path: "/anime/home", param: "none", placeholder: "" },
-    { title: "Samehadaku List", desc: "Mengambil daftar anime lengkap", path: "/anime/list", param: "none", placeholder: "" },
-    { title: "Samehadaku Schedule", desc: "Jadwal rilis anime mingguan", path: "/anime/schedule", param: "none", placeholder: "" },
-    { title: "Samehadaku Batch", desc: "Daftar anime batch download", path: "/anime/batch", param: "none", placeholder: "" },
-    { title: "Batch Detail", desc: "Detail download anime batch", path: "/anime/batch/detail", param: "url", placeholder: "https://samehadaku.vip/..." },
-    { title: "Anime Detail", desc: "Mengambil detail anime tertentu", path: "/anime/detail", param: "url", placeholder: "https://samehadaku.vip/anime/..." },
-    { title: "Anime Episode", desc: "Mengambil detail dan link episode", path: "/anime/episode", param: "url", placeholder: "https://samehadaku.vip/..." }
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const API_BASE =
+    "https://api.legionteknologi.my.id";
+
+
+/* =========================================================
+   API DATA
+========================================================= */
+
+const apiGroups = [
+
+    {
+        id: "samehadaku",
+        icon: "🌸",
+        title: "Samehadaku Anime",
+
+        description:
+            "Anime directory, schedule, batch, detail, dan episode.",
+
+        apis: [
+
+            {
+                title: "Samehadaku Home",
+                desc: "Mengambil data anime terbaru.",
+                path: "/anime/home",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Samehadaku List",
+                desc: "Mengambil daftar anime lengkap.",
+                path: "/anime/list",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Samehadaku Schedule",
+                desc: "Jadwal rilis anime mingguan.",
+                path: "/anime/schedule",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Samehadaku Batch",
+                desc: "Daftar anime batch download.",
+                path: "/anime/batch",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Batch Detail",
+                desc: "Detail anime batch berdasarkan URL.",
+                path: "/anime/batch/detail",
+                param: "url",
+                placeholder: "https://samehadaku.vip/..."
+            },
+
+            {
+                title: "Anime Detail",
+                desc: "Detail anime berdasarkan URL.",
+                path: "/anime/detail",
+                param: "url",
+                placeholder: "https://samehadaku.vip/anime/..."
+            },
+
+            {
+                title: "Anime Episode",
+                desc: "Detail dan link episode anime.",
+                path: "/anime/episode",
+                param: "url",
+                placeholder: "https://samehadaku.vip/..."
+            }
+
+        ]
+    },
+
+
+    {
+        id: "donghub",
+        icon: "🐉",
+        title: "Donghub Donghua",
+
+        description:
+            "Donghua home, search, genre, detail, dan episode.",
+
+        apis: [
+
+            {
+                title: "Donghub Home",
+                desc: "Home recommendations dan popular donghua.",
+                path: "/donghub/home",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Donghub Schedule",
+                desc: "Weekly donghua release schedule.",
+                path: "/donghub/schedule",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Donghub Detail",
+                desc: "Detail series dan episode donghua.",
+                path: "/donghub/detail",
+                param: "slug",
+                placeholder: "battle-through-the-heavens"
+            },
+
+            {
+                title: "Donghub Search",
+                desc: "Mencari daftar donghua.",
+                path: "/donghub/search",
+                param: "q",
+                placeholder: "swallowed star"
+            },
+
+            {
+                title: "Donghub Genres",
+                desc: "Mengambil seluruh genre tersedia.",
+                path: "/donghub/genres",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Donghub Episode",
+                desc: "Mengambil mirror video episode.",
+                path: "/donghub/episode",
+                param: "slug",
+                placeholder: "battle-through-episode-1"
+            }
+
+        ]
+    },
+
+
+    {
+        id: "tokusatsu",
+        icon: "⚡",
+        title: "Tokusatsu",
+
+        description:
+            "Kamen Rider, Super Sentai, Ultraman dan lainnya.",
+
+        apis: [
+
+            {
+                title: "Tokusatsu Home",
+                desc: "Home releases dan slider.",
+                path: "/tokusatsu/home",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Tokusatsu Movies",
+                desc: "Daftar movie dengan pagination.",
+                path: "/tokusatsu/movie",
+                param: "page",
+                placeholder: "1"
+            },
+
+            {
+                title: "Tokusatsu Special",
+                desc: "Kategori movie special.",
+                path: "/tokusatsu/movie-special",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Tokusatsu Era",
+                desc: "Filter Kamen Rider, Sentai, Ultraman.",
+                path: "/tokusatsu/era",
+                param: "type",
+                placeholder: "kamen-rider"
+            },
+
+            {
+                title: "Tokusatsu Search",
+                desc: "Mencari show tokusatsu.",
+                path: "/tokusatsu/search",
+                param: "q",
+                placeholder: "Kamen Rider"
+            },
+
+            {
+                title: "Tokusatsu Detail",
+                desc: "Detail series dan episode.",
+                path: "/tokusatsu/detail",
+                param: "url",
+                placeholder: "https://www.tokusatsuindo.com/..."
+            }
+
+        ]
+    }
+
 ];
 
-const donghubApis = [
-    { title: "Donghub Home", desc: "Home recommendations & popular donghua", path: "/donghub/home", param: "none", placeholder: "" },
-    { title: "Donghub Schedule", desc: "Weekly release schedule", path: "/donghub/schedule", param: "none", placeholder: "" },
-    { title: "Donghub Detail", desc: "Donghua series detail & episodes", path: "/donghub/detail", param: "slug", placeholder: "battle-through-the-heavens" },
-    { title: "Donghub Search", desc: "Search donghua list", path: "/donghub/search", param: "q", placeholder: "swallowed star" },
-    { title: "Donghub Genre List", desc: "Get all available genres", path: "/donghub/genres", param: "none", placeholder: "" },
-    { title: "Donghub Episode", desc: "Episode video mirrors", path: "/donghub/episode", param: "slug", placeholder: "battle-through-episode-1" }
-];
 
-const tokusatsuApis = [
-    { title: "Tokusatsu Home", desc: "Home releases & sliders", path: "/tokusatsu/home", param: "none", placeholder: "" },
-    { title: "Tokusatsu Movies", desc: "Movie list with pagination", path: "/tokusatsu/movie", param: "page", placeholder: "1" },
-    { title: "Tokusatsu Special", desc: "Movie special categories", path: "/tokusatsu/movie-special", param: "none", placeholder: "" },
-    { title: "Tokusatsu Era", desc: "Kamen Rider, Sentai, Ultraman", path: "/tokusatsu/era", param: "type", placeholder: "kamen-rider" },
-    { title: "Tokusatsu Search", desc: "Search tokusatsu shows", path: "/tokusatsu/search", param: "q", placeholder: "Kamen Rider" },
-    { title: "Tokusatsu Detail", desc: "Series & episode streaming detail", path: "/tokusatsu/detail", param: "url", placeholder: "https://www.tokusatsuindo.com/..." }
-];
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const apiContainer =
+    document.getElementById("apiContainer");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const emptyState =
+    document.getElementById("emptyState");
+
+const totalEndpoint =
+    document.getElementById("totalEndpoint");
+
+const filterWrap =
+    document.getElementById("filterWrap");
+
+const filterButton =
+    document.getElementById("filterButton");
+
+const filterText =
+    document.getElementById("filterText");
+
+const filterOptions =
+    document.querySelectorAll(".filter-option");
+
+const modal =
+    document.getElementById("apiModal");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const modalEndpoint =
+    document.getElementById("modalEndpoint");
+
+const inputGroup =
+    document.getElementById("inputGroup");
+
+const inputLabel =
+    document.getElementById("inputLabel");
+
+const input =
+    document.getElementById("apiInput");
+
+const fileInput =
+    document.getElementById("apiFileInput");
+
+const responseBox =
+    document.getElementById("apiResponse");
+
+const mediaPreview =
+    document.getElementById("mediaPreview");
+
+const codeSnippet =
+    document.getElementById("codeSnippet");
+
+const executeButton =
+    document.getElementById("executeRequest");
 
 
-const nekopoiApis = [
-    { title: "Nekopoi Latest", desc: "Latest hentai & jav releases", path: "/nekopoi/latest", param: "page", placeholder: "1" },
-    { title: "Nekopoi Search", desc: "Search content", path: "/nekopoi/search", param: "q", placeholder: "query" },
-    { title: "Nekopoi Category", desc: "Get by category name", path: "/nekopoi/category", param: "name", placeholder: "3d-hentai" },
-    { title: "Nekopoi Genres", desc: "List all genres", path: "/nekopoi/genres", param: "none", placeholder: "" },
-    { title: "Nekopoi Genre Filter", desc: "Filter by genre", path: "/nekopoi/genre", param: "name", placeholder: "action" },
-    { title: "Nekopoi Hentai List", desc: "Hentai directory", path: "/nekopoi/hentai-list", param: "none", placeholder: "" },
-    { title: "Nekopoi JAV List", desc: "JAV directory", path: "/nekopoi/jav-list", param: "none", placeholder: "" },
-    { title: "Nekopoi Schedule", desc: "Release schedule", path: "/nekopoi/schedule", param: "none", placeholder: "" },
-    { title: "Nekopoi Detail", desc: "Content detail & links", path: "/nekopoi/detail", param: "url", placeholder: "https://nekopoi.care/..." }
-];
-
-function populateContainer(containerId, apiList){
-    const container = document.getElementById(containerId);
-    container.innerHTML = "";
-    const fragment = document.createDocumentFragment();
-
-    apiList.forEach(api => {
-        const card = document.createElement("div");
-        card.className = "endpoint glass";
-
-        const info = document.createElement("div");
-        info.className = "endpoint-info";
-
-        const title = document.createElement("h4");
-        title.textContent = api.title;
-
-        const path = document.createElement("p");
-        path.textContent = api.path;
-
-        info.appendChild(title);
-        info.appendChild(path);
-
-        const button = document.createElement("button");
-        button.className = "try-btn";
-        button.textContent = "Test API";
-        button.addEventListener("click", () => openModal(api));
-
-        card.appendChild(info);
-        card.appendChild(button);
-        fragment.appendChild(card);
-    });
-    container.appendChild(fragment);
-}
-
-populateContainer("samehadakuList", samehadakuApis);
-populateContainer("donghubList", donghubApis);
-populateContainer("tokusatsuList", tokusatsuApis);
-populateContainer("nekopoiList", nekopoiApis);
-
-const modal = document.getElementById("apiModal");
-const input = document.getElementById("apiInput");
-const fileInput = document.getElementById("apiFileInput");
-
-const responseBox = document.getElementById("apiResponse");
-const mediaPreview = document.getElementById("mediaPreview");
-const codeSnippet = document.getElementById("codeSnippet");
-const executeButton = document.getElementById("executeRequest");
+/* =========================================================
+   STATE
+========================================================= */
 
 let currentApi = null;
 let currentUrl = "";
 let currentResponse = "";
+
 let requestRunning = false;
+
+let activeFilter = "all";
+
 let toastTimer = null;
 
-function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
 
-function buildUrl(){
-    if(!currentApi) return API_BASE;
-    if(currentApi.param === "none" || currentApi.param === "file") return API_BASE + currentApi.path;
-    
-    let queryParams = [];
-    const value = input.value.trim();
-    if(value) queryParams.push(`${encodeURIComponent(currentApi.param)}=${encodeURIComponent(value)}`);
+/* =========================================================
+   TOTAL
+========================================================= */
 
-    return queryParams.length > 0 ? `${API_BASE}${currentApi.path}?${queryParams.join("&")}` : `${API_BASE}${currentApi.path}`;
-}
+const totalApis =
+    apiGroups.reduce(
+        (total, group) =>
+            total + group.apis.length,
+        0
+    );
 
-function updateCode(lang){
-    currentUrl = buildUrl();
-    let code = "";
-    if(currentApi && currentApi.param === "file"){
-        code = `curl -X POST "${API_BASE}${currentApi.path}" \\\n  -F "file=@/path/to/file"`;
-    } else {
-        switch(lang){
-            case "curl": 
-                code = `curl -X GET <span class="highlight">"${currentUrl}"</span>`; 
-                break;
-            case "javascript": 
-                code = `const axios = require('axios');\n\n(async () => {\n  try {\n    const res = await axios.get(<span class="highlight">"${currentUrl}"</span>);\n    console.log(res.data);\n  } catch (err) {\n    console.error(err.message);\n  }\n})();`; 
-                break;
-            case "python": 
-                code = `import requests\n\nres = requests.get(<span class="highlight">"${currentUrl}"</span>)\nprint(res.json())`; 
-                break;
-            case "php": 
-                code = `$ch = curl_init(<span class="highlight">"${currentUrl}"</span>);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\n\nencho $response;`; 
-                break;
+totalEndpoint.textContent =
+    totalApis;
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderApis(){
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+    apiContainer.innerHTML = "";
+
+    let visibleCount = 0;
+
+    apiGroups.forEach(group => {
+
+        if(
+            activeFilter !== "all" &&
+            activeFilter !== group.id
+        ){
+            return;
         }
-    }
-    codeSnippet.innerHTML = code;
+
+        const filtered =
+            group.apis.filter(api => {
+
+                const target =
+                    (
+                        api.title +
+                        " " +
+                        api.desc +
+                        " " +
+                        api.path
+                    ).toLowerCase();
+
+                return target.includes(search);
+            });
+
+        if(!filtered.length){
+            return;
+        }
+
+        visibleCount += filtered.length;
+
+
+        /* CATEGORY */
+
+        const category =
+            document.createElement("section");
+
+        category.className =
+            "api-category";
+
+
+        const categoryHead =
+            document.createElement("div");
+
+        categoryHead.className =
+            "category";
+
+
+        const icon =
+            document.createElement("div");
+
+        icon.className =
+            "category-icon";
+
+        icon.textContent =
+            group.icon;
+
+
+        const info =
+            document.createElement("div");
+
+        info.className =
+            "category-info";
+
+
+        const title =
+            document.createElement("div");
+
+        title.className =
+            "category-title";
+
+        title.textContent =
+            group.title;
+
+
+        const count =
+            document.createElement("div");
+
+        count.className =
+            "category-count";
+
+        count.textContent =
+            `${filtered.length} endpoint` +
+            (filtered.length !== 1 ? "s" : "");
+
+
+        info.appendChild(title);
+        info.appendChild(count);
+
+
+        const line =
+            document.createElement("div");
+
+        line.className =
+            "category-line";
+
+
+        categoryHead.appendChild(icon);
+        categoryHead.appendChild(info);
+        categoryHead.appendChild(line);
+
+
+        category.appendChild(categoryHead);
+
+
+        /* LIST */
+
+        const list =
+            document.createElement("div");
+
+        list.className =
+            "endpoint-list";
+
+
+        filtered.forEach(api => {
+
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "endpoint";
+
+
+            const endpointIcon =
+                document.createElement("div");
+
+            endpointIcon.className =
+                "endpoint-icon";
+
+            endpointIcon.textContent =
+                group.icon;
+
+
+            const main =
+                document.createElement("div");
+
+            main.className =
+                "endpoint-main";
+
+
+            const titleRow =
+                document.createElement("div");
+
+            titleRow.className =
+                "endpoint-title-row";
+
+
+            const apiTitle =
+                document.createElement("div");
+
+            apiTitle.className =
+                "endpoint-title";
+
+            apiTitle.textContent =
+                api.title;
+
+
+            const method =
+                document.createElement("span");
+
+            method.className =
+                "method";
+
+            method.textContent =
+                api.method || "GET";
+
+
+            titleRow.appendChild(apiTitle);
+            titleRow.appendChild(method);
+
+
+            const path =
+                document.createElement("div");
+
+            path.className =
+                "endpoint-path";
+
+            path.textContent =
+                api.path;
+
+
+            const desc =
+                document.createElement("div");
+
+            desc.className =
+                "endpoint-desc";
+
+            desc.textContent =
+                api.desc;
+
+
+            main.appendChild(titleRow);
+            main.appendChild(path);
+            main.appendChild(desc);
+
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "test-btn";
+
+            button.textContent =
+                "Test API";
+
+            button.addEventListener(
+                "click",
+                () => openModal(api)
+            );
+
+
+            card.appendChild(endpointIcon);
+            card.appendChild(main);
+            card.appendChild(button);
+
+            list.appendChild(card);
+
+        });
+
+
+        category.appendChild(list);
+
+        apiContainer.appendChild(category);
+
+    });
+
+
+    emptyState.classList.toggle(
+        "show",
+        visibleCount === 0
+    );
 }
+
+
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
+
+renderApis();
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    renderApis
+);
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+filterButton.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        filterWrap.classList.toggle("open");
+
+    }
+);
+
+
+filterOptions.forEach(option => {
+
+    option.addEventListener(
+        "click",
+        () => {
+
+            filterOptions.forEach(
+                item =>
+                    item.classList.remove("active")
+            );
+
+            option.classList.add("active");
+
+            activeFilter =
+                option.dataset.filter;
+
+            filterText.textContent =
+                option.querySelector("span")
+                    .textContent;
+
+            filterWrap.classList.remove("open");
+
+            renderApis();
+
+        }
+    );
+
+});
+
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if(!filterWrap.contains(event.target)){
+            filterWrap.classList.remove("open");
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 function openModal(api){
+
     currentApi = api;
+
     currentUrl = "";
     currentResponse = "";
-    document.getElementById("modalTitle").textContent = api.title;
-    document.getElementById("modalEndpoint").textContent = API_BASE + api.path;
-    
+
+
+    modalTitle.textContent =
+        api.title;
+
+    modalEndpoint.textContent =
+        API_BASE + api.path;
+
+
     input.value = "";
     fileInput.value = "";
 
+
     if(api.param === "none"){
-        document.getElementById("inputLabel").textContent = "No Parameter Required";
-        input.style.display = "none";
-        fileInput.style.display = "none";
-    } else if(api.param === "file"){
-        document.getElementById("inputLabel").textContent = "Upload File / Multipart";
-        input.style.display = "none";
-        fileInput.style.display = "block";
-    } else {
-        document.getElementById("inputLabel").textContent = "Enter " + api.param.toUpperCase();
-        input.placeholder = api.placeholder || "";
-        input.style.display = "block";
-        fileInput.style.display = "none";
+
+        inputGroup.style.display =
+            "none";
+
+    }else{
+
+        inputGroup.style.display =
+            "block";
+
+        inputLabel.textContent =
+            "ENTER " +
+            String(api.param)
+                .toUpperCase();
+
+        input.placeholder =
+            api.placeholder ||
+            `Masukkan ${api.param}...`;
+
     }
 
-    responseBox.className = "response";
-    responseBox.textContent = "// Klik Execute Request untuk menjalankan API...";
-    
-    mediaPreview.innerHTML = "";
-    mediaPreview.classList.remove("active");
 
-    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-    const curlTab = document.querySelector('.tab[data-lang="curl"]');
-    curlTab.classList.add("active");
+    if(api.param === "file"){
+
+        input.style.display =
+            "none";
+
+        fileInput.style.display =
+            "block";
+
+    }else{
+
+        input.style.display =
+            "block";
+
+        fileInput.style.display =
+            "none";
+
+    }
+
+
+    responseBox.className =
+        "response";
+
+    responseBox.textContent =
+        "// Klik Execute Request untuk menjalankan API...";
+
+
+    mediaPreview.innerHTML = "";
+
+    mediaPreview.classList.remove(
+        "active"
+    );
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(
+            tab =>
+                tab.classList.remove("active")
+        );
+
+
+    const curl =
+        document.querySelector(
+            '.tab[data-lang="curl"]'
+        );
+
+    curl.classList.add("active");
+
+
     updateCode("curl");
 
+
     modal.classList.add("active");
+
 }
+
 
 function closeModal(){
-    if(requestRunning) return;
+
+    if(requestRunning){
+        return;
+    }
+
     modal.classList.remove("active");
+
 }
 
-document.getElementById("closeModal").addEventListener("click", closeModal);
-modal.addEventListener("click", event => {
-    if(event.target === modal && !requestRunning) closeModal();
-});
 
-input.addEventListener("input", () => {
-    const active = document.querySelector(".tab.active");
-    updateCode(active ? active.dataset.lang : "curl");
-});
+document
+    .getElementById("closeModal")
+    .addEventListener(
+        "click",
+        closeModal
+    );
 
-document.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
-        tab.classList.add("active");
-        updateCode(tab.dataset.lang);
+
+modal.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target === modal &&
+            !requestRunning
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "Escape" &&
+            modal.classList.contains("active") &&
+            !requestRunning
+        ){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BUILD URL
+========================================================= */
+
+function buildUrl(){
+
+    if(!currentApi){
+        return API_BASE;
+    }
+
+
+    if(
+        currentApi.param === "none" ||
+        currentApi.param === "file"
+    ){
+
+        return (
+            API_BASE +
+            currentApi.path
+        );
+
+    }
+
+
+    const value =
+        input.value.trim();
+
+
+    if(!value){
+
+        return (
+            API_BASE +
+            currentApi.path
+        );
+
+    }
+
+
+    return (
+        API_BASE +
+        currentApi.path +
+        "?" +
+        encodeURIComponent(
+            currentApi.param
+        ) +
+        "=" +
+        encodeURIComponent(value)
+    );
+
+}
+
+
+/* =========================================================
+   CODE GENERATOR
+========================================================= */
+
+function updateCode(lang){
+
+    currentUrl =
+        buildUrl();
+
+
+    let code = "";
+
+
+    if(
+        currentApi &&
+        currentApi.param === "file"
+    ){
+
+        if(lang === "curl"){
+
+            code =
+`curl -X POST "${API_BASE}${currentApi.path}" \\
+  -F "file=@/path/to/file"`;
+
+        }else if(lang === "javascript"){
+
+            code =
+`const axios = require("axios");
+const FormData = require("form-data");
+const fs = require("fs");
+
+const form = new FormData();
+
+form.append(
+  "file",
+  fs.createReadStream("./file.jpg")
+);
+
+const res = await axios.post(
+  "${API_BASE}${currentApi.path}",
+  form,
+  {
+    headers: form.getHeaders()
+  }
+);
+
+console.log(res.data);`;
+
+        }else if(lang === "python"){
+
+            code =
+`import requests
+
+with open("file.jpg", "rb") as f:
+    res = requests.post(
+        "${API_BASE}${currentApi.path}",
+        files={"file": f}
+    )
+
+print(res.json())`;
+
+        }else if(lang === "php"){
+
+            code =
+`$ch = curl_init(
+    "${API_BASE}${currentApi.path}"
+);
+
+curl_setopt($ch, CURLOPT_POST, true);
+
+curl_setopt(
+    $ch,
+    CURLOPT_POSTFIELDS,
+    [
+        "file" =>
+        new CURLFile("file.jpg")
+    ]
+);
+
+curl_setopt(
+    $ch,
+    CURLOPT_RETURNTRANSFER,
+    true
+);
+
+$response = curl_exec($ch);
+
+curl_close($ch);
+
+echo $response;`;
+
+        }
+
+    }else{
+
+        if(lang === "curl"){
+
+            code =
+`curl -X GET "${currentUrl}"`;
+
+        }
+
+
+        if(lang === "javascript"){
+
+            code =
+`const axios = require("axios");
+
+(async () => {
+
+  try {
+
+    const res = await axios.get(
+      "${currentUrl}"
+    );
+
+    console.log(res.data);
+
+  } catch (err) {
+
+    console.error(
+      err.message
+    );
+
+  }
+
+})();`;
+
+        }
+
+
+        if(lang === "python"){
+
+            code =
+`import requests
+
+res = requests.get(
+    "${currentUrl}"
+)
+
+print(res.json())`;
+
+        }
+
+
+        if(lang === "php"){
+
+            code =
+`$ch = curl_init(
+    "${currentUrl}"
+);
+
+curl_setopt(
+    $ch,
+    CURLOPT_RETURNTRANSFER,
+    true
+);
+
+$response = curl_exec($ch);
+
+curl_close($ch);
+
+echo $response;`;
+
+        }
+
+    }
+
+
+    codeSnippet.textContent =
+        code;
+
+}
+
+
+/* =========================================================
+   INPUT UPDATE
+========================================================= */
+
+input.addEventListener(
+    "input",
+    () => {
+
+        const active =
+            document.querySelector(
+                ".tab.active"
+            );
+
+        updateCode(
+            active
+                ? active.dataset.lang
+                : "curl"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   FILE UPDATE
+========================================================= */
+
+fileInput.addEventListener(
+    "change",
+    () => {
+
+        const active =
+            document.querySelector(
+                ".tab.active"
+            );
+
+        updateCode(
+            active
+                ? active.dataset.lang
+                : "curl"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+document
+    .querySelectorAll(".tab")
+    .forEach(tab => {
+
+        tab.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".tab")
+                    .forEach(
+                        item =>
+                            item.classList.remove(
+                                "active"
+                            )
+                    );
+
+                tab.classList.add("active");
+
+                updateCode(
+                    tab.dataset.lang
+                );
+
+            }
+        );
+
     });
-});
 
-function showToast(message = "Tersalin!"){
-    const toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message = "Tersalin!"
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            () =>
+                toast.classList.remove(
+                    "show"
+                ),
+            1800
+        );
+
 }
 
-async function copyText(text, message){
-    if(!text){ showToast("Tidak ada data"); return; }
+
+/* =========================================================
+   COPY
+========================================================= */
+
+async function copyText(
+    text,
+    message
+){
+
+    if(!text){
+
+        showToast(
+            "Tidak ada data"
+        );
+
+        return;
+
+    }
+
+
     try{
-        await navigator.clipboard.writeText(text);
+
+        await navigator.clipboard
+            .writeText(text);
+
     }catch{
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
+
+        const textarea =
+            document.createElement(
+                "textarea"
+            );
+
+        textarea.value =
+            text;
+
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.opacity =
+            "0";
+
+        document.body.appendChild(
+            textarea
+        );
+
         textarea.focus();
         textarea.select();
-        document.execCommand("copy");
+
+        document.execCommand(
+            "copy"
+        );
+
         textarea.remove();
+
     }
+
+
     showToast(message);
+
 }
 
-document.getElementById("copyEndpoint").addEventListener("click", () => copyText(currentUrl || buildUrl(), "Endpoint tersalin!"));
-document.getElementById("copyResponse").addEventListener("click", () => copyText(currentResponse, "Response tersalin!"));
-document.getElementById("copyCode").addEventListener("click", () => copyText(codeSnippet.innerText, "Code tersalin!"));
-document.getElementById("openEndpoint").addEventListener("click", () => {
-    const url = currentUrl || buildUrl();
-    window.open(url, "_blank", "noopener,noreferrer");
-});
 
-function isImage(contentType = "", url = ""){ return contentType.includes("image/") || /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i.test(url); }
-function isVideo(contentType = "", url = ""){ return contentType.includes("video/") || /\.(mp4|webm|mov|mkv|avi)(\?|$)/i.test(url); }
-function extractUrls(text){ if(typeof text !== "string") return []; return text.match(/https?:\/\/[^\s"'<>]+/gi) || []; }
+/* =========================================================
+   COPY BUTTONS
+========================================================= */
+
+document
+    .getElementById("copyEndpoint")
+    .addEventListener(
+        "click",
+        () =>
+            copyText(
+                currentUrl ||
+                buildUrl(),
+                "Endpoint tersalin!"
+            )
+    );
+
+
+document
+    .getElementById("copyResponse")
+    .addEventListener(
+        "click",
+        () =>
+            copyText(
+                currentResponse,
+                "Response tersalin!"
+            )
+    );
+
+
+document
+    .getElementById("copyCode")
+    .addEventListener(
+        "click",
+        () =>
+            copyText(
+                codeSnippet.textContent,
+                "Code tersalin!"
+            )
+    );
+
+
+/* =========================================================
+   OPEN ENDPOINT
+========================================================= */
+
+document
+    .getElementById("openEndpoint")
+    .addEventListener(
+        "click",
+        () => {
+
+            const url =
+                currentUrl ||
+                buildUrl();
+
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   MEDIA DETECTOR
+========================================================= */
+
+function isImage(
+    contentType = "",
+    url = ""
+){
+
+    return (
+        contentType.includes("image/") ||
+        /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i
+            .test(url)
+    );
+
+}
+
+
+function isVideo(
+    contentType = "",
+    url = ""
+){
+
+    return (
+        contentType.includes("video/") ||
+        /\.(mp4|webm|mov|mkv|avi)(\?|$)/i
+            .test(url)
+    );
+
+}
+
+
+function extractUrls(text){
+
+    if(
+        typeof text !== "string"
+    ){
+
+        return [];
+
+    }
+
+
+    return (
+        text.match(
+            /https?:\/\/[^\s"'<>]+/gi
+        ) || []
+    );
+
+}
+
+
+/* =========================================================
+   DEEP MEDIA FINDER
+========================================================= */
 
 function findMediaUrlDeep(data){
-    if(!data) return null;
+
+    if(!data){
+        return null;
+    }
+
+
     if(typeof data === "string"){
-        const urls = extractUrls(data);
-        for(const url of urls){ if(isImage("",url) || isVideo("",url)) return url; }
-        if(/^https?:\/\//i.test(data.trim())) return data.trim();
-        return null;
-    }
-    if(Array.isArray(data)){
-        for(const item of data){ const result = findMediaUrlDeep(item); if(result) return result; }
-        return null;
-    }
-    if(typeof data === "object"){
-        const priorityKeys = ["url", "image", "imageUrl", "image_url", "img", "photo", "picture", "thumbnail", "thumbnailUrl", "thumbnail_url", "media", "mediaUrl", "media_url", "video", "videoUrl", "video_url", "download", "downloadUrl", "download_url", "result", "data", "displayUrl"];
-        for(const key of priorityKeys){
-            if(data[key] !== undefined && data[key] !== null){
-                const result = findMediaUrlDeep(data[key]);
-                if(result) return result;
+
+        const urls =
+            extractUrls(data);
+
+
+        for(
+            const url of urls
+        ){
+
+            if(
+                isImage("",url) ||
+                isVideo("",url)
+            ){
+
+                return url;
+
             }
+
         }
-        for(const key of Object.keys(data)){
-            const result = findMediaUrlDeep(data[key]);
-            if(result) return result;
+
+
+        if(
+            /^https?:\/\//i
+                .test(data.trim())
+        ){
+
+            return data.trim();
+
         }
+
+
+        return null;
+
     }
+
+
+    if(Array.isArray(data)){
+
+        for(
+            const item of data
+        ){
+
+            const result =
+                findMediaUrlDeep(
+                    item
+                );
+
+            if(result){
+                return result;
+            }
+
+        }
+
+        return null;
+
+    }
+
+
+    if(typeof data === "object"){
+
+        const priorityKeys = [
+
+            "url",
+            "image",
+            "imageUrl",
+            "image_url",
+            "img",
+            "photo",
+            "picture",
+            "thumbnail",
+            "thumbnailUrl",
+            "thumbnail_url",
+            "media",
+            "mediaUrl",
+            "media_url",
+            "video",
+            "videoUrl",
+            "video_url",
+            "download",
+            "downloadUrl",
+            "download_url",
+            "result",
+            "data",
+            "displayUrl"
+
+        ];
+
+
+        for(
+            const key of priorityKeys
+        ){
+
+            if(
+                data[key] !== undefined &&
+                data[key] !== null
+            ){
+
+                const result =
+                    findMediaUrlDeep(
+                        data[key]
+                    );
+
+                if(result){
+                    return result;
+                }
+
+            }
+
+        }
+
+
+        for(
+            const key of Object.keys(data)
+        ){
+
+            const result =
+                findMediaUrlDeep(
+                    data[key]
+                );
+
+            if(result){
+                return result;
+            }
+
+        }
+
+    }
+
+
     return null;
+
 }
 
-function showMedia(url, type = ""){
+
+/* =========================================================
+   SHOW MEDIA
+========================================================= */
+
+function showMedia(
+    url,
+    type = ""
+){
+
     mediaPreview.innerHTML = "";
+
+
     let element = null;
-    if(isImage(type,url)){
-        element = document.createElement("img");
-        element.src = url;
-        element.alt = "API Image Response";
-        element.loading = "lazy";
-    }else if(isVideo(type,url)){
-        element = document.createElement("video");
-        element.src = url;
-        element.controls = true;
-        element.playsInline = true;
+
+
+    if(
+        isImage(
+            type,
+            url
+        )
+    ){
+
+        element =
+            document.createElement(
+                "img"
+            );
+
+        element.src =
+            url;
+
+        element.alt =
+            "API Image Response";
+
+        element.loading =
+            "lazy";
+
+    }else if(
+        isVideo(
+            type,
+            url
+        )
+    ){
+
+        element =
+            document.createElement(
+                "video"
+            );
+
+        element.src =
+            url;
+
+        element.controls =
+            true;
+
+        element.playsInline =
+            true;
+
     }
-    if(!element) return;
-    
-    mediaPreview.appendChild(element);
-    
-    const urlText = document.createElement("span");
-    urlText.className = "media-url";
-    urlText.textContent = url;
-    mediaPreview.appendChild(urlText);
-    
-    const buttons = document.createElement("div");
-    buttons.className = "media-buttons";
-    
-    const copy = document.createElement("button");
-    copy.className = "small-btn";
-    copy.textContent = "🔗 Salin URL";
-    copy.onclick = () => copyText(url, "URL media tersalin!");
-    
-    const open = document.createElement("button");
-    open.className = "small-btn";
-    open.textContent = "↗ Buka Media";
-    open.onclick = () => window.open(url, "_blank", "noopener,noreferrer");
-    
-    buttons.appendChild(copy);
-    buttons.appendChild(open);
-    mediaPreview.appendChild(buttons);
-    mediaPreview.classList.add("active");
+
+
+    if(!element){
+        return;
+    }
+
+
+    mediaPreview.appendChild(
+        element
+    );
+
+
+    const urlText =
+        document.createElement(
+            "span"
+        );
+
+    urlText.className =
+        "media-url";
+
+    urlText.textContent =
+        url;
+
+
+    mediaPreview.appendChild(
+        urlText
+    );
+
+
+    const buttons =
+        document.createElement(
+            "div"
+        );
+
+    buttons.className =
+        "media-buttons";
+
+
+    const copy =
+        document.createElement(
+            "button"
+        );
+
+    copy.className =
+        "small-btn";
+
+    copy.textContent =
+        "🔗 Salin URL";
+
+    copy.onclick =
+        () =>
+            copyText(
+                url,
+                "URL media tersalin!"
+            );
+
+
+    const open =
+        document.createElement(
+            "button"
+        );
+
+    open.className =
+        "small-btn";
+
+    open.textContent =
+        "↗ Buka Media";
+
+    open.onclick =
+        () =>
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+
+    buttons.appendChild(
+        copy
+    );
+
+    buttons.appendChild(
+        open
+    );
+
+
+    mediaPreview.appendChild(
+        buttons
+    );
+
+
+    mediaPreview.classList.add(
+        "active"
+    );
+
 }
 
-async function showProgress(message){
-    responseBox.className = "response loading";
-    responseBox.textContent = message;
-    await sleep(350);
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+async function showProgress(
+    message
+){
+
+    responseBox.className =
+        "response loading";
+
+    responseBox.textContent =
+        message;
+
+    await sleep(300);
+
 }
 
-executeButton.addEventListener("click", async () => {
-    if(requestRunning) return;
 
-    requestRunning = true;
-    executeButton.disabled = true;
-    executeButton.textContent = "Processing...";
-    
-    currentUrl = buildUrl();
-    currentResponse = "";
-    mediaPreview.innerHTML = "";
-    mediaPreview.classList.remove("active");
+function sleep(ms){
 
-    try{
-        await showProgress("⏳ Connecting to API...");
-        const start = performance.now();
-        let res;
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                ms
+            )
+    );
+
+}
+
+
+/* =========================================================
+   EXECUTE REQUEST
+========================================================= */
+
+executeButton.addEventListener(
+    "click",
+    async () => {
+
+        if(requestRunning){
+            return;
+        }
+
+
+        requestRunning =
+            true;
+
+        executeButton.disabled =
+            true;
+
+        executeButton.textContent =
+            "Processing...";
+
+
+        currentUrl =
+            buildUrl();
+
+        currentResponse =
+            "";
+
+
+        mediaPreview.innerHTML =
+            "";
+
+        mediaPreview.classList.remove(
+            "active"
+        );
+
 
         try{
-            res = await fetch(currentUrl, { method:"GET", cache:"no-store", headers:{ "Accept": "*/*" } });
-        }catch(error){
-            throw new Error("Gagal terhubung ke API. Periksa CORS atau status server.");
-        }
 
-        const elapsed = Math.round(performance.now() - start);
-        const contentType = (res.headers.get("content-type") || "").toLowerCase();
+            await showProgress(
+                "⏳ Connecting to API..."
+            );
 
-        if(contentType.includes("image/")){
-            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nMedia URL:\n${currentUrl}`;
-            showMedia(currentUrl, contentType);
-            responseBox.className = "response";
-            responseBox.textContent = `🖼️ Image Response\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n✅ Request completed`;
-            return;
-        }
 
-        if(contentType.includes("video/")){
-            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nMedia URL:\n${currentUrl}`;
-            showMedia(currentUrl, contentType);
-            responseBox.className = "response";
-            responseBox.textContent = `🎬 Video Response\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n✅ Request completed`;
-            return;
-        }
+            const start =
+                performance.now();
 
-        const raw = await res.text();
-        let data;
-        try{ data = JSON.parse(raw); }catch{ data = raw; }
 
-        let mediaUrl = (data && typeof data === "object") ? findMediaUrlDeep(data) : findMediaUrlDeep(raw);
-        if(mediaUrl){
-            let mediaType = "";
+            let res;
+
+
             try{
-                const mediaResponse = await fetch(mediaUrl, { method:"HEAD", cache:"no-store" });
-                mediaType = (mediaResponse.headers.get("content-type") || "").toLowerCase();
-            }catch{}
-            if(mediaType || isImage("", mediaUrl) || isVideo("", mediaUrl)){
-                showMedia(mediaUrl, mediaType);
+
+                if(
+                    currentApi.param ===
+                    "file" &&
+                    fileInput.files.length > 0
+                ){
+
+                    const formData =
+                        new FormData();
+
+                    formData.append(
+                        "file",
+                        fileInput.files[0]
+                    );
+
+
+                    res =
+                        await fetch(
+                            API_BASE +
+                            currentApi.path,
+                            {
+                                method:
+                                    "POST",
+
+                                body:
+                                    formData
+                            }
+                        );
+
+                }else{
+
+                    res =
+                        await fetch(
+                            currentUrl,
+                            {
+                                method:
+                                    "GET",
+
+                                cache:
+                                    "no-store",
+
+                                headers:{
+                                    "Accept":
+                                        "*/*"
+                                }
+                            }
+                        );
+
+                }
+
+            }catch(error){
+
+                throw new Error(
+                    "Gagal terhubung ke API. Periksa CORS atau status server."
+                );
+
             }
+
+
+            const elapsed =
+                Math.round(
+                    performance.now() -
+                    start
+                );
+
+
+            const contentType =
+                (
+                    res.headers.get(
+                        "content-type"
+                    ) || ""
+                ).toLowerCase();
+
+
+            /* IMAGE RESPONSE */
+
+            if(
+                contentType.includes(
+                    "image/"
+                )
+            ){
+
+                currentResponse =
+`HTTP ${res.status} ${res.statusText}
+Content-Type: ${contentType}
+Response time: ${elapsed} ms
+
+Media URL:
+${currentUrl}`;
+
+
+                showMedia(
+                    currentUrl,
+                    contentType
+                );
+
+
+                responseBox.className =
+                    "response";
+
+
+                responseBox.textContent =
+`🖼️ Image Response
+
+HTTP ${res.status} ${res.statusText}
+Response time: ${elapsed} ms
+
+✅ Request completed`;
+
+
+                return;
+
+            }
+
+
+            /* VIDEO RESPONSE */
+
+            if(
+                contentType.includes(
+                    "video/"
+                )
+            ){
+
+                currentResponse =
+`HTTP ${res.status} ${res.statusText}
+Content-Type: ${contentType}
+Response time: ${elapsed} ms
+
+Media URL:
+${currentUrl}`;
+
+
+                showMedia(
+                    currentUrl,
+                    contentType
+                );
+
+
+                responseBox.className =
+                    "response";
+
+
+                responseBox.textContent =
+`🎬 Video Response
+
+HTTP ${res.status} ${res.statusText}
+Response time: ${elapsed} ms
+
+✅ Request completed`;
+
+
+                return;
+
+            }
+
+
+            /* TEXT / JSON */
+
+            const raw =
+                await res.text();
+
+
+            let data;
+
+
+            try{
+
+                data =
+                    JSON.parse(raw);
+
+            }catch{
+
+                data =
+                    raw;
+
+            }
+
+
+            /* MEDIA INSIDE JSON */
+
+            const mediaUrl =
+                (
+                    data &&
+                    typeof data === "object"
+                )
+                    ? findMediaUrlDeep(data)
+                    : findMediaUrlDeep(raw);
+
+
+            if(mediaUrl){
+
+                let mediaType =
+                    "";
+
+
+                try{
+
+                    const mediaResponse =
+                        await fetch(
+                            mediaUrl,
+                            {
+                                method:
+                                    "HEAD",
+
+                                cache:
+                                    "no-store"
+                            }
+                        );
+
+
+                    mediaType =
+                        (
+                            mediaResponse
+                                .headers
+                                .get(
+                                    "content-type"
+                                ) || ""
+                        ).toLowerCase();
+
+                }catch{}
+
+
+                if(
+                    mediaType ||
+                    isImage("",mediaUrl) ||
+                    isVideo("",mediaUrl)
+                ){
+
+                    showMedia(
+                        mediaUrl,
+                        mediaType
+                    );
+
+                }
+
+            }
+
+
+            currentResponse =
+                (
+                    data &&
+                    typeof data === "object"
+                )
+                    ? JSON.stringify(
+                        data,
+                        null,
+                        2
+                    )
+                    : String(data);
+
+
+            responseBox.className =
+                res.ok
+                    ? "response"
+                    : "response error";
+
+
+            responseBox.textContent =
+`${res.ok ? "✅" : "⚠️"} Request completed
+
+HTTP ${res.status} ${res.statusText}
+Response time: ${elapsed} ms
+
+${currentResponse}`;
+
+        }catch(error){
+
+            currentResponse =
+                error?.message ||
+                "Unknown error";
+
+
+            responseBox.className =
+                "response error";
+
+
+            responseBox.textContent =
+`❌ API Request Failed
+
+${currentResponse}
+
+Endpoint:
+${currentUrl}`;
+
+        }finally{
+
+            requestRunning =
+                false;
+
+            executeButton.disabled =
+                false;
+
+            executeButton.textContent =
+                "Execute Request";
+
         }
 
-        currentResponse = (data && typeof data === "object") ? JSON.stringify(data, null, 2) : String(data);
-        responseBox.className = res.ok ? "response" : "response error";
-        responseBox.textContent = `✅ Request completed\n\nHTTP ${res.status} ${res.statusText}\nResponse time: ${elapsed} ms\n\n` + currentResponse;
-
-    }catch(error){
-        currentResponse = error?.message || "Unknown error";
-        responseBox.className = "response error";
-        responseBox.textContent = `❌ API Request Failed\n\n` + currentResponse + `\n\nEndpoint:\n` + currentUrl;
-    }finally{
-        requestRunning = false;
-        executeButton.disabled = false;
-        executeButton.textContent = "Execute Request";
     }
-});
+);
+
+
+/* =========================================================
+   ONLINE CHECK
+========================================================= */
+
+async function checkApiStatus(){
+
+    try{
+
+        const controller =
+            new AbortController();
+
+        const timeout =
+            setTimeout(
+                () =>
+                    controller.abort(),
+                5000
+            );
+
+
+        await fetch(
+            API_BASE,
+            {
+                method:"GET",
+                mode:"no-cors",
+                cache:"no-store",
+                signal:controller.signal
+            }
+        );
+
+
+        clearTimeout(timeout);
+
+    }catch{
+
+        /* silent */
+
+    }
+
+}
+
+
+checkApiStatus();
+
 </script>
 
 </body>
