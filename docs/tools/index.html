@@ -335,10 +335,6 @@ button:disabled{
     justify-content:center;
 }
 
-.category-option.active .radio{
-    border-color:#64748b;
-}
-
 .radio-dot{
     width:12px;
     height:12px;
@@ -599,21 +595,12 @@ button:disabled{
     box-shadow:0 0 0 2px rgba(59,130,246,.2);
 }
 
-/* MULTI PARAM */
-
 .param-group{
     margin-bottom:2px;
 }
 
 .param-group .input{
     margin-bottom:14px;
-}
-
-.param-hint{
-    margin-top:-8px;
-    margin-bottom:14px;
-    color:#64748b;
-    font-size:9px;
 }
 
 /* EMOJI */
@@ -750,6 +737,7 @@ button:disabled{
 .response-actions{
     display:flex;
     gap:6px;
+    flex-wrap:wrap;
 }
 
 .small-btn{
@@ -841,7 +829,7 @@ button:disabled{
     flex:1;
 }
 
-/* TEMP MAIL */
+/* TEMPMAIL */
 
 .tempmail-box{
     padding:14px;
@@ -855,17 +843,127 @@ button:disabled{
     color:var(--blue-light);
     font-size:10px;
     font-weight:700;
+    margin-bottom:10px;
+}
+
+.tempmail-item{
     margin-bottom:8px;
 }
 
-.tempmail-email{
-    padding:12px;
+.tempmail-item:last-child{
+    margin-bottom:0;
+}
+
+.tempmail-label{
+    color:#64748b;
+    font-size:9px;
+    margin-bottom:4px;
+}
+
+.tempmail-value{
+    padding:10px;
     background:#000;
     border:1px solid var(--border);
     border-radius:9px;
     color:#fff;
     font-family:'JetBrains Mono',monospace;
-    font-size:10px;
+    font-size:9px;
+    word-break:break-all;
+}
+
+.tempmail-actions{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+    margin-top:10px;
+}
+
+.tempmail-actions .small-btn{
+    width:100%;
+}
+
+.mail-list{
+    margin-top:12px;
+}
+
+.mail-item{
+    padding:12px;
+    margin-bottom:8px;
+    background:#050505;
+    border:1px solid var(--border);
+    border-radius:10px;
+}
+
+.mail-item:hover{
+    border-color:rgba(59,130,246,.5);
+}
+
+.mail-subject{
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.mail-meta{
+    color:#64748b;
+    font-size:8px;
+    line-height:1.5;
+}
+
+.mail-id{
+    margin-top:7px;
+    padding:7px;
+    border-radius:7px;
+    background:#000;
+    color:var(--blue-light);
+    font-family:'JetBrains Mono',monospace;
+    font-size:8px;
+    word-break:break-all;
+}
+
+.message-detail{
+    margin-top:12px;
+}
+
+.message-block{
+    margin-bottom:10px;
+}
+
+.message-block-title{
+    color:#64748b;
+    font-size:9px;
+    margin-bottom:5px;
+    text-transform:uppercase;
+}
+
+.message-block-value{
+    padding:10px;
+    background:#000;
+    border:1px solid var(--border);
+    border-radius:9px;
+    color:#fff;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;
+    line-height:1.6;
+    word-break:break-word;
+    white-space:pre-wrap;
+}
+
+.url-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.url-item{
+    padding:8px;
+    background:#000;
+    border:1px solid var(--border);
+    border-radius:7px;
+    color:var(--blue-light);
+    font-family:'JetBrains Mono',monospace;
+    font-size:8px;
     word-break:break-all;
 }
 
@@ -950,9 +1048,9 @@ button:disabled{
         padding:8px 13px;
     }
 
-    .response-actions{
-        flex-wrap:wrap;
-        justify-content:flex-end;
+    .response-head{
+        align-items:flex-start;
+        flex-direction:column;
     }
 
     .modal-foot{
@@ -961,6 +1059,10 @@ button:disabled{
 
     .open-btn{
         padding:12px;
+    }
+
+    .tempmail-actions{
+        grid-template-columns:1fr;
     }
 }
 </style>
@@ -982,26 +1084,16 @@ button:disabled{
 
         </a>
 
-        <div class="logo">
-            🚀
-        </div>
+        <div class="logo">🚀</div>
 
         <div>
-
-            <h1>
-                ReyCloudSHP API
-            </h1>
-
-            <p>
-                API Documentation & Playground
-            </p>
-
+            <h1>ReyCloudSHP API</h1>
+            <p>API Documentation & Playground</p>
         </div>
 
     </div>
 
 </header>
-
 
 <section class="hero glass">
 
@@ -1016,12 +1108,9 @@ button:disabled{
 
 </section>
 
-
 <div class="search-wrap">
 
-    <span class="search-icon">
-        🔎
-    </span>
+    <span class="search-icon">🔎</span>
 
     <input
         id="searchInput"
@@ -1033,19 +1122,13 @@ button:disabled{
 
 </div>
 
-
 <div class="category-wrap" id="categoryWrap">
 
-    <button
-        class="category-trigger"
-        id="categoryTrigger"
-    >
+    <button class="category-trigger" id="categoryTrigger">
 
         <span class="category-left">
 
-            <span id="categoryIcon">
-                ◉
-            </span>
+            <span id="categoryIcon">◉</span>
 
             <span id="categoryText">
                 Semua Kategori
@@ -1053,17 +1136,11 @@ button:disabled{
 
         </span>
 
-        <span class="category-arrow">
-            ⌄
-        </span>
+        <span class="category-arrow">⌄</span>
 
     </button>
 
-
-    <div
-        class="category-menu"
-        id="categoryMenu"
-    >
+    <div class="category-menu" id="categoryMenu">
 
         <button
             class="category-option active"
@@ -1083,7 +1160,6 @@ button:disabled{
             </span>
 
         </button>
-
 
         <button
             class="category-option"
@@ -1107,7 +1183,6 @@ button:disabled{
             </span>
 
         </button>
-
 
         <button
             class="category-option"
@@ -1136,7 +1211,6 @@ button:disabled{
 
 </div>
 
-
 <div class="endpoint-stats">
 
     <span>
@@ -1152,7 +1226,6 @@ button:disabled{
 
 </div>
 
-
 <div id="apiListContainer"></div>
 
 </div>
@@ -1160,10 +1233,7 @@ button:disabled{
 
 <!-- MODAL -->
 
-<div
-    class="overlay"
-    id="apiModal"
->
+<div class="overlay" id="apiModal">
 
 <div class="modal">
 
@@ -1181,20 +1251,15 @@ button:disabled{
 
         </div>
 
-        <button
-            class="close"
-            id="closeModal"
-        >
+        <button class="close" id="closeModal">
             ✕
         </button>
 
     </div>
 
-
     <div class="modal-body">
 
         <div id="dynamicParams"></div>
-
 
         <input
             id="apiInput"
@@ -1205,14 +1270,12 @@ button:disabled{
             style="display:none;"
         >
 
-
         <input
             id="apiFileInput"
             class="input"
             type="file"
             style="display:none;padding:10px;"
         >
-
 
         <!-- EMOJI -->
 
@@ -1234,12 +1297,9 @@ button:disabled{
                     😹,🚀,😎,☠️,🤓
                 </span>
 
-                <span>
-                    ▾
-                </span>
+                <span>▾</span>
 
             </div>
-
 
             <div
                 class="custom-options"
@@ -1292,69 +1352,45 @@ button:disabled{
 
         </div>
 
-
         <!-- LANGUAGE -->
 
         <div class="tabs">
 
-            <button
-                class="tab active"
-                data-lang="curl"
-            >
+            <button class="tab active" data-lang="curl">
                 cURL
             </button>
 
-            <button
-                class="tab"
-                data-lang="javascript"
-            >
+            <button class="tab" data-lang="javascript">
                 Node.js
             </button>
 
-            <button
-                class="tab"
-                data-lang="python"
-            >
+            <button class="tab" data-lang="python">
                 Python
             </button>
 
-            <button
-                class="tab"
-                data-lang="php"
-            >
+            <button class="tab" data-lang="php">
                 PHP
             </button>
 
         </div>
 
-
         <!-- CODE -->
 
         <div class="code-wrap">
 
-            <pre
-                class="code"
-                id="codeSnippet"
-            >...</pre>
+            <pre class="code" id="codeSnippet">...</pre>
 
-            <button
-                class="copy-code"
-                id="copyCode"
-            >
+            <button class="copy-code" id="copyCode">
                 Salin
             </button>
 
         </div>
 
-
         <!-- RESPONSE -->
 
         <div class="response-head">
 
-            <label
-                class="label"
-                style="margin:0"
-            >
+            <label class="label" style="margin:0">
                 API Response
             </label>
 
@@ -1378,14 +1414,12 @@ button:disabled{
 
         </div>
 
-
         <div
             class="response"
             id="apiResponse"
         >
             // Klik Execute Request untuk menjalankan API...
         </div>
-
 
         <div
             class="media"
@@ -1394,20 +1428,13 @@ button:disabled{
 
     </div>
 
-
     <div class="modal-foot">
 
-        <button
-            class="open-btn"
-            id="openEndpoint"
-        >
+        <button class="open-btn" id="openEndpoint">
             ↗ Buka
         </button>
 
-        <button
-            class="execute-btn"
-            id="executeRequest"
-        >
+        <button class="execute-btn" id="executeRequest">
             Execute Request
         </button>
 
@@ -1417,11 +1444,7 @@ button:disabled{
 
 </div>
 
-
-<div
-    class="toast"
-    id="toast"
->
+<div class="toast" id="toast">
     Tersalin!
 </div>
 
@@ -1495,40 +1518,99 @@ const apiList = [
         placeholder:"10900123"
     },
 
+    /* TEMPMAIL CREATE */
+
     {
         category:"tools",
         categoryName:"Tools & Utilities",
         categoryIcon:"🛠️",
         title:"TempMail Create",
-        desc:"Generate temporary email address",
+        desc:"Membuat temporary email baru",
         path:"/utility/tempmail/create",
+        method:"GET",
         param:"none",
         placeholder:"",
         tempmailCreate:true
     },
+
+    /* TEMPMAIL INBOX */
 
     {
         category:"tools",
         categoryName:"Tools & Utilities",
         categoryIcon:"🛠️",
         title:"TempMail Inbox",
-        desc:"Check inbox menggunakan email dan token",
+        desc:"Melihat inbox temporary email",
         path:"/utility/tempmail/inbox",
+        method:"GET",
         params:[
-            {
-                name:"email",
-                label:"📧 Email",
-                placeholder:"user@domain.com",
-                type:"email"
-            },
             {
                 name:"token",
                 label:"🔑 Token",
                 placeholder:"Masukkan token TempMail",
-                type:"text"
+                type:"text",
+                required:true
             }
         ],
         tempmailInbox:true
+    },
+
+    /* TEMPMAIL MESSAGE */
+
+    {
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"TempMail Message",
+        desc:"Mengambil detail pesan berdasarkan Message ID",
+        path:"/utility/tempmail/message",
+        method:"GET",
+        params:[
+            {
+                name:"token",
+                label:"🔑 Token",
+                placeholder:"Masukkan token TempMail",
+                type:"text",
+                required:true
+            },
+            {
+                name:"messageId",
+                label:"🆔 Message ID",
+                placeholder:"Masukkan Message ID",
+                type:"text",
+                required:true
+            }
+        ],
+        tempmailMessage:true
+    },
+
+    /* TEMPMAIL DELETE */
+
+    {
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"TempMail Delete",
+        desc:"Menghapus akun temporary email",
+        path:"/utility/tempmail/delete",
+        method:"DELETE",
+        params:[
+            {
+                name:"token",
+                label:"🔑 Token",
+                placeholder:"Masukkan token TempMail",
+                type:"text",
+                required:true
+            },
+            {
+                name:"accountId",
+                label:"🆔 Account ID",
+                placeholder:"Masukkan Account ID",
+                type:"text",
+                required:true
+            }
+        ],
+        tempmailDelete:true
     },
 
     {
@@ -1669,6 +1751,134 @@ let toastTimer = null;
 
 /*
 ============================================================
+TEMPMAIL SESSION
+============================================================
+*/
+
+const TEMPMAIL_STORAGE_KEY =
+    "reycloud_tempmail_session";
+
+
+function getTempMailSession(){
+
+    try{
+
+        const raw =
+            sessionStorage.getItem(
+                TEMPMAIL_STORAGE_KEY
+            );
+
+        if(!raw){
+            return null;
+        }
+
+        return JSON.parse(raw);
+
+    }catch{
+
+        return null;
+
+    }
+
+}
+
+
+function saveTempMailSession(data){
+
+    if(!data){
+        return;
+    }
+
+    const session = {
+
+        email:
+            data.email ||
+            "",
+
+        username:
+            data.username ||
+            "",
+
+        domain:
+            data.domain ||
+            "",
+
+        password:
+            data.password ||
+            "",
+
+        token:
+            data.token ||
+            "",
+
+        account:
+            data.account ||
+            {},
+
+        savedAt:
+            Date.now()
+
+    };
+
+
+    try{
+
+        sessionStorage.setItem(
+            TEMPMAIL_STORAGE_KEY,
+            JSON.stringify(session)
+        );
+
+    }catch(err){
+
+        console.error(
+            "[TEMPMAIL STORAGE]",
+            err
+        );
+
+    }
+
+}
+
+
+function clearTempMailSession(){
+
+    try{
+
+        sessionStorage.removeItem(
+            TEMPMAIL_STORAGE_KEY
+        );
+
+    }catch{}
+
+}
+
+
+function getTempMailToken(){
+
+    const session =
+        getTempMailSession();
+
+    return session?.token || "";
+
+}
+
+
+function getTempMailAccountId(){
+
+    const session =
+        getTempMailSession();
+
+    return (
+        session?.account?.id ||
+        session?.accountId ||
+        ""
+    );
+
+}
+
+
+/*
+============================================================
 UTILITIES
 ============================================================
 */
@@ -1676,7 +1886,8 @@ UTILITIES
 function sleep(ms){
 
     return new Promise(
-        resolve => setTimeout(resolve,ms)
+        resolve =>
+            setTimeout(resolve,ms)
     );
 
 }
@@ -1716,11 +1927,14 @@ async function copyText(
         showToast("Tidak ada data");
 
         return;
+
     }
 
     try{
 
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.writeText(
+            String(text)
+        );
 
     }catch{
 
@@ -1728,7 +1942,7 @@ async function copyText(
             document.createElement("textarea");
 
         textarea.value =
-            text;
+            String(text);
 
         textarea.style.position =
             "fixed";
@@ -1746,9 +1960,29 @@ async function copyText(
         document.execCommand("copy");
 
         textarea.remove();
+
     }
 
     showToast(message);
+
+}
+
+
+function safeJson(data){
+
+    try{
+
+        return JSON.stringify(
+            data,
+            null,
+            2
+        );
+
+    }catch{
+
+        return String(data);
+
+    }
 
 }
 
@@ -1792,8 +2026,10 @@ function renderList(){
                     .toLowerCase()
                     .includes(query);
 
-            return categoryMatch &&
-                   searchMatch;
+            return (
+                categoryMatch &&
+                searchMatch
+            );
 
         });
 
@@ -1808,6 +2044,7 @@ function renderList(){
     if(!filtered.length){
 
         container.innerHTML = `
+
             <div class="empty glass">
 
                 <div class="empty-icon">
@@ -1823,9 +2060,11 @@ function renderList(){
                 </div>
 
             </div>
+
         `;
 
         return;
+
     }
 
 
@@ -1889,7 +2128,7 @@ function renderList(){
                 document.createElement("p");
 
             path.textContent =
-                api.path;
+                `${api.method || "GET"} ${api.path}`;
 
 
             const desc =
@@ -1920,7 +2159,8 @@ function renderList(){
                     "disabled"
                 );
 
-                button.disabled = true;
+                button.disabled =
+                    true;
 
             }else{
 
@@ -1929,7 +2169,8 @@ function renderList(){
 
                 button.addEventListener(
                     "click",
-                    () => openModal(api)
+                    () =>
+                        openModal(api)
                 );
 
             }
@@ -2168,6 +2409,7 @@ function getParamValues(){
 
     const result = {};
 
+
     if(
         currentApi?.params &&
         Array.isArray(currentApi.params)
@@ -2200,7 +2442,9 @@ function getParamValues(){
 
     }
 
+
     return result;
+
 }
 
 
@@ -2248,10 +2492,12 @@ function buildUrl(){
                 values[param.name];
 
             if(value){
+
                 params.set(
                     param.name,
                     value
                 );
+
             }
 
         });
@@ -2317,12 +2563,17 @@ function updateCode(lang){
         currentApi.param === "file"
     ){
 
+        const method =
+            currentApi.method ||
+            "POST";
+
+
         switch(lang){
 
             case "curl":
 
                 code =
-`curl -X POST "${API_BASE}${currentApi.path}" \\
+`curl -X ${method} "${API_BASE}${currentApi.path}" \\
   -F "file=@/path/to/file"`;
 
                 break;
@@ -2342,7 +2593,7 @@ form.append(
   fs.createReadStream("/path/to/file")
 );
 
-axios.post(
+axios.${method.toLowerCase()}(
   "${API_BASE}${currentApi.path}",
   form,
   {
@@ -2363,7 +2614,8 @@ axios.post(
 `import requests
 
 with open("/path/to/file", "rb") as f:
-    res = requests.post(
+
+    res = requests.${method.toLowerCase()}(
         "${API_BASE}${currentApi.path}",
         files={"file": f}
     )
@@ -2382,8 +2634,8 @@ print(res.json())`;
 
 curl_setopt(
     $ch,
-    CURLOPT_POST,
-    true
+    CURLOPT_CUSTOMREQUEST,
+    "${method}"
 );
 
 curl_setopt(
@@ -2414,12 +2666,17 @@ echo $response;`;
 
     }else{
 
+        const method =
+            currentApi?.method ||
+            "GET";
+
+
         switch(lang){
 
             case "curl":
 
                 code =
-`curl -X GET "${currentUrl}"`;
+`curl -X ${method} "${currentUrl}"`;
 
                 break;
 
@@ -2434,9 +2691,13 @@ echo $response;`;
   try {
 
     const res =
-      await axios.get(
-        "${currentUrl}"
-      );
+      await axios.request({
+
+        method: "${method}",
+
+        url: "${currentUrl}"
+
+      });
 
     console.log(res.data);
 
@@ -2458,11 +2719,12 @@ echo $response;`;
                 code =
 `import requests
 
-res = requests.get(
+res = requests.request(
+    "${method}",
     "${currentUrl}"
 )
 
-print(res.json())`;
+print(res.text)`;
 
                 break;
 
@@ -2472,6 +2734,12 @@ print(res.json())`;
                 code =
 `$ch = curl_init(
     "${currentUrl}"
+);
+
+curl_setopt(
+    $ch,
+    CURLOPT_CUSTOMREQUEST,
+    "${method}"
 );
 
 curl_setopt(
@@ -2561,6 +2829,81 @@ function renderParameters(api){
 
             field.autocomplete =
                 "off";
+
+
+            /*
+            TEMPMAIL AUTO TOKEN
+            */
+
+            if(
+                api.tempmailInbox &&
+                param.name === "token"
+            ){
+
+                const token =
+                    getTempMailToken();
+
+                if(token){
+
+                    field.value =
+                        token;
+
+                    field.readOnly =
+                        true;
+
+                }
+
+            }
+
+
+            /*
+            TEMPMAIL DELETE AUTO TOKEN
+            */
+
+            if(
+                api.tempmailDelete &&
+                param.name === "token"
+            ){
+
+                const token =
+                    getTempMailToken();
+
+                if(token){
+
+                    field.value =
+                        token;
+
+                    field.readOnly =
+                        true;
+
+                }
+
+            }
+
+
+            /*
+            TEMPMAIL DELETE ACCOUNT ID
+            */
+
+            if(
+                api.tempmailDelete &&
+                param.name === "accountId"
+            ){
+
+                const accountId =
+                    getTempMailAccountId();
+
+                if(accountId){
+
+                    field.value =
+                        accountId;
+
+                    field.readOnly =
+                        true;
+
+                }
+
+            }
 
 
             field.addEventListener(
@@ -2655,6 +2998,695 @@ function renderParameters(api){
 
 /*
 ============================================================
+TEMPMAIL UI
+============================================================
+*/
+
+function createTempMailBox(data){
+
+    const session =
+        getTempMailSession();
+
+
+    const box =
+        document.createElement("div");
+
+    box.className =
+        "tempmail-box";
+
+
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "tempmail-title";
+
+    title.textContent =
+        "📧 Temporary Email";
+
+
+    box.appendChild(title);
+
+
+    const values = [
+
+        [
+            "📧 Email",
+            data.email ||
+            session?.email ||
+            "-"
+        ],
+
+        [
+            "👤 Username",
+            data.username ||
+            session?.username ||
+            "-"
+        ],
+
+        [
+            "🌐 Domain",
+            data.domain ||
+            session?.domain ||
+            "-"
+        ],
+
+        [
+            "🔑 Token",
+            data.token ||
+            session?.token ||
+            "-"
+        ],
+
+        [
+            "🆔 Account ID",
+            data.account?.id ||
+            session?.account?.id ||
+            "-"
+        ]
+
+    ];
+
+
+    values.forEach(
+        ([labelText,value]) => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "tempmail-item";
+
+
+            const label =
+                document.createElement(
+                    "div"
+                );
+
+            label.className =
+                "tempmail-label";
+
+            label.textContent =
+                labelText;
+
+
+            const valueBox =
+                document.createElement(
+                    "div"
+                );
+
+            valueBox.className =
+                "tempmail-value";
+
+            valueBox.textContent =
+                value;
+
+
+            item.appendChild(label);
+            item.appendChild(valueBox);
+
+            box.appendChild(item);
+
+        }
+    );
+
+
+    const actions =
+        document.createElement(
+            "div"
+        );
+
+    actions.className =
+        "tempmail-actions";
+
+
+    const copyEmail =
+        document.createElement(
+            "button"
+        );
+
+    copyEmail.className =
+        "small-btn";
+
+    copyEmail.textContent =
+        "📋 Copy Email";
+
+    copyEmail.onclick =
+        () =>
+            copyText(
+                data.email ||
+                session?.email,
+                "Email tersalin!"
+            );
+
+
+    const copyToken =
+        document.createElement(
+            "button"
+        );
+
+    copyToken.className =
+        "small-btn";
+
+    copyToken.textContent =
+        "🔑 Copy Token";
+
+    copyToken.onclick =
+        () =>
+            copyText(
+                data.token ||
+                session?.token,
+                "Token tersalin!"
+            );
+
+
+    const inbox =
+        document.createElement(
+            "button"
+        );
+
+    inbox.className =
+        "small-btn";
+
+    inbox.textContent =
+        "📨 Buka Inbox";
+
+    inbox.onclick =
+        () => {
+
+            const inboxApi =
+                apiList.find(
+                    api =>
+                        api.tempmailInbox
+                );
+
+            if(!inboxApi){
+                return;
+            }
+
+            openModal(
+                inboxApi
+            );
+
+            updateCode("curl");
+
+        };
+
+
+    const deleteBtn =
+        document.createElement(
+            "button"
+        );
+
+    deleteBtn.className =
+        "small-btn";
+
+    deleteBtn.textContent =
+        "🗑️ Delete Account";
+
+    deleteBtn.onclick =
+        () => {
+
+            const deleteApi =
+                apiList.find(
+                    api =>
+                        api.tempmailDelete
+                );
+
+            if(!deleteApi){
+                return;
+            }
+
+            openModal(
+                deleteApi
+            );
+
+            updateCode("curl");
+
+        };
+
+
+    actions.appendChild(
+        copyEmail
+    );
+
+    actions.appendChild(
+        copyToken
+    );
+
+    actions.appendChild(
+        inbox
+    );
+
+    actions.appendChild(
+        deleteBtn
+    );
+
+
+    box.appendChild(actions);
+
+
+    return box;
+
+}
+
+
+/*
+============================================================
+SHOW TEMPMAIL CREATE
+============================================================
+*/
+
+function showTempMailActions(data){
+
+    if(
+        !currentApi?.tempmailCreate
+    ){
+
+        return;
+
+    }
+
+
+    const result =
+        data?.data &&
+        typeof data.data === "object"
+            ? data.data
+            : data;
+
+
+    const email =
+        result?.email ||
+        result?.address ||
+        "";
+
+
+    if(!email){
+        return;
+    }
+
+
+    saveTempMailSession(
+        result
+    );
+
+
+    mediaPreview.innerHTML =
+        "";
+
+
+    mediaPreview.appendChild(
+        createTempMailBox(result)
+    );
+
+
+    mediaPreview.classList.add(
+        "active"
+    );
+
+}
+
+
+/*
+============================================================
+SHOW TEMPMAIL INBOX
+============================================================
+*/
+
+function renderTempMailInbox(data){
+
+    const box =
+        document.createElement(
+            "div"
+        );
+
+    box.className =
+        "tempmail-box";
+
+
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "tempmail-title";
+
+    title.textContent =
+        "📨 TempMail Inbox";
+
+
+    box.appendChild(title);
+
+
+    const messages =
+        Array.isArray(data?.messages)
+            ? data.messages
+            : Array.isArray(data?.data)
+                ? data.data
+                : Array.isArray(data)
+                    ? data
+                    : [];
+
+
+    if(!messages.length){
+
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "tempmail-value";
+
+        empty.textContent =
+            "📭 Inbox kosong.";
+
+        box.appendChild(empty);
+
+    }else{
+
+        const list =
+            document.createElement(
+                "div"
+            );
+
+        list.className =
+            "mail-list";
+
+
+        messages.forEach(message => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "mail-item";
+
+
+            const subject =
+                document.createElement(
+                    "div"
+                );
+
+            subject.className =
+                "mail-subject";
+
+            subject.textContent =
+                message.subject ||
+                "(Tanpa Subject)";
+
+
+            const meta =
+                document.createElement(
+                    "div"
+                );
+
+            meta.className =
+                "mail-meta";
+
+            const from =
+                message.from || {};
+
+            meta.textContent =
+                `From: ${
+                    from.address ||
+                    from.email ||
+                    message.sender_email ||
+                    "-"
+                }
+Date: ${
+                    message.createdAt ||
+                    message.date ||
+                    "-"
+                }`;
+
+
+            const id =
+                document.createElement(
+                    "div"
+                );
+
+            id.className =
+                "mail-id";
+
+            id.textContent =
+                `Message ID: ${
+                    message.id ||
+                    "-"
+                }`;
+
+
+            const actions =
+                document.createElement(
+                    "div"
+                );
+
+            actions.className =
+                "media-buttons";
+
+
+            const copy =
+                document.createElement(
+                    "button"
+                );
+
+            copy.className =
+                "small-btn";
+
+            copy.textContent =
+                "📋 Copy ID";
+
+            copy.onclick =
+                () =>
+                    copyText(
+                        message.id,
+                        "Message ID tersalin!"
+                    );
+
+
+            const detail =
+                document.createElement(
+                    "button"
+                );
+
+            detail.className =
+                "small-btn";
+
+            detail.textContent =
+                "✉️ Detail";
+
+
+            detail.onclick =
+                () =>
+                    openMessageDetail(
+                        message.id
+                    );
+
+
+            actions.appendChild(copy);
+            actions.appendChild(detail);
+
+
+            item.appendChild(subject);
+            item.appendChild(meta);
+            item.appendChild(id);
+            item.appendChild(actions);
+
+            list.appendChild(item);
+
+        });
+
+
+        box.appendChild(list);
+
+    }
+
+
+    const actions =
+        document.createElement(
+            "div"
+        );
+
+    actions.className =
+        "media-buttons";
+
+
+    const refresh =
+        document.createElement(
+            "button"
+        );
+
+    refresh.className =
+        "small-btn";
+
+    refresh.textContent =
+        "🔄 Refresh Inbox";
+
+    refresh.onclick =
+        () =>
+            executeTempMailAction(
+                "inbox"
+            );
+
+
+    const message =
+        document.createElement(
+            "button"
+        );
+
+    message.className =
+        "small-btn";
+
+    message.textContent =
+        "🆔 Message ID Manual";
+
+    message.onclick =
+        () => {
+
+            const api =
+                apiList.find(
+                    item =>
+                        item.tempmailMessage
+                );
+
+            if(api){
+
+                openModal(api);
+
+            }
+
+        };
+
+
+    actions.appendChild(refresh);
+    actions.appendChild(message);
+
+    box.appendChild(actions);
+
+
+    return box;
+
+}
+
+
+/*
+============================================================
+OPEN MESSAGE DETAIL
+============================================================
+*/
+
+function openMessageDetail(messageId){
+
+    const api =
+        apiList.find(
+            item =>
+                item.tempmailMessage
+        );
+
+
+    if(!api){
+        return;
+    }
+
+
+    openModal(api);
+
+
+    const tokenField =
+        document.getElementById(
+            "param_token"
+        );
+
+    const messageField =
+        document.getElementById(
+            "param_messageId"
+        );
+
+
+    if(tokenField){
+
+        tokenField.value =
+            getTempMailToken();
+
+        tokenField.readOnly =
+            !!getTempMailToken();
+
+    }
+
+
+    if(messageField){
+
+        messageField.value =
+            messageId || "";
+
+    }
+
+
+    updateCode("curl");
+
+}
+
+
+/*
+============================================================
+TEMPMAIL ACTION
+============================================================
+*/
+
+async function executeTempMailAction(
+    type
+){
+
+    if(type === "inbox"){
+
+        const api =
+            apiList.find(
+                item =>
+                    item.tempmailInbox
+            );
+
+        if(!api){
+            return;
+        }
+
+        currentApi =
+            api;
+
+        currentUrl =
+            buildUrl();
+
+    }
+
+
+    if(type === "message"){
+
+        const api =
+            apiList.find(
+                item =>
+                    item.tempmailMessage
+            );
+
+        if(!api){
+            return;
+        }
+
+        currentApi =
+            api;
+
+        currentUrl =
+            buildUrl();
+
+    }
+
+
+    executeButton.click();
+
+}
+
+
+/*
+============================================================
 OPEN MODAL
 ============================================================
 */
@@ -2680,8 +3712,7 @@ function openModal(api){
     document
     .getElementById("modalEndpoint")
     .textContent =
-        API_BASE +
-        api.path;
+        `${api.method || "GET"} ${API_BASE}${api.path}`;
 
 
     input.value =
@@ -2709,7 +3740,6 @@ function openModal(api){
 
     responseBox.className =
         "response";
-
 
     responseBox.textContent =
         "// Klik Execute Request untuk menjalankan API...";
@@ -3305,185 +4335,6 @@ function showMedia(
 
 /*
 ============================================================
-TEMPMAIL CREATE ACTION
-============================================================
-*/
-
-function showTempMailActions(data){
-
-    if(
-        !currentApi?.tempmailCreate
-    ){
-
-        return;
-
-    }
-
-
-    const email =
-        data?.email ||
-        data?.result?.email ||
-        data?.data?.email;
-
-
-    if(!email){
-        return;
-    }
-
-
-    const box =
-        document.createElement(
-            "div"
-        );
-
-    box.className =
-        "tempmail-box";
-
-
-    const title =
-        document.createElement(
-            "div"
-        );
-
-    title.className =
-        "tempmail-title";
-
-    title.textContent =
-        "📧 Temporary Email";
-
-
-    const emailBox =
-        document.createElement(
-            "div"
-        );
-
-    emailBox.className =
-        "tempmail-email";
-
-    emailBox.textContent =
-        email;
-
-
-    box.appendChild(
-        title
-    );
-
-    box.appendChild(
-        emailBox
-    );
-
-
-    const buttons =
-        document.createElement(
-            "div"
-        );
-
-    buttons.className =
-        "media-buttons";
-
-
-    const copy =
-        document.createElement(
-            "button"
-        );
-
-    copy.className =
-        "small-btn";
-
-    copy.textContent =
-        "📋 Salin Email";
-
-
-    copy.onclick =
-        () =>
-            copyText(
-                email,
-                "Email tersalin!"
-            );
-
-
-    const inbox =
-        document.createElement(
-            "button"
-        );
-
-    inbox.className =
-        "small-btn";
-
-    inbox.textContent =
-        "📨 Cek Inbox";
-
-
-    inbox.onclick = () => {
-
-        const inboxApi =
-            apiList.find(
-                api =>
-                    api.tempmailInbox
-            );
-
-
-        if(!inboxApi){
-            return;
-        }
-
-
-        openModal(
-            inboxApi
-        );
-
-
-        const emailField =
-            document.getElementById(
-                "param_email"
-            );
-
-
-        if(emailField){
-
-            emailField.value =
-                email;
-
-        }
-
-
-        updateCode(
-            "curl"
-        );
-
-    };
-
-
-    buttons.appendChild(
-        copy
-    );
-
-    buttons.appendChild(
-        inbox
-    );
-
-
-    box.appendChild(
-        buttons
-    );
-
-
-    mediaPreview.innerHTML =
-        "";
-
-    mediaPreview.appendChild(
-        box
-    );
-
-    mediaPreview.classList.add(
-        "active"
-    );
-
-}
-
-
-/*
-============================================================
 PROGRESS
 ============================================================
 */
@@ -3505,7 +4356,7 @@ async function showProgress(
 
 /*
 ============================================================
-EXECUTE
+EXECUTE REQUEST
 ============================================================
 */
 
@@ -3547,6 +4398,110 @@ executeButton.addEventListener(
 
         try{
 
+            /*
+            VALIDASI TEMPMAIL
+            */
+
+            if(
+                currentApi?.tempmailInbox
+            ){
+
+                const tokenField =
+                    document.getElementById(
+                        "param_token"
+                    );
+
+                if(
+                    !tokenField?.value.trim()
+                ){
+
+                    throw new Error(
+                        "Token TempMail belum tersedia. Buat TempMail terlebih dahulu."
+                    );
+
+                }
+
+            }
+
+
+            if(
+                currentApi?.tempmailMessage
+            ){
+
+                const tokenField =
+                    document.getElementById(
+                        "param_token"
+                    );
+
+                const messageField =
+                    document.getElementById(
+                        "param_messageId"
+                    );
+
+
+                if(
+                    !tokenField?.value.trim()
+                ){
+
+                    throw new Error(
+                        "Token TempMail belum tersedia."
+                    );
+
+                }
+
+
+                if(
+                    !messageField?.value.trim()
+                ){
+
+                    throw new Error(
+                        "Message ID wajib diisi."
+                    );
+
+                }
+
+            }
+
+
+            if(
+                currentApi?.tempmailDelete
+            ){
+
+                const tokenField =
+                    document.getElementById(
+                        "param_token"
+                    );
+
+                const accountField =
+                    document.getElementById(
+                        "param_accountId"
+                    );
+
+
+                if(
+                    !tokenField?.value.trim()
+                ){
+
+                    throw new Error(
+                        "Token TempMail belum tersedia."
+                    );
+
+                }
+
+
+                if(
+                    !accountField?.value.trim()
+                ){
+
+                    throw new Error(
+                        "Account ID wajib diisi."
+                    );
+
+                }
+
+            }
+
+
             await showProgress(
                 "⏳ Connecting to API..."
             );
@@ -3559,64 +4514,67 @@ executeButton.addEventListener(
             let res;
 
 
-            try{
+            /*
+            FILE REQUEST
+            */
+
+            if(
+                currentApi.param === "file"
+            ){
 
                 if(
-                    currentApi.param === "file"
+                    !fileInput.files.length
                 ){
 
-                    if(
-                        !fileInput.files.length
-                    ){
-
-                        throw new Error(
-                            "Silakan pilih file terlebih dahulu."
-                        );
-
-                    }
-
-
-                    const formData =
-                        new FormData();
-
-
-                    formData.append(
-                        "file",
-                        fileInput.files[0]
+                    throw new Error(
+                        "Silakan pilih file terlebih dahulu."
                     );
-
-
-                    res =
-                        await fetch(
-                            `${API_BASE}${currentApi.path}`,
-                            {
-                                method:"POST",
-                                body:formData
-                            }
-                        );
-
-                }else{
-
-                    res =
-                        await fetch(
-                            currentUrl,
-                            {
-                                method:"GET",
-                                cache:"no-store",
-                                headers:{
-                                    "Accept":"*/*"
-                                }
-                            }
-                        );
 
                 }
 
-            }catch(error){
 
-                throw new Error(
-                    error?.message ||
-                    "Gagal terhubung ke API."
+                const formData =
+                    new FormData();
+
+
+                formData.append(
+                    "file",
+                    fileInput.files[0]
                 );
+
+
+                res =
+                    await fetch(
+                        `${API_BASE}${currentApi.path}`,
+                        {
+                            method:
+                                currentApi.method ||
+                                "POST",
+
+                            body:
+                                formData
+                        }
+                    );
+
+            }else{
+
+                res =
+                    await fetch(
+                        currentUrl,
+                        {
+                            method:
+                                currentApi.method ||
+                                "GET",
+
+                            cache:
+                                "no-store",
+
+                            headers:{
+                                "Accept":
+                                    "*/*"
+                            }
+                        }
+                    );
 
             }
 
@@ -3664,7 +4622,6 @@ ${currentUrl}`;
                 responseBox.className =
                     "response";
 
-
                 responseBox.textContent =
 `🖼️ Image Response
 
@@ -3672,7 +4629,6 @@ HTTP ${res.status} ${res.statusText}
 Response time: ${elapsed} ms
 
 ✅ Request completed`;
-
 
                 return;
 
@@ -3707,7 +4663,6 @@ ${currentUrl}`;
                 responseBox.className =
                     "response";
 
-
                 responseBox.textContent =
 `🎬 Video Response
 
@@ -3715,7 +4670,6 @@ HTTP ${res.status} ${res.statusText}
 Response time: ${elapsed} ms
 
 ✅ Request completed`;
-
 
                 return;
 
@@ -3751,12 +4705,113 @@ Response time: ${elapsed} ms
             */
 
             if(
-                currentApi.tempmailCreate
+                currentApi?.tempmailCreate
             ){
 
                 showTempMailActions(
                     data
                 );
+
+            }
+
+
+            /*
+            TEMPMAIL INBOX
+            */
+
+            if(
+                currentApi?.tempmailInbox &&
+                res.ok
+            ){
+
+                mediaPreview.innerHTML =
+                    "";
+
+                mediaPreview.appendChild(
+                    renderTempMailInbox(
+                        data
+                    )
+                );
+
+                mediaPreview.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            /*
+            TEMPMAIL MESSAGE
+            */
+
+            if(
+                currentApi?.tempmailMessage &&
+                res.ok
+            ){
+
+                renderTempMailMessage(
+                    data
+                );
+
+            }
+
+
+            /*
+            TEMPMAIL DELETE
+            */
+
+            if(
+                currentApi?.tempmailDelete &&
+                res.ok
+            ){
+
+                clearTempMailSession();
+
+                mediaPreview.innerHTML =
+                    "";
+
+                mediaPreview.classList.add(
+                    "active"
+                );
+
+
+                const box =
+                    document.createElement(
+                        "div"
+                    );
+
+                box.className =
+                    "tempmail-box";
+
+
+                const title =
+                    document.createElement(
+                        "div"
+                    );
+
+                title.className =
+                    "tempmail-title";
+
+                title.textContent =
+                    "🗑️ TempMail Account";
+
+
+                const value =
+                    document.createElement(
+                        "div"
+                    );
+
+                value.className =
+                    "tempmail-value";
+
+                value.textContent =
+                    "Account berhasil dihapus dan session lokal telah dibersihkan.";
+
+
+                box.appendChild(title);
+                box.appendChild(value);
+
+                mediaPreview.appendChild(box);
 
             }
 
@@ -3771,7 +4826,12 @@ Response time: ${elapsed} ms
                 );
 
 
-            if(mediaUrl){
+            if(
+                mediaUrl &&
+                !currentApi?.tempmailCreate &&
+                !currentApi?.tempmailInbox &&
+                !currentApi?.tempmailMessage
+            ){
 
                 let mediaType =
                     "";
@@ -3783,8 +4843,11 @@ Response time: ${elapsed} ms
                         await fetch(
                             mediaUrl,
                             {
-                                method:"HEAD",
-                                cache:"no-store"
+                                method:
+                                    "HEAD",
+
+                                cache:
+                                    "no-store"
                             }
                         );
 
@@ -3891,11 +4954,389 @@ ${currentUrl}`;
 
 /*
 ============================================================
+TEMPMAIL MESSAGE DETAIL RENDER
+============================================================
+*/
+
+function renderTempMailMessage(data){
+
+    const result =
+        data?.data &&
+        typeof data.data === "object"
+            ? data.data
+            : data;
+
+
+    const box =
+        document.createElement(
+            "div"
+        );
+
+    box.className =
+        "tempmail-box";
+
+
+    const title =
+        document.createElement(
+            "div"
+        );
+
+    title.className =
+        "tempmail-title";
+
+    title.textContent =
+        "✉️ Message Detail";
+
+
+    box.appendChild(title);
+
+
+    const fields = [
+
+        [
+            "🆔 Message ID",
+            result?.id
+        ],
+
+        [
+            "📌 Subject",
+            result?.subject
+        ],
+
+        [
+            "👤 From",
+            result?.from?.address ||
+            result?.sender_email
+        ],
+
+        [
+            "📅 Date",
+            result?.createdAt ||
+            result?.date
+        ],
+
+        [
+            "📝 Intro",
+            result?.intro
+        ],
+
+        [
+            "📄 Text",
+            result?.text ||
+            result?.body
+        ]
+
+    ];
+
+
+    fields.forEach(
+        ([labelText,value]) => {
+
+            if(
+                value === undefined ||
+                value === null ||
+                value === ""
+            ){
+                return;
+            }
+
+
+            const block =
+                document.createElement(
+                    "div"
+                );
+
+            block.className =
+                "message-block";
+
+
+            const blockTitle =
+                document.createElement(
+                    "div"
+                );
+
+            blockTitle.className =
+                "message-block-title";
+
+            blockTitle.textContent =
+                labelText;
+
+
+            const blockValue =
+                document.createElement(
+                    "div"
+                );
+
+            blockValue.className =
+                "message-block-value";
+
+            blockValue.textContent =
+                String(value);
+
+
+            block.appendChild(
+                blockTitle
+            );
+
+            block.appendChild(
+                blockValue
+            );
+
+            box.appendChild(
+                block
+            );
+
+        }
+    );
+
+
+    /*
+    HTML MESSAGE
+    */
+
+    if(result?.html){
+
+        const htmlBlock =
+            document.createElement(
+                "div"
+            );
+
+        htmlBlock.className =
+            "message-block";
+
+
+        const htmlTitle =
+            document.createElement(
+                "div"
+            );
+
+        htmlTitle.className =
+            "message-block-title";
+
+        htmlTitle.textContent =
+            "🌐 HTML";
+
+
+        const htmlValue =
+            document.createElement(
+                "div"
+            );
+
+        htmlValue.className =
+            "message-block-value";
+
+        htmlValue.textContent =
+            Array.isArray(result.html)
+                ? result.html.join("\n")
+                : String(result.html);
+
+
+        htmlBlock.appendChild(
+            htmlTitle
+        );
+
+        htmlBlock.appendChild(
+            htmlValue
+        );
+
+        box.appendChild(
+            htmlBlock
+        );
+
+    }
+
+
+    /*
+    URLS
+    */
+
+    const urls =
+        Array.isArray(result?.urls)
+            ? result.urls
+            : extractUrls(
+                `${result?.text || ""}
+                 ${result?.html || ""}
+                 ${result?.intro || ""}`
+            );
+
+
+    if(urls.length){
+
+        const block =
+            document.createElement(
+                "div"
+            );
+
+        block.className =
+            "message-block";
+
+
+        const title =
+            document.createElement(
+                "div"
+            );
+
+        title.className =
+            "message-block-title";
+
+        title.textContent =
+            `🔗 URLs (${urls.length})`;
+
+
+        const list =
+            document.createElement(
+                "div"
+            );
+
+        list.className =
+            "url-list";
+
+
+        [...new Set(urls)].forEach(url => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "url-item";
+
+            item.textContent =
+                url;
+
+            item.onclick =
+                () =>
+                    copyText(
+                        url,
+                        "URL tersalin!"
+                    );
+
+
+            list.appendChild(item);
+
+        });
+
+
+        block.appendChild(title);
+        block.appendChild(list);
+
+        box.appendChild(block);
+
+    }
+
+
+    /*
+    COPY MESSAGE
+    */
+
+    const actions =
+        document.createElement(
+            "div"
+        );
+
+    actions.className =
+        "media-buttons";
+
+
+    const copy =
+        document.createElement(
+            "button"
+        );
+
+    copy.className =
+        "small-btn";
+
+    copy.textContent =
+        "📋 Copy Message JSON";
+
+    copy.onclick =
+        () =>
+            copyText(
+                safeJson(data),
+                "Message JSON tersalin!"
+            );
+
+
+    const backInbox =
+        document.createElement(
+            "button"
+        );
+
+    backInbox.className =
+        "small-btn";
+
+    backInbox.textContent =
+        "📨 Kembali Inbox";
+
+    backInbox.onclick =
+        () => {
+
+            const api =
+                apiList.find(
+                    item =>
+                        item.tempmailInbox
+                );
+
+            if(api){
+
+                openModal(api);
+
+                executeButton.click();
+
+            }
+
+        };
+
+
+    actions.appendChild(copy);
+    actions.appendChild(backInbox);
+
+    box.appendChild(actions);
+
+
+    mediaPreview.innerHTML =
+        "";
+
+    mediaPreview.appendChild(box);
+
+    mediaPreview.classList.add(
+        "active"
+    );
+
+}
+
+
+/*
+============================================================
 INITIALIZE
 ============================================================
 */
 
 renderList();
+
+
+/*
+============================================================
+AUTO LOAD SAVED TEMPMAIL INFO
+============================================================
+*/
+
+(function(){
+
+    const session =
+        getTempMailSession();
+
+    if(session?.email){
+
+        console.log(
+            "[TEMPMAIL] Session aktif:",
+            session.email
+        );
+
+    }
+
+})();
 
 </script>
 
