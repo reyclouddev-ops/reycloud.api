@@ -223,7 +223,7 @@ button:disabled{
     box-shadow:0 0 0 2px rgba(59,130,246,.15);
 }
 
-/* CATEGORY SELECT */
+/* CATEGORY */
 
 .category-wrap{
     position:relative;
@@ -388,7 +388,7 @@ button:disabled{
     background:linear-gradient(90deg,var(--border),transparent);
 }
 
-/* ENDPOINT CARD */
+/* ENDPOINT */
 
 .endpoint{
     display:flex;
@@ -599,7 +599,24 @@ button:disabled{
     box-shadow:0 0 0 2px rgba(59,130,246,.2);
 }
 
-/* EMOJI SELECT */
+/* MULTI PARAM */
+
+.param-group{
+    margin-bottom:2px;
+}
+
+.param-group .input{
+    margin-bottom:14px;
+}
+
+.param-hint{
+    margin-top:-8px;
+    margin-bottom:14px;
+    color:#64748b;
+    font-size:9px;
+}
+
+/* EMOJI */
 
 .custom-select-container{
     position:relative;
@@ -705,10 +722,6 @@ button:disabled{
     line-height:1.6;
     white-space:pre-wrap;
     word-break:break-all;
-}
-
-.code span.highlight{
-    color:#fff;
 }
 
 .copy-code{
@@ -828,6 +841,34 @@ button:disabled{
     flex:1;
 }
 
+/* TEMP MAIL */
+
+.tempmail-box{
+    padding:14px;
+    margin-top:12px;
+    background:rgba(59,130,246,.05);
+    border:1px solid rgba(59,130,246,.2);
+    border-radius:12px;
+}
+
+.tempmail-title{
+    color:var(--blue-light);
+    font-size:10px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.tempmail-email{
+    padding:12px;
+    background:#000;
+    border:1px solid var(--border);
+    border-radius:9px;
+    color:#fff;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    word-break:break-all;
+}
+
 /* FOOT */
 
 .modal-foot{
@@ -892,6 +933,7 @@ button:disabled{
 }
 
 @media(max-width:500px){
+
     .app{
         padding:18px 15px 50px;
     }
@@ -912,6 +954,14 @@ button:disabled{
         flex-wrap:wrap;
         justify-content:flex-end;
     }
+
+    .modal-foot{
+        padding:14px;
+    }
+
+    .open-btn{
+        padding:12px;
+    }
 }
 </style>
 </head>
@@ -921,22 +971,35 @@ button:disabled{
 <div class="app">
 
 <header class="header">
+
     <div class="brand">
 
         <a href="/dashboard" class="back-btn" title="Kembali">
+
             <svg viewBox="0 0 24 24">
                 <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
             </svg>
+
         </a>
 
-        <div class="logo">🚀</div>
+        <div class="logo">
+            🚀
+        </div>
 
         <div>
-            <h1>ReyCloudSHP API</h1>
-            <p>API Documentation & Playground</p>
+
+            <h1>
+                ReyCloudSHP API
+            </h1>
+
+            <p>
+                API Documentation & Playground
+            </p>
+
         </div>
 
     </div>
+
 </header>
 
 
@@ -954,11 +1017,11 @@ button:disabled{
 </section>
 
 
-<!-- SEARCH -->
-
 <div class="search-wrap">
 
-    <span class="search-icon">🔎</span>
+    <span class="search-icon">
+        🔎
+    </span>
 
     <input
         id="searchInput"
@@ -971,23 +1034,36 @@ button:disabled{
 </div>
 
 
-<!-- CATEGORY -->
-
 <div class="category-wrap" id="categoryWrap">
 
-    <button class="category-trigger" id="categoryTrigger">
+    <button
+        class="category-trigger"
+        id="categoryTrigger"
+    >
 
         <span class="category-left">
-            <span id="categoryIcon">◉</span>
-            <span id="categoryText">Semua Kategori</span>
+
+            <span id="categoryIcon">
+                ◉
+            </span>
+
+            <span id="categoryText">
+                Semua Kategori
+            </span>
+
         </span>
 
-        <span class="category-arrow">⌄</span>
+        <span class="category-arrow">
+            ⌄
+        </span>
 
     </button>
 
 
-    <div class="category-menu" id="categoryMenu">
+    <div
+        class="category-menu"
+        id="categoryMenu"
+    >
 
         <button
             class="category-option active"
@@ -1061,22 +1137,21 @@ button:disabled{
 </div>
 
 
-<!-- STATS -->
-
 <div class="endpoint-stats">
 
     <span>
-        Menampilkan <strong id="visibleCount">13</strong> endpoint
+        Menampilkan
+        <strong id="visibleCount">0</strong>
+        endpoint
     </span>
 
     <span>
-        Total: <strong id="totalCount">13</strong>
+        Total:
+        <strong id="totalCount">0</strong>
     </span>
 
 </div>
 
-
-<!-- ENDPOINT CONTAINER -->
 
 <div id="apiListContainer"></div>
 
@@ -1085,7 +1160,10 @@ button:disabled{
 
 <!-- MODAL -->
 
-<div class="overlay" id="apiModal">
+<div
+    class="overlay"
+    id="apiModal"
+>
 
 <div class="modal">
 
@@ -1103,7 +1181,10 @@ button:disabled{
 
         </div>
 
-        <button class="close" id="closeModal">
+        <button
+            class="close"
+            id="closeModal"
+        >
             ✕
         </button>
 
@@ -1112,9 +1193,8 @@ button:disabled{
 
     <div class="modal-body">
 
-        <label class="label" id="inputLabel">
-            Query Parameter
-        </label>
+        <div id="dynamicParams"></div>
+
 
         <input
             id="apiInput"
@@ -1122,7 +1202,9 @@ button:disabled{
             type="text"
             autocomplete="off"
             placeholder="Masukkan value..."
+            style="display:none;"
         >
+
 
         <input
             id="apiFileInput"
@@ -1152,7 +1234,9 @@ button:disabled{
                     😹,🚀,😎,☠️,🤓
                 </span>
 
-                <span>▾</span>
+                <span>
+                    ▾
+                </span>
 
             </div>
 
@@ -1344,7 +1428,9 @@ button:disabled{
 
 <script>
 
-const API_BASE = "https://api.legionteknologi.my.id";
+const API_BASE =
+    "https://api.legionteknologi.my.id";
+
 
 /*
 ============================================================
@@ -1355,138 +1441,150 @@ ENDPOINT DATABASE
 const apiList = [
 
     {
-        category: "other",
-        categoryName: "Other APIs",
-        categoryIcon: "🌐",
-        title: "Create Task",
-        desc: "Membuat task baru pembuatan akun amprem",
-        path: "/amprem/create",
-        param: "none",
-        placeholder: ""
+        category:"other",
+        categoryName:"Other APIs",
+        categoryIcon:"🌐",
+        title:"Create Task",
+        desc:"Membuat task baru pembuatan akun amprem",
+        path:"/amprem/create",
+        param:"none",
+        placeholder:""
     },
 
     {
-        category: "other",
-        categoryName: "Other APIs",
-        categoryIcon: "🌐",
-        title: "Check Task",
-        desc: "Mengecek status task berdasarkan ID",
-        path: "/amprem/task",
-        param: "id",
-        placeholder: "t4pvuxlv749kp"
+        category:"other",
+        categoryName:"Other APIs",
+        categoryIcon:"🌐",
+        title:"Check Task",
+        desc:"Mengecek status task berdasarkan ID",
+        path:"/amprem/task",
+        param:"id",
+        placeholder:"t4pvuxlv749kp"
     },
 
     {
-        category: "other",
-        categoryName: "Other APIs",
-        categoryIcon: "🌐",
-        title: "Get Verification Link",
-        desc: "Mendapatkan link verifikasi setelah task selesai",
-        path: "/verif/amprem/link",
-        param: "task",
-        placeholder: "t4pvuxlv749kp"
+        category:"other",
+        categoryName:"Other APIs",
+        categoryIcon:"🌐",
+        title:"Get Verification Link",
+        desc:"Mendapatkan link verifikasi setelah task selesai",
+        path:"/verif/amprem/link",
+        param:"task",
+        placeholder:"t4pvuxlv749kp"
     },
 
     {
-        category: "other",
-        categoryName: "Other APIs",
-        categoryIcon: "🌐",
-        title: "Search School",
-        desc: "Mencari sekolah berdasarkan query nama",
-        path: "/dapodik/search",
-        param: "q",
-        placeholder: "SMKN 1 Batam"
+        category:"other",
+        categoryName:"Other APIs",
+        categoryIcon:"🌐",
+        title:"Search School",
+        desc:"Mencari sekolah berdasarkan query nama",
+        path:"/dapodik/search",
+        param:"q",
+        placeholder:"SMKN 1 Batam"
     },
 
     {
-        category: "other",
-        categoryName: "Other APIs",
-        categoryIcon: "🌐",
-        title: "School Detail",
-        desc: "Mengambil detail sekolah berdasarkan NPSN",
-        path: "/dapodik/detail",
-        param: "npsn",
-        placeholder: "10900123"
+        category:"other",
+        categoryName:"Other APIs",
+        categoryIcon:"🌐",
+        title:"School Detail",
+        desc:"Mengambil detail sekolah berdasarkan NPSN",
+        path:"/dapodik/detail",
+        param:"npsn",
+        placeholder:"10900123"
     },
 
     {
-        category: "tools",
-        categoryName: "Tools & Utilities",
-        categoryIcon: "🛠️",
-        title: "TempMail Create",
-        desc: "Generate temporary email address",
-        path: "/utility/tempmail/create",
-        param: "none",
-        placeholder: "",
-        tempmailCreate: true
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"TempMail Create",
+        desc:"Generate temporary email address",
+        path:"/utility/tempmail/create",
+        param:"none",
+        placeholder:"",
+        tempmailCreate:true
     },
 
     {
-        category: "tools",
-        categoryName: "Tools & Utilities",
-        categoryIcon: "🛠️",
-        title: "TempMail Inbox",
-        desc: "Check incoming inbox messages",
-        path: "/utility/tempmail/inbox",
-        param: "email",
-        placeholder: "user@domain.com",
-        tempmailInbox: true
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"TempMail Inbox",
+        desc:"Check inbox menggunakan email dan token",
+        path:"/utility/tempmail/inbox",
+        params:[
+            {
+                name:"email",
+                label:"📧 Email",
+                placeholder:"user@domain.com",
+                type:"email"
+            },
+            {
+                name:"token",
+                label:"🔑 Token",
+                placeholder:"Masukkan token TempMail",
+                type:"text"
+            }
+        ],
+        tempmailInbox:true
     },
 
     {
-        category: "tools",
-        categoryName: "Tools & Utilities",
-        categoryIcon: "🛠️",
-        title: "Remove Background",
-        desc: "AI image background remover",
-        path: "/utility/removebg",
-        param: "file",
-        placeholder: "Pilih file gambar"
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"Remove Background",
+        desc:"AI image background remover",
+        path:"/utility/removebg",
+        param:"file",
+        placeholder:"Pilih file gambar"
     },
 
     {
-        category: "tools",
-        categoryName: "Tools & Utilities",
-        categoryIcon: "🛠️",
-        title: "NFToken Scraper",
-        desc: "Fetch tokens with proxies & plans",
-        path: "/utility/nftoken",
-        param: "count",
-        placeholder: "1"
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"NFToken Scraper",
+        desc:"Fetch tokens with proxies & plans",
+        path:"/utility/nftoken",
+        param:"count",
+        placeholder:"1"
     },
 
     {
-        category: "tools",
-        categoryName: "Tools & Utilities",
-        categoryIcon: "🛠️",
-        title: "Wink Image Enhance",
-        desc: "Enhance image quality using AI",
-        path: "/utility/wink",
-        param: "file",
-        placeholder: "Pilih file gambar"
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"Wink Image Enhance",
+        desc:"Enhance image quality using AI",
+        path:"/utility/wink",
+        param:"file",
+        placeholder:"Pilih file gambar"
     },
 
     {
-        category: "tools",
-        categoryName: "Tools & Utilities",
-        categoryIcon: "🛠️",
-        title: "Bypass link Delta",
-        desc: "Bypass target shortened links",
-        path: "/tools/bypass",
-        param: "url",
-        placeholder: "https://linktarget.com/..."
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"Bypass link Delta",
+        desc:"Bypass target shortened links",
+        path:"/tools/bypass",
+        param:"url",
+        placeholder:"https://linktarget.com/..."
     },
 
     {
-        category: "tools",
-        categoryName: "Tools & Utilities",
-        categoryIcon: "🛠️",
-        title: "WA Auto React",
-        desc: "Kirim reaction emoji ke WhatsApp channel",
-        path: "/tools/wareact",
-        param: "url",
-        placeholder: "https://whatsapp.com/channel/...",
-        hasEmojis: true
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"WA Auto React",
+        desc:"Kirim reaction emoji ke WhatsApp channel",
+        path:"/tools/wareact",
+        param:"url",
+        placeholder:"https://whatsapp.com/channel/...",
+        hasEmojis:true
     }
 
 ];
@@ -1506,6 +1604,9 @@ const input =
 
 const fileInput =
     document.getElementById("apiFileInput");
+
+const dynamicParams =
+    document.getElementById("dynamicParams");
 
 const responseBox =
     document.getElementById("apiResponse");
@@ -1572,52 +1673,72 @@ UTILITIES
 ============================================================
 */
 
-function sleep(ms) {
-    return new Promise(resolve =>
-        setTimeout(resolve, ms)
+function sleep(ms){
+
+    return new Promise(
+        resolve => setTimeout(resolve,ms)
     );
+
 }
 
 
-function showToast(message = "Tersalin!") {
+function showToast(
+    message = "Tersalin!"
+){
 
     const toast =
         document.getElementById("toast");
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
     toast.classList.add("show");
 
     clearTimeout(toastTimer);
 
     toastTimer =
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 1800);
+        setTimeout(
+            () =>
+                toast.classList.remove("show"),
+            1800
+        );
+
 }
 
 
-async function copyText(text, message) {
+async function copyText(
+    text,
+    message = "Tersalin!"
+){
 
-    if (!text) {
+    if(!text){
+
         showToast("Tidak ada data");
+
         return;
     }
 
-    try {
+    try{
 
         await navigator.clipboard.writeText(text);
 
-    } catch {
+    }catch{
 
         const textarea =
             document.createElement("textarea");
 
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
+        textarea.value =
+            text;
 
-        document.body.appendChild(textarea);
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.opacity =
+            "0";
+
+        document.body.appendChild(
+            textarea
+        );
 
         textarea.focus();
         textarea.select();
@@ -1628,6 +1749,7 @@ async function copyText(text, message) {
     }
 
     showToast(message);
+
 }
 
 
@@ -1637,7 +1759,7 @@ RENDER LIST
 ============================================================
 */
 
-function renderList() {
+function renderList(){
 
     const container =
         document.getElementById(
@@ -1672,7 +1794,9 @@ function renderList() {
 
             return categoryMatch &&
                    searchMatch;
+
         });
+
 
     visibleCount.textContent =
         filtered.length;
@@ -1680,11 +1804,15 @@ function renderList() {
     totalCount.textContent =
         apiList.length;
 
-    if (!filtered.length) {
+
+    if(!filtered.length){
 
         container.innerHTML = `
             <div class="empty glass">
-                <div class="empty-icon">🔎</div>
+
+                <div class="empty-icon">
+                    🔎
+                </div>
 
                 <div class="empty-title">
                     Endpoint tidak ditemukan
@@ -1693,22 +1821,27 @@ function renderList() {
                 <div>
                     Coba kata pencarian atau kategori lain.
                 </div>
+
             </div>
         `;
 
         return;
     }
 
+
     const groups = {};
+
 
     filtered.forEach(api => {
 
-        if (!groups[api.category]) {
+        if(!groups[api.category]){
             groups[api.category] = [];
         }
 
         groups[api.category].push(api);
+
     });
+
 
     Object.keys(groups).forEach(category => {
 
@@ -1728,6 +1861,7 @@ function renderList() {
             categoryTitle
         );
 
+
         groups[category].forEach(api => {
 
             const card =
@@ -1736,11 +1870,13 @@ function renderList() {
             card.className =
                 "endpoint glass";
 
+
             const info =
                 document.createElement("div");
 
             info.className =
                 "endpoint-info";
+
 
             const title =
                 document.createElement("h4");
@@ -1748,11 +1884,13 @@ function renderList() {
             title.textContent =
                 api.title;
 
+
             const path =
                 document.createElement("p");
 
             path.textContent =
                 api.path;
+
 
             const desc =
                 document.createElement("small");
@@ -1760,9 +1898,11 @@ function renderList() {
             desc.textContent =
                 api.desc;
 
+
             info.appendChild(title);
             info.appendChild(path);
             info.appendChild(desc);
+
 
             const button =
                 document.createElement("button");
@@ -1770,15 +1910,19 @@ function renderList() {
             button.className =
                 "try-btn";
 
-            if (api.disabled) {
+
+            if(api.disabled){
 
                 button.textContent =
                     "Disabled";
 
-                button.classList.add("disabled");
+                button.classList.add(
+                    "disabled"
+                );
+
                 button.disabled = true;
 
-            } else {
+            }else{
 
                 button.textContent =
                     "Test API";
@@ -1787,14 +1931,19 @@ function renderList() {
                     "click",
                     () => openModal(api)
                 );
+
             }
+
 
             card.appendChild(info);
             card.appendChild(button);
 
             container.appendChild(card);
+
         });
+
     });
+
 }
 
 
@@ -1825,6 +1974,7 @@ categoryTrigger.addEventListener(
         categoryWrap.classList.toggle(
             "open"
         );
+
     }
 );
 
@@ -1840,6 +1990,7 @@ document
             selectedCategory =
                 option.dataset.category;
 
+
             document
             .querySelectorAll(
                 ".category-option"
@@ -1850,11 +2001,15 @@ document
                 )
             );
 
-            option.classList.add("active");
 
-            if (
+            option.classList.add(
+                "active"
+            );
+
+
+            if(
                 selectedCategory === "all"
-            ) {
+            ){
 
                 categoryIcon.textContent =
                     "◉";
@@ -1862,9 +2017,9 @@ document
                 categoryText.textContent =
                     "Semua Kategori";
 
-            } else if (
+            }else if(
                 selectedCategory === "other"
-            ) {
+            ){
 
                 categoryIcon.textContent =
                     "🌐";
@@ -1872,22 +2027,26 @@ document
                 categoryText.textContent =
                     "Other APIs";
 
-            } else {
+            }else{
 
                 categoryIcon.textContent =
                     "🛠️";
 
                 categoryText.textContent =
                     "Tools & Utilities";
+
             }
+
 
             categoryWrap.classList.remove(
                 "open"
             );
 
             renderList();
+
         }
     );
+
 });
 
 
@@ -1895,15 +2054,18 @@ document.addEventListener(
     "click",
     event => {
 
-        if (
+        if(
             !categoryWrap.contains(
                 event.target
             )
-        ) {
+        ){
+
             categoryWrap.classList.remove(
                 "open"
             );
+
         }
+
     }
 );
 
@@ -1914,81 +2076,131 @@ EMOJI SELECT
 ============================================================
 */
 
-if (
-    emojiSelectTrigger &&
-    emojiOptions &&
-    emojiSelectContainer
-) {
+emojiSelectTrigger.onclick = event => {
 
-    emojiSelectTrigger.onclick = event => {
+    event.stopPropagation();
 
-        event.stopPropagation();
+    emojiOptions.classList.toggle(
+        "open"
+    );
 
-        emojiOptions.classList.toggle(
+};
+
+
+emojiOptions
+.querySelectorAll(".custom-option")
+.forEach(option => {
+
+    option.onclick = () => {
+
+        emojiOptions
+        .querySelectorAll(
+            ".custom-option"
+        )
+        .forEach(item =>
+            item.classList.remove(
+                "selected"
+            )
+        );
+
+
+        option.classList.add(
+            "selected"
+        );
+
+
+        selectedEmojiValue =
+            option.dataset.value;
+
+
+        selectedEmojiText.textContent =
+            option.textContent;
+
+
+        emojiOptions.classList.remove(
             "open"
         );
+
+
+        const active =
+            document.querySelector(
+                ".tab.active"
+            );
+
+
+        updateCode(
+            active
+                ? active.dataset.lang
+                : "curl"
+        );
+
     };
 
+});
 
-    emojiOptions
-    .querySelectorAll(".custom-option")
-    .forEach(option => {
 
-        option.onclick = () => {
+document.addEventListener(
+    "click",
+    event => {
 
-            emojiOptions
-            .querySelectorAll(
-                ".custom-option"
-            )
-            .forEach(item =>
-                item.classList.remove(
-                    "selected"
-                )
-            );
-
-            option.classList.add(
-                "selected"
-            );
-
-            selectedEmojiValue =
-                option.dataset.value;
-
-            selectedEmojiText.textContent =
-                option.textContent;
+        if(
+            !emojiSelectContainer
+                .contains(event.target)
+        ){
 
             emojiOptions.classList.remove(
                 "open"
             );
 
-            const active =
-                document.querySelector(
-                    ".tab.active"
-                );
-
-            updateCode(
-                active
-                    ? active.dataset.lang
-                    : "curl"
-            );
-        };
-    });
-
-
-    document.addEventListener(
-        "click",
-        event => {
-
-            if (
-                !emojiSelectContainer
-                    .contains(event.target)
-            ) {
-
-                emojiOptions.classList.remove(
-                    "open"
-                );
-            }
         }
-    );
+
+    }
+);
+
+
+/*
+============================================================
+PARAMETERS
+============================================================
+*/
+
+function getParamValues(){
+
+    const result = {};
+
+    if(
+        currentApi?.params &&
+        Array.isArray(currentApi.params)
+    ){
+
+        currentApi.params.forEach(param => {
+
+            const element =
+                document.getElementById(
+                    `param_${param.name}`
+                );
+
+            if(element){
+
+                result[param.name] =
+                    element.value.trim();
+
+            }
+
+        });
+
+    }else if(
+        currentApi?.param &&
+        currentApi.param !== "none" &&
+        currentApi.param !== "file"
+    ){
+
+        result[currentApi.param] =
+            input.value.trim();
+
+    }
+
+    return result;
 }
 
 
@@ -1998,51 +2210,90 @@ BUILD URL
 ============================================================
 */
 
-function buildUrl() {
+function buildUrl(){
 
-    if (!currentApi) {
+    if(!currentApi){
         return API_BASE;
     }
 
-    if (
-        currentApi.param === "none" ||
+
+    if(
         currentApi.param === "file"
-    ) {
+    ){
 
         return (
             API_BASE +
             currentApi.path
         );
+
     }
 
-    const params = [];
 
-    const value =
-        input.value.trim();
+    const params =
+        new URLSearchParams();
 
-    if (value) {
 
-        params.push(
-            `${encodeURIComponent(
-                currentApi.param
-            )}=${encodeURIComponent(
+    if(
+        currentApi.params &&
+        Array.isArray(currentApi.params)
+    ){
+
+        const values =
+            getParamValues();
+
+
+        currentApi.params.forEach(param => {
+
+            const value =
+                values[param.name];
+
+            if(value){
+                params.set(
+                    param.name,
+                    value
+                );
+            }
+
+        });
+
+    }else if(
+        currentApi.param &&
+        currentApi.param !== "none"
+    ){
+
+        const value =
+            input.value.trim();
+
+        if(value){
+
+            params.set(
+                currentApi.param,
                 value
-            )}`
-        );
+            );
+
+        }
+
     }
 
-    if (currentApi.hasEmojis) {
 
-        params.push(
-            `emojis=${encodeURIComponent(
-                selectedEmojiValue
-            )}`
+    if(currentApi.hasEmojis){
+
+        params.set(
+            "emojis",
+            selectedEmojiValue
         );
+
     }
 
-    return params.length
-        ? `${API_BASE}${currentApi.path}?${params.join("&")}`
+
+    const query =
+        params.toString();
+
+
+    return query
+        ? `${API_BASE}${currentApi.path}?${query}`
         : `${API_BASE}${currentApi.path}`;
+
 }
 
 
@@ -2052,19 +2303,21 @@ CODE GENERATOR
 ============================================================
 */
 
-function updateCode(lang) {
+function updateCode(lang){
 
     currentUrl =
         buildUrl();
 
+
     let code = "";
 
-    if (
+
+    if(
         currentApi &&
         currentApi.param === "file"
-    ) {
+    ){
 
-        switch (lang) {
+        switch(lang){
 
             case "curl":
 
@@ -2073,6 +2326,7 @@ function updateCode(lang) {
   -F "file=@/path/to/file"`;
 
                 break;
+
 
             case "javascript":
 
@@ -2102,6 +2356,7 @@ axios.post(
 
                 break;
 
+
             case "python":
 
                 code =
@@ -2116,6 +2371,7 @@ with open("/path/to/file", "rb") as f:
 print(res.json())`;
 
                 break;
+
 
             case "php":
 
@@ -2153,11 +2409,12 @@ curl_close($ch);
 echo $response;`;
 
                 break;
+
         }
 
-    } else {
+    }else{
 
-        switch (lang) {
+        switch(lang){
 
             case "curl":
 
@@ -2165,6 +2422,7 @@ echo $response;`;
 `curl -X GET "${currentUrl}"`;
 
                 break;
+
 
             case "javascript":
 
@@ -2194,6 +2452,7 @@ echo $response;`;
 
                 break;
 
+
             case "python":
 
                 code =
@@ -2206,6 +2465,7 @@ res = requests.get(
 print(res.json())`;
 
                 break;
+
 
             case "php":
 
@@ -2228,11 +2488,168 @@ curl_close($ch);
 echo $response;`;
 
                 break;
+
         }
+
     }
+
 
     codeSnippet.textContent =
         code;
+
+}
+
+
+/*
+============================================================
+RENDER PARAMETERS
+============================================================
+*/
+
+function renderParameters(api){
+
+    dynamicParams.innerHTML = "";
+
+    input.style.display =
+        "none";
+
+    fileInput.style.display =
+        "none";
+
+
+    if(
+        api.params &&
+        Array.isArray(api.params)
+    ){
+
+        api.params.forEach(param => {
+
+            const group =
+                document.createElement("div");
+
+            group.className =
+                "param-group";
+
+
+            const label =
+                document.createElement("label");
+
+            label.className =
+                "label";
+
+            label.textContent =
+                param.label ||
+                param.name.toUpperCase();
+
+
+            const field =
+                document.createElement("input");
+
+            field.className =
+                "input";
+
+            field.type =
+                param.type ||
+                "text";
+
+            field.id =
+                `param_${param.name}`;
+
+            field.placeholder =
+                param.placeholder ||
+                "";
+
+            field.autocomplete =
+                "off";
+
+
+            field.addEventListener(
+                "input",
+                () => {
+
+                    const active =
+                        document.querySelector(
+                            ".tab.active"
+                        );
+
+                    updateCode(
+                        active
+                            ? active.dataset.lang
+                            : "curl"
+                    );
+
+                }
+            );
+
+
+            group.appendChild(label);
+            group.appendChild(field);
+
+            dynamicParams.appendChild(
+                group
+            );
+
+        });
+
+
+        return;
+
+    }
+
+
+    if(api.param === "none"){
+
+        return;
+
+    }
+
+
+    if(api.param === "file"){
+
+        const label =
+            document.createElement("label");
+
+        label.className =
+            "label";
+
+        label.textContent =
+            "Upload File / Multipart";
+
+
+        dynamicParams.appendChild(
+            label
+        );
+
+        fileInput.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    const label =
+        document.createElement("label");
+
+    label.className =
+        "label";
+
+    label.textContent =
+        "Enter " +
+        api.param.toUpperCase();
+
+
+    dynamicParams.appendChild(
+        label
+    );
+
+
+    input.style.display =
+        "block";
+
+    input.placeholder =
+        api.placeholder || "";
+
 }
 
 
@@ -2242,16 +2659,23 @@ OPEN MODAL
 ============================================================
 */
 
-function openModal(api) {
+function openModal(api){
 
-    currentApi = api;
-    currentUrl = "";
-    currentResponse = "";
+    currentApi =
+        api;
+
+    currentUrl =
+        "";
+
+    currentResponse =
+        "";
+
 
     document
     .getElementById("modalTitle")
     .textContent =
         api.title;
+
 
     document
     .getElementById("modalEndpoint")
@@ -2259,68 +2683,45 @@ function openModal(api) {
         API_BASE +
         api.path;
 
-    input.value = "";
-    input.placeholder =
-        api.placeholder || "";
 
-    fileInput.value = "";
+    input.value =
+        "";
 
-    if (api.param === "none") {
+    fileInput.value =
+        "";
 
-        document
-        .getElementById("inputLabel")
-        .textContent =
-            "No Parameter Required";
 
-        input.style.display = "none";
-        fileInput.style.display = "none";
+    renderParameters(api);
 
-    } else if (
-        api.param === "file"
-    ) {
 
-        document
-        .getElementById("inputLabel")
-        .textContent =
-            "Upload File / Multipart";
-
-        input.style.display = "none";
-        fileInput.style.display = "block";
-
-    } else {
-
-        document
-        .getElementById("inputLabel")
-        .textContent =
-            "Enter " +
-            api.param.toUpperCase();
-
-        input.style.display = "block";
-        fileInput.style.display = "none";
-    }
-
-    if (api.hasEmojis) {
+    if(api.hasEmojis){
 
         emojiSelectContainer.style.display =
             "block";
 
-    } else {
+    }else{
 
         emojiSelectContainer.style.display =
             "none";
+
     }
+
 
     responseBox.className =
         "response";
 
+
     responseBox.textContent =
         "// Klik Execute Request untuk menjalankan API...";
 
-    mediaPreview.innerHTML = "";
+
+    mediaPreview.innerHTML =
+        "";
 
     mediaPreview.classList.remove(
         "active"
     );
+
 
     document
     .querySelectorAll(".tab")
@@ -2328,16 +2729,27 @@ function openModal(api) {
         tab.classList.remove("active")
     );
 
+
     const curlTab =
         document.querySelector(
             '.tab[data-lang="curl"]'
         );
 
-    curlTab.classList.add("active");
 
-    updateCode("curl");
+    curlTab.classList.add(
+        "active"
+    );
 
-    modal.classList.add("active");
+
+    updateCode(
+        "curl"
+    );
+
+
+    modal.classList.add(
+        "active"
+    );
+
 }
 
 
@@ -2347,14 +2759,16 @@ CLOSE MODAL
 ============================================================
 */
 
-function closeModal() {
+function closeModal(){
 
-    if (requestRunning)
+    if(requestRunning){
         return;
+    }
 
     modal.classList.remove(
         "active"
     );
+
 }
 
 
@@ -2370,19 +2784,22 @@ modal.addEventListener(
     "click",
     event => {
 
-        if (
+        if(
             event.target === modal &&
             !requestRunning
-        ) {
+        ){
+
             closeModal();
+
         }
+
     }
 );
 
 
 /*
 ============================================================
-INPUT UPDATE
+SINGLE PARAM INPUT
 ============================================================
 */
 
@@ -2400,6 +2817,32 @@ input.addEventListener(
                 ? active.dataset.lang
                 : "curl"
         );
+
+    }
+);
+
+
+/*
+============================================================
+FILE INPUT
+============================================================
+*/
+
+fileInput.addEventListener(
+    "change",
+    () => {
+
+        const active =
+            document.querySelector(
+                ".tab.active"
+            );
+
+        updateCode(
+            active
+                ? active.dataset.lang
+                : "curl"
+        );
+
     }
 );
 
@@ -2426,19 +2869,25 @@ document
                 )
             );
 
-            tab.classList.add("active");
+
+            tab.classList.add(
+                "active"
+            );
+
 
             updateCode(
                 tab.dataset.lang
             );
+
         }
     );
+
 });
 
 
 /*
 ============================================================
-COPY BUTTONS
+COPY
 ============================================================
 */
 
@@ -2500,6 +2949,7 @@ document
             "_blank",
             "noopener,noreferrer"
         );
+
     }
 );
 
@@ -2513,94 +2963,124 @@ MEDIA
 function isImage(
     contentType = "",
     url = ""
-) {
+){
 
     return (
         contentType.includes("image/") ||
         /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i
             .test(url)
     );
+
 }
 
 
 function isVideo(
     contentType = "",
     url = ""
-) {
+){
 
     return (
         contentType.includes("video/") ||
         /\.(mp4|webm|mov|mkv|avi)(\?|$)/i
             .test(url)
     );
+
 }
 
 
-function extractUrls(text) {
+function extractUrls(text){
 
-    if (
+    if(
         typeof text !== "string"
-    ) {
+    ){
+
         return [];
+
     }
 
     return text.match(
         /https?:\/\/[^\s"'<>]+/gi
     ) || [];
+
 }
 
 
-function findMediaUrlDeep(data) {
+function findMediaUrlDeep(data){
 
-    if (!data)
+    if(!data){
         return null;
+    }
 
-    if (
+
+    if(
         typeof data === "string"
-    ) {
+    ){
 
         const urls =
             extractUrls(data);
 
-        for (const url of urls) {
 
-            if (
-                isImage("", url) ||
-                isVideo("", url)
-            ) {
+        for(
+            const url of urls
+        ){
+
+            if(
+                isImage("",url) ||
+                isVideo("",url)
+            ){
+
                 return url;
+
             }
+
         }
 
-        if (
+
+        if(
             /^https?:\/\//i
                 .test(data.trim())
-        ) {
+        ){
+
             return data.trim();
+
         }
 
+
         return null;
+
     }
 
-    if (Array.isArray(data)) {
 
-        for (const item of data) {
+    if(
+        Array.isArray(data)
+    ){
+
+        for(
+            const item of data
+        ){
 
             const result =
                 findMediaUrlDeep(item);
 
-            if (result)
+
+            if(result){
                 return result;
+            }
+
         }
 
+
         return null;
+
     }
 
-    if (
+
+    if(
         typeof data === "object"
-    ) {
+    ){
 
         const priorityKeys = [
+
             "url",
             "image",
             "imageUrl",
@@ -2623,84 +3103,130 @@ function findMediaUrlDeep(data) {
             "result",
             "data",
             "displayUrl"
+
         ];
 
-        for (
-            const key of priorityKeys
-        ) {
 
-            if (
+        for(
+            const key of priorityKeys
+        ){
+
+            if(
                 data[key] !== undefined &&
                 data[key] !== null
-            ) {
+            ){
 
                 const result =
                     findMediaUrlDeep(
                         data[key]
                     );
 
-                if (result)
+
+                if(result){
                     return result;
+                }
+
             }
+
         }
 
-        for (
+
+        for(
             const key of Object.keys(data)
-        ) {
+        ){
 
             const result =
                 findMediaUrlDeep(
                     data[key]
                 );
 
-            if (result)
+
+            if(result){
                 return result;
+            }
+
         }
+
     }
 
+
     return null;
+
 }
 
+
+/*
+============================================================
+SHOW MEDIA
+============================================================
+*/
 
 function showMedia(
     url,
     type = ""
-) {
+){
 
-    mediaPreview.innerHTML = "";
+    mediaPreview.innerHTML =
+        "";
 
-    let element = null;
 
-    if (
-        isImage(type, url)
-    ) {
+    let element =
+        null;
 
-        element =
-            document.createElement("img");
 
-        element.src = url;
-        element.alt = "API Image Response";
-        element.loading = "lazy";
-
-    } else if (
-        isVideo(type, url)
-    ) {
+    if(
+        isImage(type,url)
+    ){
 
         element =
-            document.createElement("video");
+            document.createElement(
+                "img"
+            );
 
-        element.src = url;
-        element.controls = true;
-        element.playsInline = true;
+        element.src =
+            url;
+
+        element.alt =
+            "API Image Response";
+
+        element.loading =
+            "lazy";
+
+    }else if(
+        isVideo(type,url)
+    ){
+
+        element =
+            document.createElement(
+                "video"
+            );
+
+        element.src =
+            url;
+
+        element.controls =
+            true;
+
+        element.playsInline =
+            true;
+
     }
 
-    if (!element)
-        return;
 
-    mediaPreview.appendChild(element);
+    if(!element){
+        return;
+    }
+
+
+    mediaPreview.appendChild(
+        element
+    );
+
 
     const urlText =
-        document.createElement("span");
+        document.createElement(
+            "span"
+        );
 
     urlText.className =
         "media-url";
@@ -2708,18 +3234,25 @@ function showMedia(
     urlText.textContent =
         url;
 
+
     mediaPreview.appendChild(
         urlText
     );
 
+
     const buttons =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     buttons.className =
         "media-buttons";
 
+
     const copy =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
     copy.className =
         "small-btn";
@@ -2734,8 +3267,11 @@ function showMedia(
                 "URL media tersalin!"
             );
 
+
     const open =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
     open.className =
         "small-btn";
@@ -2751,6 +3287,7 @@ function showMedia(
                 "noopener,noreferrer"
             );
 
+
     buttons.appendChild(copy);
     buttons.appendChild(open);
 
@@ -2758,49 +3295,104 @@ function showMedia(
         buttons
     );
 
+
     mediaPreview.classList.add(
         "active"
     );
+
 }
 
 
 /*
 ============================================================
-TEMPMAIL QUICK ACTION
+TEMPMAIL CREATE ACTION
 ============================================================
 */
 
-function showTempMailActions(data) {
+function showTempMailActions(data){
 
-    if (
+    if(
         !currentApi?.tempmailCreate
-    ) {
+    ){
+
+        return;
+
+    }
+
+
+    const email =
+        data?.email ||
+        data?.result?.email ||
+        data?.data?.email;
+
+
+    if(!email){
         return;
     }
 
-    const email =
-        data?.email;
-
-    if (!email)
-        return;
 
     const box =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     box.className =
+        "tempmail-box";
+
+
+    const title =
+        document.createElement(
+            "div"
+        );
+
+    title.className =
+        "tempmail-title";
+
+    title.textContent =
+        "📧 Temporary Email";
+
+
+    const emailBox =
+        document.createElement(
+            "div"
+        );
+
+    emailBox.className =
+        "tempmail-email";
+
+    emailBox.textContent =
+        email;
+
+
+    box.appendChild(
+        title
+    );
+
+    box.appendChild(
+        emailBox
+    );
+
+
+    const buttons =
+        document.createElement(
+            "div"
+        );
+
+    buttons.className =
         "media-buttons";
 
-    box.style.marginTop =
-        "12px";
 
     const copy =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
     copy.className =
         "small-btn";
 
     copy.textContent =
         "📋 Salin Email";
+
 
     copy.onclick =
         () =>
@@ -2809,14 +3401,18 @@ function showTempMailActions(data) {
                 "Email tersalin!"
             );
 
+
     const inbox =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
     inbox.className =
         "small-btn";
 
     inbox.textContent =
         "📨 Cek Inbox";
+
 
     inbox.onclick = () => {
 
@@ -2826,47 +3422,54 @@ function showTempMailActions(data) {
                     api.tempmailInbox
             );
 
-        if (!inboxApi)
+
+        if(!inboxApi){
             return;
+        }
 
-        openModal(inboxApi);
 
-        input.value =
-            email;
+        openModal(
+            inboxApi
+        );
 
-        updateCode("curl");
 
-        setTimeout(() => {
+        const emailField =
+            document.getElementById(
+                "param_email"
+            );
 
-            executeButton.click();
 
-        }, 150);
+        if(emailField){
+
+            emailField.value =
+                email;
+
+        }
+
+
+        updateCode(
+            "curl"
+        );
 
     };
 
-    box.appendChild(copy);
-    box.appendChild(inbox);
 
-    mediaPreview.innerHTML = "";
-
-    const emailBox =
-        document.createElement("div");
-
-    emailBox.className =
-        "response";
-
-    emailBox.style.minHeight =
-        "auto";
-
-    emailBox.style.marginBottom =
-        "10px";
-
-    emailBox.textContent =
-        `📧 Temporary Email\n\n${email}`;
-
-    mediaPreview.appendChild(
-        emailBox
+    buttons.appendChild(
+        copy
     );
+
+    buttons.appendChild(
+        inbox
+    );
+
+
+    box.appendChild(
+        buttons
+    );
+
+
+    mediaPreview.innerHTML =
+        "";
 
     mediaPreview.appendChild(
         box
@@ -2875,6 +3478,7 @@ function showTempMailActions(data) {
     mediaPreview.classList.add(
         "active"
     );
+
 }
 
 
@@ -2886,7 +3490,7 @@ PROGRESS
 
 async function showProgress(
     message
-) {
+){
 
     responseBox.className =
         "response loading";
@@ -2895,12 +3499,13 @@ async function showProgress(
         message;
 
     await sleep(350);
+
 }
 
 
 /*
 ============================================================
-EXECUTE REQUEST
+EXECUTE
 ============================================================
 */
 
@@ -2908,105 +3513,120 @@ executeButton.addEventListener(
     "click",
     async () => {
 
-        if (requestRunning)
+        if(requestRunning){
             return;
+        }
 
-        requestRunning = true;
 
-        executeButton.disabled = true;
+        requestRunning =
+            true;
+
+
+        executeButton.disabled =
+            true;
 
         executeButton.textContent =
             "Processing...";
 
+
         currentUrl =
             buildUrl();
 
-        currentResponse = "";
 
-        mediaPreview.innerHTML = "";
+        currentResponse =
+            "";
+
+
+        mediaPreview.innerHTML =
+            "";
 
         mediaPreview.classList.remove(
             "active"
         );
 
-        try {
+
+        try{
 
             await showProgress(
                 "⏳ Connecting to API..."
             );
 
+
             const start =
                 performance.now();
 
+
             let res;
 
-            try {
 
-                /*
-                FILE REQUEST
-                */
+            try{
 
-                if (
+                if(
                     currentApi.param === "file"
-                ) {
+                ){
 
-                    if (
+                    if(
                         !fileInput.files.length
-                    ) {
+                    ){
+
                         throw new Error(
                             "Silakan pilih file terlebih dahulu."
                         );
+
                     }
+
 
                     const formData =
                         new FormData();
+
 
                     formData.append(
                         "file",
                         fileInput.files[0]
                     );
 
+
                     res =
                         await fetch(
                             `${API_BASE}${currentApi.path}`,
                             {
-                                method: "POST",
-                                body: formData
+                                method:"POST",
+                                body:formData
                             }
                         );
 
-                } else {
-
-                    /*
-                    GET REQUEST
-                    */
+                }else{
 
                     res =
                         await fetch(
                             currentUrl,
                             {
-                                method: "GET",
-                                cache: "no-store",
-                                headers: {
-                                    "Accept": "*/*"
+                                method:"GET",
+                                cache:"no-store",
+                                headers:{
+                                    "Accept":"*/*"
                                 }
                             }
                         );
+
                 }
 
-            } catch (error) {
+            }catch(error){
 
                 throw new Error(
                     error?.message ||
                     "Gagal terhubung ke API."
                 );
+
             }
+
 
             const elapsed =
                 Math.round(
                     performance.now() -
                     start
                 );
+
 
             const contentType =
                 (
@@ -3017,14 +3637,14 @@ executeButton.addEventListener(
 
 
             /*
-            IMAGE RESPONSE
+            IMAGE
             */
 
-            if (
+            if(
                 contentType.includes(
                     "image/"
                 )
-            ) {
+            ){
 
                 currentResponse =
 `HTTP ${res.status} ${res.statusText}
@@ -3034,13 +3654,16 @@ Response time: ${elapsed} ms
 Media URL:
 ${currentUrl}`;
 
+
                 showMedia(
                     currentUrl,
                     contentType
                 );
 
+
                 responseBox.className =
                     "response";
+
 
                 responseBox.textContent =
 `🖼️ Image Response
@@ -3050,19 +3673,21 @@ Response time: ${elapsed} ms
 
 ✅ Request completed`;
 
+
                 return;
+
             }
 
 
             /*
-            VIDEO RESPONSE
+            VIDEO
             */
 
-            if (
+            if(
                 contentType.includes(
                     "video/"
                 )
-            ) {
+            ){
 
                 currentResponse =
 `HTTP ${res.status} ${res.statusText}
@@ -3072,13 +3697,16 @@ Response time: ${elapsed} ms
 Media URL:
 ${currentUrl}`;
 
+
                 showMedia(
                     currentUrl,
                     contentType
                 );
 
+
                 responseBox.className =
                     "response";
+
 
                 responseBox.textContent =
 `🎬 Video Response
@@ -3088,28 +3716,33 @@ Response time: ${elapsed} ms
 
 ✅ Request completed`;
 
+
                 return;
+
             }
 
 
             /*
-            TEXT / JSON
+            JSON / TEXT
             */
 
             const raw =
                 await res.text();
 
+
             let data;
 
-            try {
+
+            try{
 
                 data =
                     JSON.parse(raw);
 
-            } catch {
+            }catch{
 
                 data =
                     raw;
+
             }
 
 
@@ -3117,14 +3750,14 @@ Response time: ${elapsed} ms
             TEMPMAIL CREATE
             */
 
-            if (
-                currentApi.tempmailCreate &&
-                data &&
-                typeof data === "object" &&
-                data.email
-            ) {
+            if(
+                currentApi.tempmailCreate
+            ){
 
-                showTempMailActions(data);
+                showTempMailActions(
+                    data
+                );
+
             }
 
 
@@ -3133,22 +3766,28 @@ Response time: ${elapsed} ms
             */
 
             const mediaUrl =
-                findMediaUrlDeep(data);
+                findMediaUrlDeep(
+                    data
+                );
 
-            if (mediaUrl) {
 
-                let mediaType = "";
+            if(mediaUrl){
 
-                try {
+                let mediaType =
+                    "";
+
+
+                try{
 
                     const mediaResponse =
                         await fetch(
                             mediaUrl,
                             {
-                                method: "HEAD",
-                                cache: "no-store"
+                                method:"HEAD",
+                                cache:"no-store"
                             }
                         );
+
 
                     mediaType =
                         (
@@ -3159,19 +3798,22 @@ Response time: ${elapsed} ms
                                 ) || ""
                         ).toLowerCase();
 
-                } catch {}
+                }catch{}
 
-                if (
+
+                if(
                     mediaType ||
-                    isImage("", mediaUrl) ||
-                    isVideo("", mediaUrl)
-                ) {
+                    isImage("",mediaUrl) ||
+                    isVideo("",mediaUrl)
+                ){
 
                     showMedia(
                         mediaUrl,
                         mediaType
                     );
+
                 }
+
             }
 
 
@@ -3199,6 +3841,7 @@ Response time: ${elapsed} ms
                     ? "response"
                     : "response error";
 
+
             responseBox.textContent =
 `${res.ok ? "✅" : "❌"} Request completed
 
@@ -3207,14 +3850,17 @@ Response time: ${elapsed} ms
 
 ${currentResponse}`;
 
-        } catch (error) {
+
+        }catch(error){
 
             currentResponse =
                 error?.message ||
                 "Unknown error";
 
+
             responseBox.className =
                 "response error";
+
 
             responseBox.textContent =
 `❌ API Request Failed
@@ -3224,16 +3870,21 @@ ${currentResponse}
 Endpoint:
 ${currentUrl}`;
 
-        } finally {
+        }finally{
 
-            requestRunning = false;
+            requestRunning =
+                false;
+
 
             executeButton.disabled =
                 false;
 
+
             executeButton.textContent =
                 "Execute Request";
+
         }
+
     }
 );
 
