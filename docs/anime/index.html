@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -1241,6 +1242,138 @@ button:disabled{
     border-color:rgba(248,113,113,.25);
 }
 
+/* =========================================================
+   CONSOLE PROGRESS
+========================================================= */
+
+.response.console-mode{
+    color:#cbd5e1;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(59,130,246,.055),
+            transparent 45%
+        ),
+        #020304;
+
+    border-color:rgba(59,130,246,.22);
+
+    overflow:auto;
+}
+
+.console-line{
+    display:block;
+
+    min-height:14px;
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-size:8px;
+    line-height:1.75;
+
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.console-time{
+    color:#475569;
+}
+
+.console-command{
+    color:#93c5fd;
+}
+
+.console-info{
+    color:#cbd5e1;
+}
+
+.console-success{
+    color:#6ee7b7;
+}
+
+.console-warning{
+    color:#fbbf24;
+}
+
+.console-error{
+    color:#fca5a5;
+}
+
+.console-muted{
+    color:#64748b;
+}
+
+.console-result{
+    margin-top:5px;
+
+    padding-top:7px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+    color:#e2e8f0;
+}
+
+.console-progress{
+    height:3px;
+
+    margin-top:8px;
+    margin-bottom:2px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.06);
+
+    border-radius:20px;
+}
+
+.console-progress-bar{
+    width:0;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #3b82f6,
+            #38bdf8
+        );
+
+    border-radius:20px;
+
+    transition:
+        width .35s ease;
+}
+
+.console-cursor{
+    display:inline-block;
+
+    width:5px;
+    height:9px;
+
+    margin-left:2px;
+
+    vertical-align:-1px;
+
+    background:#93c5fd;
+
+    animation:
+        consoleBlink .8s infinite;
+}
+
+@keyframes consoleBlink{
+
+    0%,
+    49%{
+        opacity:1;
+    }
+
+    50%,
+    100%{
+        opacity:0;
+    }
+
+}
+
 /* MEDIA */
 
 .media{
@@ -1570,7 +1703,7 @@ button:disabled{
             </div>
 
             <div class="brand-text">
-                <h1>Anime & Entertainment V2</h1>
+                <h1>Anime & Entertainment V3</h1>
                 <p>ReyCloudSHP API Documentation</p>
             </div>
 
@@ -3648,23 +3781,184 @@ function showMedia(
 
 
 /* =========================================================
-   PROGRESS
+   CONSOLE PROGRESS HELPERS
 ========================================================= */
 
-async function showProgress(
-    message
-){
+function consoleTime(){
 
-    responseBox.className =
-        "response loading";
-
-    responseBox.textContent =
-        message;
-
-    await sleep(300);
+    return new Date()
+        .toLocaleTimeString(
+            "id-ID",
+            {
+                hour12:false
+            }
+        );
 
 }
 
+
+function consoleLine(
+    message,
+    type = "info"
+){
+
+    const line =
+        document.createElement(
+            "div"
+        );
+
+    line.className =
+        `console-line console-${type}`;
+
+
+    const time =
+        document.createElement(
+            "span"
+        );
+
+    time.className =
+        "console-time";
+
+    time.textContent =
+        `[${consoleTime()}] `;
+
+
+    line.appendChild(
+        time
+    );
+
+
+    const text =
+        document.createElement(
+            "span"
+        );
+
+    text.textContent =
+        message;
+
+
+    line.appendChild(
+        text
+    );
+
+
+    responseBox.appendChild(
+        line
+    );
+
+
+    responseBox.scrollTop =
+        responseBox.scrollHeight;
+
+
+    return line;
+
+}
+
+
+function createConsole(){
+
+    responseBox.className =
+        "response console-mode";
+
+
+    responseBox.innerHTML = "";
+
+
+    const progress =
+        document.createElement(
+            "div"
+        );
+
+    progress.className =
+        "console-progress";
+
+
+    const bar =
+        document.createElement(
+            "div"
+        );
+
+    bar.className =
+        "console-progress-bar";
+
+    bar.id =
+        "consoleProgressBar";
+
+
+    progress.appendChild(
+        bar
+    );
+
+
+    responseBox.appendChild(
+        progress
+    );
+
+
+    return bar;
+
+}
+
+
+function setConsoleProgress(
+    value
+){
+
+    const bar =
+        document.getElementById(
+            "consoleProgressBar"
+        );
+
+
+    if(!bar){
+        return;
+    }
+
+
+    bar.style.width =
+        `${Math.max(
+            0,
+            Math.min(
+                100,
+                value
+            )
+        )}%`;
+
+}
+
+
+async function showProgress(
+    message,
+    type = "info",
+    progress = null
+){
+
+    consoleLine(
+        message,
+        type
+    );
+
+
+    if(
+        progress !== null
+    ){
+
+        setConsoleProgress(
+            progress
+        );
+
+    }
+
+
+    await sleep(250);
+
+}
+
+
+/* =========================================================
+   SLEEP
+========================================================= */
 
 function sleep(ms){
 
@@ -3688,6 +3982,11 @@ executeButton.addEventListener(
     async () => {
 
         if(requestRunning){
+            return;
+        }
+
+
+        if(!currentApi){
             return;
         }
 
@@ -3717,10 +4016,76 @@ executeButton.addEventListener(
         );
 
 
+        const progressBar =
+            createConsole();
+
+
         try{
 
+            /* -------------------------------------------------
+               INITIALIZE
+            ------------------------------------------------- */
+
             await showProgress(
-                "⏳ Connecting to API..."
+                `▶ ${currentApi.method || "GET"} ${currentApi.path}`,
+                "command",
+                5
+            );
+
+
+            await showProgress(
+                "Initializing request...",
+                "info",
+                10
+            );
+
+
+            await showProgress(
+                `Target: ${currentUrl}`,
+                "muted",
+                15
+            );
+
+
+            if(
+                currentApi.param === "file"
+            ){
+
+                if(
+                    !fileInput.files.length
+                ){
+
+                    throw new Error(
+                        "Silakan pilih file terlebih dahulu."
+                    );
+
+                }
+
+
+                await showProgress(
+                    `File: ${fileInput.files[0].name}`,
+                    "info",
+                    20
+                );
+
+            }
+
+
+            /* -------------------------------------------------
+               CONNECT
+            ------------------------------------------------- */
+
+            await showProgress(
+                "Connecting to API...",
+                "info",
+                28
+            );
+
+
+            await showProgress(
+                "Resolving API endpoint...",
+                "muted",
+                35
             );
 
 
@@ -3733,11 +4098,22 @@ executeButton.addEventListener(
 
             try{
 
+                /* -------------------------------------------------
+                   FILE REQUEST
+                ------------------------------------------------- */
+
                 if(
                     currentApi.param ===
                     "file" &&
                     fileInput.files.length > 0
                 ){
+
+                    await showProgress(
+                        "Preparing multipart/form-data...",
+                        "info",
+                        40
+                    );
+
 
                     const formData =
                         new FormData();
@@ -3745,6 +4121,13 @@ executeButton.addEventListener(
                     formData.append(
                         "file",
                         fileInput.files[0]
+                    );
+
+
+                    await showProgress(
+                        "Uploading file...",
+                        "info",
+                        48
                     );
 
 
@@ -3762,6 +4145,24 @@ executeButton.addEventListener(
                         );
 
                 }else{
+
+                    /* -------------------------------------------------
+                       GET REQUEST
+                    ------------------------------------------------- */
+
+                    await showProgress(
+                        "Opening HTTP connection...",
+                        "info",
+                        40
+                    );
+
+
+                    await showProgress(
+                        `GET ${currentApi.path}`,
+                        "command",
+                        48
+                    );
+
 
                     res =
                         await fetch(
@@ -3791,11 +4192,36 @@ executeButton.addEventListener(
             }
 
 
+            /* -------------------------------------------------
+               RESPONSE RECEIVED
+            ------------------------------------------------- */
+
             const elapsed =
                 Math.round(
                     performance.now() -
                     start
                 );
+
+
+            await showProgress(
+                "API connection established.",
+                "success",
+                60
+            );
+
+
+            await showProgress(
+                "Processing API response...",
+                "info",
+                68
+            );
+
+
+            await showProgress(
+                "Waiting for response body...",
+                "muted",
+                74
+            );
 
 
             const contentType =
@@ -3806,7 +4232,25 @@ executeButton.addEventListener(
                 ).toLowerCase();
 
 
-            /* IMAGE RESPONSE */
+            await showProgress(
+                `Response received: HTTP ${res.status} ${res.statusText}`,
+                res.ok
+                    ? "success"
+                    : "warning",
+                82
+            );
+
+
+            await showProgress(
+                `Content-Type: ${contentType || "unknown"}`,
+                "muted",
+                86
+            );
+
+
+            /* =====================================================
+               IMAGE RESPONSE
+            ===================================================== */
 
             if(
                 contentType.includes(
@@ -3823,23 +4267,60 @@ Media URL:
 ${currentUrl}`;
 
 
+                await showProgress(
+                    "Image response detected.",
+                    "success",
+                    91
+                );
+
+
                 showMedia(
                     currentUrl,
                     contentType
                 );
 
 
-                responseBox.className =
-                    "response";
+                await showProgress(
+                    `Response processed in ${elapsed} ms.`,
+                    "success",
+                    96
+                );
 
 
-                responseBox.textContent =
+                setConsoleProgress(
+                    100
+                );
+
+
+                await showProgress(
+                    "✓ Request completed.",
+                    "success",
+                    100
+                );
+
+
+                const result =
+                    document.createElement(
+                        "div"
+                    );
+
+                result.className =
+                    "console-result";
+
+                result.textContent =
 `🖼️ Image Response
 
 HTTP ${res.status} ${res.statusText}
-Response time: ${elapsed} ms
+Response time: ${elapsed} ms`;
 
-✅ Request completed`;
+
+                responseBox.appendChild(
+                    result
+                );
+
+
+                responseBox.scrollTop =
+                    responseBox.scrollHeight;
 
 
                 return;
@@ -3847,7 +4328,9 @@ Response time: ${elapsed} ms
             }
 
 
-            /* VIDEO RESPONSE */
+            /* =====================================================
+               VIDEO RESPONSE
+            ===================================================== */
 
             if(
                 contentType.includes(
@@ -3864,23 +4347,60 @@ Media URL:
 ${currentUrl}`;
 
 
+                await showProgress(
+                    "Video response detected.",
+                    "success",
+                    91
+                );
+
+
                 showMedia(
                     currentUrl,
                     contentType
                 );
 
 
-                responseBox.className =
-                    "response";
+                await showProgress(
+                    `Response processed in ${elapsed} ms.`,
+                    "success",
+                    96
+                );
 
 
-                responseBox.textContent =
+                setConsoleProgress(
+                    100
+                );
+
+
+                await showProgress(
+                    "✓ Request completed.",
+                    "success",
+                    100
+                );
+
+
+                const result =
+                    document.createElement(
+                        "div"
+                    );
+
+                result.className =
+                    "console-result";
+
+                result.textContent =
 `🎬 Video Response
 
 HTTP ${res.status} ${res.statusText}
-Response time: ${elapsed} ms
+Response time: ${elapsed} ms`;
 
-✅ Request completed`;
+
+                responseBox.appendChild(
+                    result
+                );
+
+
+                responseBox.scrollTop =
+                    responseBox.scrollHeight;
 
 
                 return;
@@ -3888,10 +4408,26 @@ Response time: ${elapsed} ms
             }
 
 
-            /* TEXT / JSON */
+            /* =====================================================
+               TEXT / JSON
+            ===================================================== */
+
+            await showProgress(
+                "Reading response body...",
+                "info",
+                88
+            );
+
 
             const raw =
                 await res.text();
+
+
+            await showProgress(
+                "Parsing response...",
+                "info",
+                91
+            );
 
 
             let data;
@@ -3902,15 +4438,36 @@ Response time: ${elapsed} ms
                 data =
                     JSON.parse(raw);
 
+                await showProgress(
+                    "JSON response detected.",
+                    "success",
+                    93
+                );
+
             }catch{
 
                 data =
                     raw;
 
+                await showProgress(
+                    "Plain text response detected.",
+                    "muted",
+                    93
+                );
+
             }
 
 
-            /* MEDIA INSIDE JSON */
+            /* =====================================================
+               MEDIA INSIDE JSON
+            ===================================================== */
+
+            await showProgress(
+                "Scanning response for media...",
+                "muted",
+                94
+            );
+
 
             const mediaUrl =
                 (
@@ -3922,6 +4479,13 @@ Response time: ${elapsed} ms
 
 
             if(mediaUrl){
+
+                await showProgress(
+                    "Media URL detected.",
+                    "success",
+                    95
+                );
+
 
                 let mediaType =
                     "";
@@ -3951,6 +4515,7 @@ Response time: ${elapsed} ms
                                 ) || ""
                         ).toLowerCase();
 
+
                 }catch{}
 
 
@@ -3970,6 +4535,10 @@ Response time: ${elapsed} ms
             }
 
 
+            /* =====================================================
+               FINAL RESPONSE
+            ===================================================== */
+
             currentResponse =
                 (
                     data &&
@@ -3983,19 +4552,58 @@ Response time: ${elapsed} ms
                     : String(data);
 
 
-            responseBox.className =
+            setConsoleProgress(
+                97
+            );
+
+
+            await showProgress(
+                `Response processed in ${elapsed} ms.`,
+                "success",
+                98
+            );
+
+
+            setConsoleProgress(
+                100
+            );
+
+
+            await showProgress(
+                "✓ Request completed.",
                 res.ok
-                    ? "response"
-                    : "response error";
+                    ? "success"
+                    : "warning",
+                100
+            );
 
 
-            responseBox.textContent =
-`${res.ok ? "✅" : "⚠️"} Request completed
+            const result =
+                document.createElement(
+                    "div"
+                );
+
+            result.className =
+                "console-result";
+
+
+            result.textContent =
+`${res.ok ? "✅" : "⚠️"} API Response
 
 HTTP ${res.status} ${res.statusText}
 Response time: ${elapsed} ms
 
 ${currentResponse}`;
+
+
+            responseBox.appendChild(
+                result
+            );
+
+
+            responseBox.scrollTop =
+                responseBox.scrollHeight;
+
 
         }catch(error){
 
@@ -4004,17 +4612,42 @@ ${currentResponse}`;
                 "Unknown error";
 
 
-            responseBox.className =
-                "response error";
+            setConsoleProgress(
+                100
+            );
 
 
-            responseBox.textContent =
+            consoleLine(
+                "✕ Request failed.",
+                "error"
+            );
+
+
+            const result =
+                document.createElement(
+                    "div"
+                );
+
+            result.className =
+                "console-result console-error";
+
+
+            result.textContent =
 `❌ API Request Failed
 
 ${currentResponse}
 
 Endpoint:
 ${currentUrl}`;
+
+
+            responseBox.appendChild(
+                result
+            );
+
+
+            responseBox.scrollTop =
+                responseBox.scrollHeight;
 
         }finally{
 

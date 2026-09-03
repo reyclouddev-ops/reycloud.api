@@ -1080,6 +1080,141 @@ input[type="file"]{
         rgba(239,68,68,.3);
 }
 
+
+/* =========================================================
+   CONSOLE RESPONSE
+   Tambahan saja
+========================================================= */
+
+.response.console-mode{
+    padding:12px 13px;
+
+    background:#000;
+
+    color:#cbd5e1;
+
+    font-family:
+        'JetBrains Mono',
+        monospace;
+
+    font-size:9px;
+
+    line-height:1.65;
+
+    white-space:pre-wrap;
+
+    word-break:break-word;
+}
+
+.console-line{
+    display:block;
+
+    min-height:15px;
+}
+
+.console-time{
+    color:#475569;
+}
+
+.console-command{
+    color:#93c5fd;
+}
+
+.console-info{
+    color:#cbd5e1;
+}
+
+.console-success{
+    color:#4ade80;
+}
+
+.console-warning{
+    color:#facc15;
+}
+
+.console-error{
+    color:#f87171;
+}
+
+.console-muted{
+    color:#64748b;
+}
+
+.console-result{
+    margin-top:7px;
+
+    padding-top:7px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+.console-progress{
+    display:block;
+
+    width:100%;
+    height:3px;
+
+    margin-top:8px;
+
+    overflow:hidden;
+
+    background:#111116;
+
+    border-radius:10px;
+}
+
+.console-progress-bar{
+    display:block;
+
+    width:0%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            #38bdf8
+        );
+
+    border-radius:10px;
+
+    transition:
+        width .35s ease;
+}
+
+.console-cursor{
+    display:inline-block;
+
+    width:5px;
+    height:10px;
+
+    margin-left:3px;
+
+    vertical-align:-1px;
+
+    background:#38bdf8;
+
+    animation:
+        consoleBlink 1s infinite;
+}
+
+@keyframes consoleBlink{
+
+    0%,
+    49%{
+        opacity:1;
+    }
+
+    50%,
+    100%{
+        opacity:0;
+    }
+
+}
+
+
 /* =========================================================
    MEDIA
 ========================================================= */
@@ -1830,7 +1965,6 @@ const CONFIG = {
 
 /* =========================================================
    AI ENDPOINT DATABASE
-   Tinggal tambah object di sini kalau ada API baru.
 ========================================================= */
 
 const aiApiList = [
@@ -3740,21 +3874,187 @@ function showMedia(
 
 
 /* =========================================================
-   PROGRESS
+   CONSOLE PROGRESS
 ========================================================= */
 
-async function showProgress(
-    message
+function consoleTime(){
+
+    return new Date()
+        .toLocaleTimeString(
+            "id-ID",
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        );
+
+}
+
+
+function consoleLine(
+    message,
+    type = "info"
 ){
 
-    responseBox.className =
-        "response loading";
+    const line =
+        document.createElement(
+            "div"
+        );
 
-    responseBox.textContent =
+    line.className =
+        "console-line console-" +
+        type;
+
+
+    const time =
+        document.createElement(
+            "span"
+        );
+
+    time.className =
+        "console-time";
+
+    time.textContent =
+        `[${consoleTime()}] `;
+
+
+    line.appendChild(
+        time
+    );
+
+
+    const text =
+        document.createElement(
+            "span"
+        );
+
+    text.textContent =
         message;
 
+
+    line.appendChild(
+        text
+    );
+
+
+    responseBox.appendChild(
+        line
+    );
+
+
+    responseBox.scrollTop =
+        responseBox.scrollHeight;
+
+
+    return line;
+
+}
+
+
+function createConsole(){
+
+    responseBox.className =
+        "response console-mode";
+
+    responseBox.innerHTML =
+        "";
+
+}
+
+
+function setConsoleProgress(
+    percent
+){
+
+    let progress =
+        responseBox.querySelector(
+            ".console-progress"
+        );
+
+
+    if(!progress){
+
+        progress =
+            document.createElement(
+                "div"
+            );
+
+        progress.className =
+            "console-progress";
+
+
+        const bar =
+            document.createElement(
+                "span"
+            );
+
+        bar.className =
+            "console-progress-bar";
+
+
+        progress.appendChild(
+            bar
+        );
+
+
+        responseBox.appendChild(
+            progress
+        );
+
+    }
+
+
+    const bar =
+        progress.querySelector(
+            ".console-progress-bar"
+        );
+
+
+    if(bar){
+
+        bar.style.width =
+            `${Math.max(
+                0,
+                Math.min(
+                    100,
+                    percent
+                )
+            )}%`;
+
+    }
+
+
+    responseBox.scrollTop =
+        responseBox.scrollHeight;
+
+}
+
+
+async function showProgress(
+    message,
+    type = "info",
+    percent = null,
+    delay = 250
+){
+
+    consoleLine(
+        message,
+        type
+    );
+
+
+    if(percent !== null){
+
+        setConsoleProgress(
+            percent
+        );
+
+    }
+
+
     await sleep(
-        300
+        delay
     );
 
 }
@@ -3847,19 +4147,89 @@ executeButton.addEventListener(
         );
 
 
+        createConsole();
+
+
+        const start =
+            performance.now();
+
+
         try{
 
-            /*
-             * FILE REQUEST
-             */
+            /* =================================================
+               INITIALIZE
+            ================================================= */
 
             await showProgress(
-                "⏳ Connecting to API..."
+                `$ ${
+                    currentApi.method || "GET"
+                } ${currentApi.path}`,
+                "command",
+                5,
+                180
             );
 
 
-            const start =
-                performance.now();
+            await showProgress(
+                "Initializing request...",
+                "info",
+                10,
+                220
+            );
+
+
+            if(
+                currentApi.param ===
+                "file"
+            ){
+
+                if(
+                    !fileInput.files.length
+                ){
+
+                    throw new Error(
+                        "Pilih file terlebih dahulu."
+                    );
+
+                }
+
+
+                await showProgress(
+                    `File selected: ${fileInput.files[0].name}`,
+                    "info",
+                    18,
+                    180
+                );
+
+
+                await showProgress(
+                    `File size: ${formatBytes(
+                        fileInput.files[0].size
+                    )}`,
+                    "muted",
+                    null,
+                    150
+                );
+
+            }
+            else{
+
+                await showProgress(
+                    "Target URL detected",
+                    "info",
+                    18,
+                    180
+                );
+
+            }
+
+
+            await showProgress(
+                "Connecting to API...",
+                "info",
+                30,
+                300
+            );
 
 
             let res;
@@ -3867,21 +4237,14 @@ executeButton.addEventListener(
 
             try{
 
+                /* =================================================
+                   FILE REQUEST
+                ================================================= */
+
                 if(
                     currentApi.param ===
-                        "file"
+                    "file"
                 ){
-
-                    if(
-                        !fileInput.files.length
-                    ){
-
-                        throw new Error(
-                            "Pilih file terlebih dahulu."
-                        );
-
-                    }
-
 
                     const formData =
                         new FormData();
@@ -3890,6 +4253,14 @@ executeButton.addEventListener(
                     formData.append(
                         "file",
                         fileInput.files[0]
+                    );
+
+
+                    await showProgress(
+                        "Preparing multipart/form-data...",
+                        "info",
+                        38,
+                        220
                     );
 
 
@@ -3904,7 +4275,19 @@ executeButton.addEventListener(
 
                 }
 
+                /* =================================================
+                   NORMAL REQUEST
+                ================================================= */
+
                 else{
+
+                    await showProgress(
+                        `${currentApi.method || "GET"} ${currentApi.path}`,
+                        "command",
+                        40,
+                        180
+                    );
+
 
                     res =
                         await fetchWithTimeout(
@@ -3948,6 +4331,30 @@ executeButton.addEventListener(
             }
 
 
+            await showProgress(
+                "API connection established",
+                "success",
+                58,
+                220
+            );
+
+
+            await showProgress(
+                "Processing request...",
+                "info",
+                68,
+                220
+            );
+
+
+            await showProgress(
+                "Waiting for API response...",
+                "warning",
+                78,
+                300
+            );
+
+
             const elapsed =
                 Math.round(
                     performance.now() -
@@ -3965,9 +4372,39 @@ executeButton.addEventListener(
                 .toLowerCase();
 
 
-            /*
-             * IMAGE RESPONSE
-             */
+            /* =================================================
+               RESPONSE RECEIVED
+            ================================================= */
+
+            await showProgress(
+                "Response received",
+                "success",
+                88,
+                180
+            );
+
+
+            await showProgress(
+                `HTTP ${res.status} ${res.statusText}`,
+                res.ok
+                    ? "success"
+                    : "error",
+                92,
+                160
+            );
+
+
+            await showProgress(
+                `Response time: ${elapsed} ms`,
+                "muted",
+                96,
+                150
+            );
+
+
+            /* =================================================
+               IMAGE RESPONSE
+            ================================================= */
 
             if(
                 contentType.includes(
@@ -3999,19 +4436,21 @@ Image response received.`;
                 );
 
 
-                responseBox.className =
-                    res.ok
-                        ? "response"
-                        : "response error";
+                setConsoleProgress(
+                    100
+                );
 
 
-                responseBox.textContent =
-`🖼️ Image Response
+                consoleLine(
+                    "✓ Image response received",
+                    "success"
+                );
 
-HTTP ${res.status} ${res.statusText}
-Response time: ${elapsed} ms
 
-✅ Request completed`;
+                consoleLine(
+                    "✓ Request completed",
+                    "success"
+                );
 
 
                 return;
@@ -4019,9 +4458,9 @@ Response time: ${elapsed} ms
             }
 
 
-            /*
-             * VIDEO RESPONSE
-             */
+            /* =================================================
+               VIDEO RESPONSE
+            ================================================= */
 
             if(
                 contentType.includes(
@@ -4053,19 +4492,21 @@ Video response received.`;
                 );
 
 
-                responseBox.className =
-                    res.ok
-                        ? "response"
-                        : "response error";
+                setConsoleProgress(
+                    100
+                );
 
 
-                responseBox.textContent =
-`🎬 Video Response
+                consoleLine(
+                    "✓ Video response received",
+                    "success"
+                );
 
-HTTP ${res.status} ${res.statusText}
-Response time: ${elapsed} ms
 
-✅ Request completed`;
+                consoleLine(
+                    "✓ Request completed",
+                    "success"
+                );
 
 
                 return;
@@ -4073,9 +4514,9 @@ Response time: ${elapsed} ms
             }
 
 
-            /*
-             * TEXT / JSON RESPONSE
-             */
+            /* =================================================
+               TEXT / JSON RESPONSE
+            ================================================= */
 
             const raw =
                 await res.text();
@@ -4100,6 +4541,18 @@ Response time: ${elapsed} ms
             }
 
 
+            /* =================================================
+               MEDIA URL DETECTION
+            ================================================= */
+
+            await showProgress(
+                "Analyzing response...",
+                "info",
+                97,
+                180
+            );
+
+
             let mediaUrl =
                 findMediaUrlDeep(
                     data
@@ -4110,15 +4563,17 @@ Response time: ${elapsed} ms
                 mediaUrl
             ){
 
+                await showProgress(
+                    "Media URL detected",
+                    "success",
+                    98,
+                    150
+                );
+
+
                 let mediaType =
                     "";
 
-
-                /*
-                 * HEAD request optional.
-                 * Jika gagal, extension tetap
-                 * digunakan sebagai fallback.
-                 */
 
                 try{
 
@@ -4172,6 +4627,10 @@ Response time: ${elapsed} ms
             }
 
 
+            /* =================================================
+               FORMAT RESPONSE
+            ================================================= */
+
             let formattedResponse;
 
 
@@ -4216,39 +4675,106 @@ Response time: ${elapsed} ms
                 formattedResponse;
 
 
-            responseBox.className =
+            /* =================================================
+               FINISH
+            ================================================= */
+
+            setConsoleProgress(
+                100
+            );
+
+
+            consoleLine(
+                `✓ Request completed in ${elapsed} ms`,
                 res.ok
-                    ? "response"
-                    : "response error";
+                    ? "success"
+                    : "error"
+            );
 
 
-            responseBox.textContent =
-`${res.ok ? "✅" : "❌"} Request completed
+            const result =
+                document.createElement(
+                    "div"
+                );
 
-HTTP ${res.status} ${res.statusText}
-Response time: ${elapsed} ms
+            result.className =
+                "console-result";
+
+
+            result.textContent =
+`HTTP ${res.status} ${res.statusText}
 
 ${formattedResponse}`;
 
+
+            responseBox.appendChild(
+                result
+            );
+
+
+            responseBox.scrollTop =
+                responseBox.scrollHeight;
+
+
         }
         catch(error){
+
+            const elapsed =
+                Math.round(
+                    performance.now() -
+                    start
+                );
+
 
             currentResponse =
                 error?.message ||
                 "Unknown error";
 
 
-            responseBox.className =
-                "response error";
+            setConsoleProgress(
+                100
+            );
 
 
-            responseBox.textContent =
-`❌ API Request Failed
+            consoleLine(
+                "✕ API Request Failed",
+                "error"
+            );
 
-${currentResponse}
 
-Endpoint:
+            consoleLine(
+                currentResponse,
+                "error"
+            );
+
+
+            consoleLine(
+                `Elapsed: ${elapsed} ms`,
+                "muted"
+            );
+
+
+            const endpoint =
+                document.createElement(
+                    "div"
+                );
+
+            endpoint.className =
+                "console-result console-error";
+
+
+            endpoint.textContent =
+`Endpoint:
 ${currentUrl}`;
+
+
+            responseBox.appendChild(
+                endpoint
+            );
+
+
+            responseBox.scrollTop =
+                responseBox.scrollHeight;
 
         }
         finally{

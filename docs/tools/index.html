@@ -783,6 +783,105 @@ button:disabled{
     border-color:rgba(239,68,68,.3);
 }
 
+/* CONSOLE PROGRESS */
+
+.response.console-mode{
+    color:#cbd5e1;
+    border-color:rgba(59,130,246,.22);
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4,8,14,.98),
+            rgba(2,4,7,.98)
+        );
+    font-family:'JetBrains Mono',monospace;
+    white-space:normal;
+}
+
+.console-line{
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+    margin-bottom:6px;
+}
+
+.console-time{
+    flex:0 0 auto;
+    color:#475569;
+}
+
+.console-command{
+    color:#93c5fd;
+}
+
+.console-info{
+    color:#cbd5e1;
+}
+
+.console-success{
+    color:#6ee7b7;
+}
+
+.console-warning{
+    color:#fbbf24;
+}
+
+.console-error{
+    color:#fca5a5;
+}
+
+.console-muted{
+    color:#64748b;
+}
+
+.console-result{
+    margin-top:8px;
+    padding-top:8px;
+    border-top:1px dashed rgba(255,255,255,.08);
+    color:#e2e8f0;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.console-progress{
+    width:100%;
+    height:5px;
+    margin-top:8px;
+    margin-bottom:12px;
+    overflow:hidden;
+    border-radius:999px;
+    background:rgba(255,255,255,.06);
+}
+
+.console-progress-bar{
+    width:0;
+    height:100%;
+    border-radius:inherit;
+    background:linear-gradient(
+        90deg,
+        var(--blue-main),
+        var(--blue-cyan)
+    );
+    box-shadow:0 0 12px rgba(56,189,248,.35);
+    transition:width .3s ease;
+}
+
+.console-cursor{
+    display:inline-block;
+    width:6px;
+    height:12px;
+    margin-left:3px;
+    vertical-align:-2px;
+    background:#93c5fd;
+    animation:consoleBlink .8s steps(1) infinite;
+}
+
+@keyframes consoleBlink{
+    50%{
+        opacity:0;
+    }
+}
+
 /* MEDIA */
 
 .media{
@@ -1222,6 +1321,7 @@ button:disabled{
     <span>
         Total:
         <strong id="totalCount">0</strong>
+        endpoint
     </span>
 
 </div>
@@ -1463,7 +1563,7 @@ ENDPOINT DATABASE
 
 const apiList = [
 
-        {
+    {
         category:"tools",
         categoryName:"Tools & Utilities",
         categoryIcon:"🛠️",
@@ -1515,7 +1615,6 @@ const apiList = [
         ],
         ampremLink:true
     },
-
 
     {
         category:"other",
@@ -4356,21 +4455,167 @@ function showMedia(
 
 /*
 ============================================================
-PROGRESS
+CONSOLE PROGRESS
 ============================================================
 */
 
-async function showProgress(
-    message
+function consoleTime(){
+
+    return new Date()
+        .toLocaleTimeString(
+            "id-ID",
+            {
+                hour12:false
+            }
+        );
+
+}
+
+
+function consoleLine(
+    text,
+    type = "info"
 ){
 
+    const line =
+        document.createElement(
+            "div"
+        );
+
+    line.className =
+        `console-line console-${type}`;
+
+
+    const time =
+        document.createElement(
+            "span"
+        );
+
+    time.className =
+        "console-time";
+
+    time.textContent =
+        `[${consoleTime()}]`;
+
+
+    const content =
+        document.createElement(
+            "span"
+        );
+
+    content.textContent =
+        text;
+
+
+    line.appendChild(
+        time
+    );
+
+    line.appendChild(
+        content
+    );
+
+
+    responseBox.appendChild(
+        line
+    );
+
+
+    responseBox.scrollTop =
+        responseBox.scrollHeight;
+
+
+    return line;
+
+}
+
+
+function createConsole(){
+
     responseBox.className =
-        "response loading";
+        "response console-mode";
 
-    responseBox.textContent =
-        message;
+    responseBox.innerHTML =
+        "";
 
-    await sleep(350);
+
+    const progress =
+        document.createElement(
+            "div"
+        );
+
+    progress.className =
+        "console-progress";
+
+
+    const bar =
+        document.createElement(
+            "div"
+        );
+
+    bar.className =
+        "console-progress-bar";
+
+
+    progress.appendChild(
+        bar
+    );
+
+
+    responseBox.appendChild(
+        progress
+    );
+
+
+    responseBox._progressBar =
+        bar;
+
+}
+
+
+function setConsoleProgress(
+    percent
+){
+
+    if(
+        responseBox._progressBar
+    ){
+
+        responseBox
+            ._progressBar
+            .style
+            .width =
+                `${Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        percent
+                    )
+                )}%`;
+
+    }
+
+}
+
+
+async function showProgress(
+    message,
+    percent = 0,
+    type = "info"
+){
+
+    consoleLine(
+        message,
+        type
+    );
+
+    setConsoleProgress(
+        percent
+    );
+
+    await sleep(
+        300
+    );
 
 }
 
@@ -4417,7 +4662,34 @@ executeButton.addEventListener(
         );
 
 
+        const requestStart =
+            performance.now();
+
+
         try{
+
+            createConsole();
+
+
+            await showProgress(
+                "Initializing API playground...",
+                5,
+                "console-muted"
+            );
+
+
+            await showProgress(
+                `$ ${
+                    currentApi?.method ||
+                    "GET"
+                } ${
+                    currentApi?.path ||
+                    "/"
+                }`,
+                10,
+                "console-command"
+            );
+
 
             /*
             VALIDASI TEMPMAIL
@@ -4431,6 +4703,7 @@ executeButton.addEventListener(
                     document.getElementById(
                         "param_token"
                     );
+
 
                 if(
                     !tokenField?.value.trim()
@@ -4523,8 +4796,51 @@ executeButton.addEventListener(
             }
 
 
+            if(
+                currentApi?.param === "file"
+            ){
+
+                const selectedFile =
+                    fileInput.files[0];
+
+
+                if(!selectedFile){
+
+                    throw new Error(
+                        "Silakan pilih file terlebih dahulu."
+                    );
+
+                }
+
+
+                await showProgress(
+                    `File selected: ${selectedFile.name}`,
+                    18,
+                    "console-info"
+                );
+
+            }else{
+
+                await showProgress(
+                    `Target: ${currentUrl}`,
+                    18,
+                    "console-info"
+                );
+
+            }
+
+
             await showProgress(
-                "⏳ Connecting to API..."
+                "Resolving API endpoint...",
+                25,
+                "console-info"
+            );
+
+
+            await showProgress(
+                "Connecting to API...",
+                35,
+                "console-info"
             );
 
 
@@ -4543,17 +4859,6 @@ executeButton.addEventListener(
                 currentApi.param === "file"
             ){
 
-                if(
-                    !fileInput.files.length
-                ){
-
-                    throw new Error(
-                        "Silakan pilih file terlebih dahulu."
-                    );
-
-                }
-
-
                 const formData =
                     new FormData();
 
@@ -4564,38 +4869,65 @@ executeButton.addEventListener(
                 );
 
 
-                res =
-                    await fetch(
-                        `${API_BASE}${currentApi.path}`,
-                        {
-                            method:
-                                currentApi.method ||
-                                "POST",
+                await showProgress(
+                    "Preparing multipart/form-data...",
+                    42,
+                    "console-muted"
+                );
 
-                            body:
-                                formData
-                        }
+
+                try{
+
+                    res =
+                        await fetch(
+                            `${API_BASE}${currentApi.path}`,
+                            {
+                                method:
+                                    currentApi.method ||
+                                    "POST",
+
+                                body:
+                                    formData
+                            }
+                        );
+
+                }catch(error){
+
+                    throw new Error(
+                        "Gagal terhubung ke API. Periksa CORS atau status server."
                     );
+
+                }
 
             }else{
 
-                res =
-                    await fetch(
-                        currentUrl,
-                        {
-                            method:
-                                currentApi.method ||
-                                "GET",
+                try{
 
-                            cache:
-                                "no-store",
+                    res =
+                        await fetch(
+                            currentUrl,
+                            {
+                                method:
+                                    currentApi.method ||
+                                    "GET",
 
-                            headers:{
-                                "Accept":
-                                    "*/*"
+                                cache:
+                                    "no-store",
+
+                                headers:{
+                                    "Accept":
+                                        "*/*"
+                                }
                             }
-                        }
+                        );
+
+                }catch(error){
+
+                    throw new Error(
+                        "Gagal terhubung ke API. Periksa CORS atau status server."
                     );
+
+                }
 
             }
 
@@ -4613,6 +4945,57 @@ executeButton.addEventListener(
                         "content-type"
                     ) || ""
                 ).toLowerCase();
+
+
+            setConsoleProgress(
+                68
+            );
+
+
+            await showProgress(
+                "API connection established.",
+                72,
+                "console-success"
+            );
+
+
+            await showProgress(
+                "Processing API response...",
+                80,
+                "console-info"
+            );
+
+
+            await showProgress(
+                `HTTP ${
+                    res.status
+                } ${
+                    res.statusText || ""
+                }`.trim(),
+                86,
+                res.ok
+                    ? "console-success"
+                    : "console-warning"
+            );
+
+
+            await showProgress(
+                `Content-Type: ${
+                    contentType ||
+                    "unknown"
+                }`,
+                89,
+                "console-muted"
+            );
+
+
+            await showProgress(
+                `Response time: ${
+                    elapsed
+                } ms`,
+                92,
+                "console-muted"
+            );
 
 
             /*
@@ -4640,16 +5023,39 @@ ${currentUrl}`;
                 );
 
 
-                responseBox.className =
-                    "response";
+                await showProgress(
+                    "Image response detected.",
+                    96,
+                    "console-success"
+                );
 
-                responseBox.textContent =
+
+                const result =
+                    document.createElement(
+                        "div"
+                    );
+
+                result.className =
+                    "console-result";
+
+                result.textContent =
 `🖼️ Image Response
 
 HTTP ${res.status} ${res.statusText}
 Response time: ${elapsed} ms
 
-✅ Request completed`;
+Request completed successfully.`;
+
+
+                responseBox.appendChild(
+                    result
+                );
+
+
+                setConsoleProgress(
+                    100
+                );
+
 
                 return;
 
@@ -4681,16 +5087,39 @@ ${currentUrl}`;
                 );
 
 
-                responseBox.className =
-                    "response";
+                await showProgress(
+                    "Video response detected.",
+                    96,
+                    "console-success"
+                );
 
-                responseBox.textContent =
+
+                const result =
+                    document.createElement(
+                        "div"
+                    );
+
+                result.className =
+                    "console-result";
+
+                result.textContent =
 `🎬 Video Response
 
 HTTP ${res.status} ${res.statusText}
 Response time: ${elapsed} ms
 
-✅ Request completed`;
+Request completed successfully.`;
+
+
+                responseBox.appendChild(
+                    result
+                );
+
+
+                setConsoleProgress(
+                    100
+                );
+
 
                 return;
 
@@ -4832,7 +5261,9 @@ Response time: ${elapsed} ms
                 box.appendChild(title);
                 box.appendChild(value);
 
-                mediaPreview.appendChild(box);
+                mediaPreview.appendChild(
+                    box
+                );
 
             }
 
@@ -4853,6 +5284,13 @@ Response time: ${elapsed} ms
                 !currentApi?.tempmailInbox &&
                 !currentApi?.tempmailMessage
             ){
+
+                await showProgress(
+                    "Media URL detected in response.",
+                    94,
+                    "console-success"
+                );
+
 
                 let mediaType =
                     "";
@@ -4920,19 +5358,47 @@ Response time: ${elapsed} ms
                 String(data);
 
 
-            responseBox.className =
+            await showProgress(
                 res.ok
-                    ? "response"
-                    : "response error";
+                    ? "Request completed successfully."
+                    : "Request completed with API warning.",
+                97,
+                res.ok
+                    ? "console-success"
+                    : "console-warning"
+            );
 
 
-            responseBox.textContent =
-`${res.ok ? "✅" : "❌"} Request completed
+            const result =
+                document.createElement(
+                    "div"
+                );
+
+            result.className =
+                "console-result";
+
+
+            result.textContent =
+`${res.ok ? "✅" : "⚠️"} Response
 
 HTTP ${res.status} ${res.statusText}
 Response time: ${elapsed} ms
 
 ${currentResponse}`;
+
+
+            responseBox.appendChild(
+                result
+            );
+
+
+            responseBox.scrollTop =
+                responseBox.scrollHeight;
+
+
+            setConsoleProgress(
+                100
+            );
 
 
         }catch(error){
@@ -4943,16 +5409,51 @@ ${currentResponse}`;
 
 
             responseBox.className =
-                "response error";
+                "response console-mode";
+
+            responseBox.innerHTML =
+                "";
 
 
-            responseBox.textContent =
-`❌ API Request Failed
+            createConsole();
 
-${currentResponse}
+
+            await showProgress(
+                "API Request Failed.",
+                20,
+                "console-error"
+            );
+
+
+            const errorLine =
+                document.createElement(
+                    "div"
+                );
+
+            errorLine.className =
+                "console-result console-error";
+
+
+            errorLine.textContent =
+`❌ ${currentResponse}
 
 Endpoint:
 ${currentUrl}`;
+
+
+            responseBox.appendChild(
+                errorLine
+            );
+
+
+            responseBox.scrollTop =
+                responseBox.scrollHeight;
+
+
+            setConsoleProgress(
+                100
+            );
+
 
         }finally{
 
