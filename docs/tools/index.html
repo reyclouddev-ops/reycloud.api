@@ -1463,38 +1463,59 @@ ENDPOINT DATABASE
 
 const apiList = [
 
-    {
-        category:"other",
-        categoryName:"Other APIs",
-        categoryIcon:"🌐",
-        title:"Create Task",
-        desc:"Membuat task baru pembuatan akun amprem",
+        {
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"Create Stak & Task",
+        desc:"Membuat task baru pembuatan akun amprem dan mencatat stak",
         path:"/amprem/create",
+        method:"POST",
         param:"none",
-        placeholder:""
+        placeholder:"",
+        ampremCreate:true
     },
 
     {
-        category:"other",
-        categoryName:"Other APIs",
-        categoryIcon:"🌐",
-        title:"Check Task",
-        desc:"Mengecek status task berdasarkan ID",
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"Check Task & Stak",
+        desc:"Mengecek status task atau stack berdasarkan ID atau Token",
         path:"/amprem/task",
-        param:"id",
-        placeholder:"t4pvuxlv749kp"
+        method:"GET",
+        params:[
+            {
+                name:"id",
+                label:"🆔 Task ID / Stack ID / Token",
+                placeholder:"Masukkan ID atau Token",
+                type:"text",
+                required:true
+            }
+        ],
+        ampremCheck:true
     },
 
     {
-        category:"other",
-        categoryName:"Other APIs",
-        categoryIcon:"🌐",
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
         title:"Get Verification Link",
-        desc:"Mendapatkan link verifikasi setelah task selesai",
+        desc:"Mendapatkan link verifikasi magic link setelah task sukses",
         path:"/verif/amprem/link",
-        param:"task",
-        placeholder:"t4pvuxlv749kp"
+        method:"GET",
+        params:[
+            {
+                name:"task",
+                label:"🆔 Task ID",
+                placeholder:"Masukkan Task ID",
+                type:"text",
+                required:true
+            }
+        ],
+        ampremLink:true
     },
+
 
     {
         category:"other",
