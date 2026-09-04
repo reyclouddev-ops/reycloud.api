@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -1680,10 +1679,6 @@ button:disabled{
 
 <div class="app">
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
     <header class="header">
 
         <div class="brand">
@@ -1717,10 +1712,6 @@ button:disabled{
     </header>
 
 
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
-
     <section class="hero">
 
         <div class="hero-content">
@@ -1731,7 +1722,7 @@ button:disabled{
             </div>
 
             <h2 class="hero-title">
-                🌸 Anime, Donghua & Entertainment API
+                🌸 Anime, Nekopoi, NSFW & Entertainment API
             </h2>
 
             <p class="hero-text">
@@ -1744,10 +1735,6 @@ button:disabled{
 
     </section>
 
-
-    <!-- =====================================================
-         STATS
-    ====================================================== -->
 
     <section class="stats">
 
@@ -1774,7 +1761,7 @@ button:disabled{
                 class="stat-value"
                 id="totalCategory"
             >
-                3
+                5
             </div>
         </div>
 
@@ -1791,10 +1778,6 @@ button:disabled{
 
     </section>
 
-
-    <!-- =====================================================
-         TOOLBAR
-    ====================================================== -->
 
     <section class="toolbar">
 
@@ -1871,6 +1854,22 @@ button:disabled{
                     <span class="check">✓</span>
                 </button>
 
+                <button
+                    class="filter-option"
+                    data-filter="nekopoi"
+                >
+                    <span>Nekopoi</span>
+                    <span class="check">✓</span>
+                </button>
+
+                <button
+                    class="filter-option"
+                    data-filter="nsfw"
+                >
+                    <span>NSFW Utilities</span>
+                    <span class="check">✓</span>
+                </button>
+
             </div>
 
         </div>
@@ -1878,14 +1877,9 @@ button:disabled{
     </section>
 
 
-    <!-- =====================================================
-         API CONTAINER
-    ====================================================== -->
-
     <main id="apiContainer"></main>
 
 
-    <!-- EMPTY SEARCH -->
     <div
         class="empty"
         id="emptyState"
@@ -1905,10 +1899,6 @@ button:disabled{
 
     </div>
 
-
-    <!-- =====================================================
-         CLOSED CONTENT
-    ====================================================== -->
 
     <section
         class="category"
@@ -1957,18 +1947,12 @@ button:disabled{
 </div>
 
 
-<!-- =========================================================
-     MODAL PLAYGROUND
-========================================================= -->
-
 <div
     class="overlay"
     id="apiModal"
 >
 
     <div class="modal">
-
-        <!-- MODAL HEADER -->
 
         <div class="modal-head">
 
@@ -1999,8 +1983,6 @@ button:disabled{
 
         </div>
 
-
-        <!-- MODAL BODY -->
 
         <div class="modal-body">
 
@@ -2033,8 +2015,6 @@ button:disabled{
 
             </div>
 
-
-            <!-- CODE TABS -->
 
             <div class="tabs">
 
@@ -2069,8 +2049,6 @@ button:disabled{
             </div>
 
 
-            <!-- CODE -->
-
             <div class="code-wrap">
 
                 <pre
@@ -2087,8 +2065,6 @@ button:disabled{
 
             </div>
 
-
-            <!-- RESPONSE -->
 
             <div class="response-head">
 
@@ -2131,8 +2107,6 @@ button:disabled{
         </div>
 
 
-        <!-- MODAL FOOTER -->
-
         <div class="modal-foot">
 
             <button
@@ -2155,8 +2129,6 @@ button:disabled{
 
 </div>
 
-
-<!-- TOAST -->
 
 <div
     class="toast"
@@ -2370,6 +2342,112 @@ const apiGroups = [
                 path: "/tokusatsu/detail",
                 param: "url",
                 placeholder: "https://www.tokusatsuindo.com/..."
+            }
+
+        ]
+    },
+
+    {
+        id: "nekopoi",
+        icon: "🌸",
+        title: "Nekopoi",
+
+        description:
+            "Nekopoi latest, search, category, genres, dan detail.",
+
+        apis: [
+
+            {
+                title: "Nekopoi Latest",
+                desc: "Mengambil update terbaru Nekopoi.",
+                path: "/nekopoi/latest",
+                param: "page",
+                placeholder: "1"
+            },
+
+            {
+                title: "Nekopoi Search",
+                desc: "Mencari judul konten Nekopoi.",
+                path: "/nekopoi/search",
+                param: "q",
+                placeholder: "query"
+            },
+
+            {
+                title: "Nekopoi Category",
+                desc: "Mengambil daftar berdasarkan kategori.",
+                path: "/nekopoi/category",
+                param: "name",
+                placeholder: "3d-hentai"
+            },
+
+            {
+                title: "Nekopoi Genres",
+                desc: "Daftar seluruh genre Nekopoi.",
+                path: "/nekopoi/genres",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Nekopoi By Genre",
+                desc: "Filter konten berdasarkan genre.",
+                path: "/nekopoi/genre",
+                param: "name",
+                placeholder: "action"
+            },
+
+            {
+                title: "Nekopoi Hentai List",
+                desc: "Daftar list anime hentai.",
+                path: "/nekopoi/hentai-list",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Nekopoi JAV List",
+                desc: "Daftar list JAV.",
+                path: "/nekopoi/jav-list",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Nekopoi Schedule",
+                desc: "Jadwal rilis konten.",
+                path: "/nekopoi/schedule",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "Nekopoi Detail",
+                desc: "Detail konten dan link download.",
+                path: "/nekopoi/detail",
+                param: "url",
+                placeholder: "slug_atau_url"
+            }
+
+        ]
+    },
+
+    {
+        id: "nsfw",
+        icon: "🔞",
+        title: "NSFW Utilities",
+
+        description:
+            "NSFW media categories dan generator.",
+
+        apis: [
+
+            {
+                title: "NSFW Media Utility",
+                desc: "Mengambil media NSFW berdasarkan kategori.",
+                path: "/utility/nsfw",
+                param: "category",
+                placeholder: "waifu"
             }
 
         ]

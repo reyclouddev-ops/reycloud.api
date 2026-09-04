@@ -284,7 +284,7 @@ button:disabled{
 
 .category-option{
     width:100%;
-    min-height:64px;
+    min-height:54px;
     padding:0 20px;
     display:flex;
     align-items:center;
@@ -317,7 +317,7 @@ button:disabled{
 }
 
 .category-option-icon{
-    font-size:23px;
+    font-size:20px;
 }
 
 .category-option-name{
@@ -326,8 +326,8 @@ button:disabled{
 }
 
 .radio{
-    width:26px;
-    height:26px;
+    width:24px;
+    height:24px;
     border:2px solid #64748b;
     border-radius:50%;
     display:flex;
@@ -336,8 +336,8 @@ button:disabled{
 }
 
 .radio-dot{
-    width:12px;
-    height:12px;
+    width:10px;
+    height:10px;
     border-radius:50%;
     background:#64748b;
     display:none;
@@ -1262,17 +1262,17 @@ button:disabled{
 
         <button
             class="category-option"
-            data-category="other"
+            data-category="lk21"
         >
 
             <span class="category-option-main">
 
                 <span class="category-option-icon">
-                    🌐
+                    🎬
                 </span>
 
                 <span class="category-option-name">
-                    Other APIs
+                    LK21 Movies & Series
                 </span>
 
             </span>
@@ -1296,6 +1296,29 @@ button:disabled{
 
                 <span class="category-option-name">
                     Tools & Utilities
+                </span>
+
+            </span>
+
+            <span class="radio">
+                <span class="radio-dot"></span>
+            </span>
+
+        </button>
+
+        <button
+            class="category-option"
+            data-category="other"
+        >
+
+            <span class="category-option-main">
+
+                <span class="category-option-icon">
+                    🌐
+                </span>
+
+                <span class="category-option-name">
+                    Other APIs
                 </span>
 
             </span>
@@ -1330,8 +1353,6 @@ button:disabled{
 
 </div>
 
-
-<!-- MODAL -->
 
 <div class="overlay" id="apiModal">
 
@@ -1376,8 +1397,6 @@ button:disabled{
             type="file"
             style="display:none;padding:10px;"
         >
-
-        <!-- EMOJI -->
 
         <div
             class="custom-select-container"
@@ -1452,8 +1471,6 @@ button:disabled{
 
         </div>
 
-        <!-- LANGUAGE -->
-
         <div class="tabs">
 
             <button class="tab active" data-lang="curl">
@@ -1474,8 +1491,6 @@ button:disabled{
 
         </div>
 
-        <!-- CODE -->
-
         <div class="code-wrap">
 
             <pre class="code" id="codeSnippet">...</pre>
@@ -1485,8 +1500,6 @@ button:disabled{
             </button>
 
         </div>
-
-        <!-- RESPONSE -->
 
         <div class="response-head">
 
@@ -1562,6 +1575,131 @@ ENDPOINT DATABASE
 */
 
 const apiList = [
+
+    /* LK21 ENDPOINTS */
+
+    {
+        category:"lk21",
+        categoryName:"LK21 Movies & Series",
+        categoryIcon:"🎬",
+        title:"LK21 Home Feed",
+        desc:"Mengambil section section film dan list terbaru dari LK21",
+        path:"/lk21/home",
+        method:"GET",
+        param:"none",
+        placeholder:""
+    },
+
+    {
+        category:"lk21",
+        categoryName:"LK21 Movies & Series",
+        categoryIcon:"🎬",
+        title:"LK21 Browse / Listing",
+        desc:"Browsing film berdasarkan path, page, dan jenis (movie/series)",
+        path:"/lk21/browse",
+        method:"GET",
+        params:[
+            {
+                name:"path",
+                label:"📂 Path / Kategori",
+                placeholder:"/populer atau /genre/action",
+                type:"text",
+                required:false
+            },
+            {
+                name:"page",
+                label:"📄 Page",
+                placeholder:"1",
+                type:"number",
+                required:false
+            },
+            {
+                name:"type",
+                label:"🏷️ Type",
+                placeholder:"movie / series / both",
+                type:"text",
+                required:false
+            }
+        ]
+    },
+
+    {
+        category:"lk21",
+        categoryName:"LK21 Movies & Series",
+        categoryIcon:"🎬",
+        title:"LK21 Genres List",
+        desc:"Mengambil daftar seluruh genre film dan series",
+        path:"/lk21/genres",
+        method:"GET",
+        param:"none",
+        placeholder:""
+    },
+
+    {
+        category:"lk21",
+        categoryName:"LK21 Movies & Series",
+        categoryIcon:"🎬",
+        title:"LK21 Search",
+        desc:"Mencari film atau series melalui API LK21",
+        path:"/lk21/search",
+        method:"GET",
+        params:[
+            {
+                name:"q",
+                label:"🔍 Query Pencarian",
+                placeholder:"Judul film...",
+                type:"text",
+                required:true
+            },
+            {
+                name:"page",
+                label:"📄 Page",
+                placeholder:"1",
+                type:"number",
+                required:false
+            }
+        ]
+    },
+
+    {
+        category:"lk21",
+        categoryName:"LK21 Movies & Series",
+        categoryIcon:"🎬",
+        title:"LK21 Detail Film / Series",
+        desc:"Mengambil detail lengkap film, episode series, dan player",
+        path:"/lk21/detail",
+        method:"GET",
+        params:[
+            {
+                name:"url",
+                label:"🔗 URL Detail Film/Series",
+                placeholder:"https://tv10.lk21official.cc/...",
+                type:"text",
+                required:true
+            }
+        ]
+    },
+
+    {
+        category:"lk21",
+        categoryName:"LK21 Movies & Series",
+        categoryIcon:"🎬",
+        title:"LK21 Streaming Server",
+        desc:"Mengambil daftar server player streaming dan navigasi episode",
+        path:"/lk21/stream",
+        method:"GET",
+        params:[
+            {
+                name:"url",
+                label:"🔗 URL Stream / Episode",
+                placeholder:"https://tv10.lk21official.cc/...",
+                type:"text",
+                required:true
+            }
+        ]
+    },
+
+    /* EXISTING ENDPOINTS */
 
     {
         category:"tools",
@@ -2379,22 +2517,32 @@ document
                     "Semua Kategori";
 
             }else if(
-                selectedCategory === "other"
+                selectedCategory === "lk21"
             ){
 
                 categoryIcon.textContent =
-                    "🌐";
+                    "🎬";
 
                 categoryText.textContent =
-                    "Other APIs";
+                    "LK21 Movies & Series";
 
-            }else{
+            }else if(
+                selectedCategory === "tools"
+            ){
 
                 categoryIcon.textContent =
                     "🛠️";
 
                 categoryText.textContent =
                     "Tools & Utilities";
+
+            }else{
+
+                categoryIcon.textContent =
+                    "🌐";
+
+                categoryText.textContent =
+                    "Other APIs";
 
             }
 
