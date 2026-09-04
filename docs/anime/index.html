@@ -1722,7 +1722,7 @@ button:disabled{
             </div>
 
             <h2 class="hero-title">
-                🌸 Anime, Nekopoi, NSFW & Entertainment API
+                🎬 NunoDrama & Entertainment API Suite
             </h2>
 
             <p class="hero-text">
@@ -1761,7 +1761,7 @@ button:disabled{
                 class="stat-value"
                 id="totalCategory"
             >
-                5
+                6
             </div>
         </div>
 
@@ -1827,6 +1827,14 @@ button:disabled{
                     data-filter="all"
                 >
                     <span>Semua Kategori</span>
+                    <span class="check">✓</span>
+                </button>
+
+                <button
+                    class="filter-option"
+                    data-filter="nunodrama"
+                >
+                    <span>NunoDrama Suite</span>
                     <span class="check">✓</span>
                 </button>
 
@@ -2153,6 +2161,67 @@ const API_BASE =
 ========================================================= */
 
 const apiGroups = [
+
+    {
+        id: "nunodrama",
+        icon: "🎬",
+        title: "NunoDrama Suite (61+ Platforms)",
+
+        description:
+            "Multi-platform Asian short drama streaming & scraper (ShortMax, DramaBox, ReelShort, dll).",
+
+        apis: [
+
+            {
+                title: "NunoDrama Platforms",
+                desc: "Mengambil daftar 61+ platform drama yang didukung.",
+                path: "/nunodrama/platforms",
+                param: "none",
+                method: "GET"
+            },
+
+            {
+                title: "NunoDrama Feed",
+                desc: "Mengambil rekomendasi drama per platform.",
+                path: "/nunodrama/feed",
+                param: "platform",
+                placeholder: "dramaverse"
+            },
+
+            {
+                title: "NunoDrama Search",
+                desc: "Mencari drama lintas platform atau spesifik.",
+                path: "/nunodrama/search",
+                param: "q",
+                placeholder: "cinta"
+            },
+
+            {
+                title: "NunoDrama Detail",
+                desc: "Mengambil detail lengkap informasi drama.",
+                path: "/nunodrama/detail",
+                param: "book_id",
+                placeholder: "12345 atau URL"
+            },
+
+            {
+                title: "NunoDrama Episodes",
+                desc: "Mengambil daftar seluruh episode drama.",
+                path: "/nunodrama/episodes",
+                param: "book_id",
+                placeholder: "12345 atau URL"
+            },
+
+            {
+                title: "NunoDrama Stream",
+                desc: "Mengambil link video streaming langsung.",
+                path: "/nunodrama/stream",
+                param: "book_id",
+                placeholder: "12345 atau URL"
+            }
+
+        ]
+    },
 
     {
         id: "samehadaku",
