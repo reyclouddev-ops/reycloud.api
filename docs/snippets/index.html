@@ -1,0 +1,3283 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ReyCloudSHP — Snippet Library</title>
+
+
+    <style>
+
+        /* ============================================================
+           ReyCloudSHP — SNIPPET LIBRARY
+           FULL DARK EDITION
+        ============================================================ */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            background: #050505;
+        }
+
+
+        body {
+            color: #e6e6e6;
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            overflow-x: hidden;
+        }
+
+
+        button,
+        input {
+            font: inherit;
+        }
+
+
+        /* ============================================================
+           PAGE
+        ============================================================ */
+
+        .rcshp-page {
+
+            --rc-bg: #050505;
+            --rc-bg-soft: #080808;
+
+            --rc-card: #0b0b0b;
+            --rc-card-2: #0e0e0e;
+
+            --rc-border: #191919;
+            --rc-border-hover: #303030;
+
+            --rc-white: #ffffff;
+            --rc-text: #e6e6e6;
+
+            --rc-muted: #777777;
+            --rc-muted-2: #505050;
+
+            position: relative;
+
+            width: 100%;
+            min-height: 100vh;
+
+            margin: 0;
+            padding: 0;
+
+            color: var(--rc-text);
+
+            background:
+                radial-gradient(
+                    circle at 50% -20%,
+                    rgba(255, 255, 255, .04),
+                    transparent 32%
+                ),
+                #050505;
+
+            isolation: isolate;
+        }
+
+
+        .rcshp-page *,
+        .rcshp-page *::before,
+        .rcshp-page *::after {
+            box-sizing: border-box;
+        }
+
+
+        /* ============================================================
+           BACKGROUND
+        ============================================================ */
+
+        .rcshp-bg {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: -1;
+
+            overflow: hidden;
+
+            pointer-events: none;
+
+            background: #050505;
+        }
+
+
+        .rcshp-bg-grid {
+
+            position: absolute;
+
+            inset: 0;
+
+            opacity: .035;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, .18) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, .18) 1px,
+                    transparent 1px
+                );
+
+            background-size: 38px 38px;
+        }
+
+
+        .rcshp-bg-glow {
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            filter: blur(30px);
+
+            opacity: .7;
+        }
+
+
+        .rcshp-bg-glow-1 {
+
+            top: -350px;
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255, 255, 255, .055),
+                    transparent 70%
+                );
+        }
+
+
+        .rcshp-bg-glow-2 {
+
+            right: -300px;
+            bottom: -350px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255, 255, 255, .025),
+                    transparent 70%
+                );
+        }
+
+
+        /* ============================================================
+           CONTAINER
+        ============================================================ */
+
+        .rcshp-container {
+
+            position: relative;
+
+            z-index: 1;
+
+            width: 100%;
+
+            max-width: 1160px;
+
+            margin:
+                0 auto;
+
+            padding:
+                28px 18px 70px;
+        }
+
+
+        /* ============================================================
+           HEADER
+        ============================================================ */
+
+        .rcshp-header {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .rcshp-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            min-width: 0;
+        }
+
+
+        .rcshp-logo {
+
+            flex: 0 0 auto;
+
+            width: 43px;
+            height: 43px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #292929;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #171717,
+                    #080808
+                );
+
+            color: #eeeeee;
+
+            font-family: monospace;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            box-shadow:
+                inset 0 1px 0
+                rgba(255, 255, 255, .035);
+        }
+
+
+        .rcshp-brand-name {
+
+            color: #f2f2f2;
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+            letter-spacing: .1px;
+        }
+
+
+        .rcshp-brand-sub {
+
+            margin-top: 2px;
+
+            color: #555555;
+
+            font-size: 9px;
+
+            letter-spacing: .3px;
+        }
+
+
+        .rcshp-status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                6px 9px;
+
+            border: 1px solid #202020;
+
+            border-radius: 999px;
+
+            background: #090909;
+
+            color: #777777;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: .8px;
+        }
+
+
+        .rcshp-status-dot {
+
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: #aaa;
+
+            box-shadow:
+                0 0 8px
+                rgba(255, 255, 255, .2);
+        }
+
+
+        /* ============================================================
+           HERO
+        ============================================================ */
+
+        .rcshp-hero {
+
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 250px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 35px;
+
+            border: 1px solid #1b1b1b;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #111111,
+                    #080808 70%
+                );
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, .25);
+        }
+
+
+        .rcshp-hero-grid {
+
+            position: absolute;
+
+            inset: 0;
+
+            opacity: .06;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, .16) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, .16) 1px,
+                    transparent 1px
+                );
+
+            background-size: 30px 30px;
+
+            mask-image:
+                linear-gradient(
+                    90deg,
+                    black,
+                    transparent 78%
+                );
+
+            pointer-events: none;
+        }
+
+
+        .rcshp-hero-glow {
+
+            position: absolute;
+
+            width: 360px;
+            height: 360px;
+
+            right: -180px;
+            top: -210px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255, 255, 255, .05),
+                    transparent 68%
+                );
+
+            pointer-events: none;
+        }
+
+
+        .rcshp-hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 700px;
+        }
+
+
+        .rcshp-label {
+
+            display: inline-flex;
+
+            padding:
+                6px 8px;
+
+            border: 1px solid #282828;
+
+            border-radius: 5px;
+
+            background:
+                rgba(255, 255, 255, .02);
+
+            color: #999999;
+
+            font-family: monospace;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            letter-spacing: .9px;
+        }
+
+
+        .rcshp-hero-title {
+
+            margin:
+                16px 0 9px;
+
+            color: #ffffff;
+
+            font-size:
+                clamp(
+                    32px,
+                    6vw,
+                    52px
+                );
+
+            font-weight: 950;
+
+            line-height: .98;
+
+            letter-spacing: -2.5px;
+        }
+
+
+        .rcshp-hero-title span {
+            color: #696969;
+        }
+
+
+        .rcshp-hero-description {
+
+            max-width: 650px;
+
+            margin: 0;
+
+            color: #696969;
+
+            font-size: 11px;
+
+            line-height: 1.8;
+        }
+
+
+        /* ============================================================
+           STATS
+        ============================================================ */
+
+        .rcshp-stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 9px;
+
+            margin-top: 17px;
+        }
+
+
+        .rcshp-stat {
+
+            padding: 15px;
+
+            border: 1px solid #181818;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d0d0d,
+                    #090909
+                );
+
+            transition:
+                border-color .2s ease,
+                transform .2s ease;
+        }
+
+
+        .rcshp-stat:hover {
+
+            border-color: #292929;
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .rcshp-stat-label {
+
+            margin-bottom: 8px;
+
+            color: #555555;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: .8px;
+        }
+
+
+        .rcshp-stat-value {
+
+            color: #d5d5d5;
+
+            font-size: 18px;
+
+            font-weight: 900;
+        }
+
+
+        /* ============================================================
+           TOOLBAR
+        ============================================================ */
+
+        .rcshp-toolbar {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            margin-top: 17px;
+
+            margin-bottom: 11px;
+        }
+
+
+        .rcshp-search {
+
+            position: relative;
+
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        .rcshp-search-icon {
+
+            position: absolute;
+
+            left: 13px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #4d4d4d;
+
+            font-size: 16px;
+
+            pointer-events: none;
+        }
+
+
+        .rcshp-search input {
+
+            width: 100%;
+
+            height: 42px;
+
+            padding:
+                0 13px 0 38px;
+
+            border: 1px solid #191919;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            background: #080808;
+
+            color: #dddddd;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            transition: .2s ease;
+        }
+
+
+        .rcshp-search input:focus {
+
+            border-color: #353535;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(255, 255, 255, .018);
+        }
+
+
+        .rcshp-search input::placeholder {
+            color: #4c4c4c;
+        }
+
+
+        .rcshp-count {
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding:
+                0 12px;
+
+            border: 1px solid #191919;
+
+            border-radius: 9px;
+
+            background: #080808;
+
+            color: #666666;
+
+            font-family: monospace;
+
+            font-size: 8px;
+
+            white-space: nowrap;
+        }
+
+
+        /* ============================================================
+           SECTION HEAD
+        ============================================================ */
+
+        .rcshp-section-head {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin:
+                0 2px 8px;
+
+            color: #4f4f4f;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* ============================================================
+           SOURCE LIST
+        ============================================================ */
+
+        .rcshp-source-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .rcshp-source {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 14px;
+
+            min-height: 66px;
+
+            padding:
+                11px 14px;
+
+            border: 1px solid #181818;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #0c0c0c,
+                    #080808
+                );
+
+            cursor: pointer;
+
+            transition:
+                transform .18s ease,
+                border-color .18s ease,
+                background .18s ease,
+                box-shadow .18s ease;
+        }
+
+
+        .rcshp-source::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            top: 13px;
+            bottom: 13px;
+
+            width: 1px;
+
+            border-radius: 2px;
+
+            background: #777777;
+
+            opacity: 0;
+
+            transition:
+                opacity .2s ease;
+        }
+
+
+        .rcshp-source:hover {
+
+            transform:
+                translateX(3px);
+
+            border-color:
+                #2b2b2b;
+
+            background:
+                #101010;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, .25);
+        }
+
+
+        .rcshp-source:hover::before {
+            opacity: 1;
+        }
+
+
+        .rcshp-source-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            min-width: 0;
+        }
+
+
+        .rcshp-source-icon {
+
+            flex: 0 0 auto;
+
+            width: 37px;
+            height: 37px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #292929;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #161616,
+                    #090909
+                );
+
+            color: #c7c7c7;
+
+            font-family: monospace;
+
+            font-size: 10px;
+
+            font-weight: 900;
+        }
+
+
+        .rcshp-source-info {
+            min-width: 0;
+        }
+
+
+        .rcshp-source-title {
+
+            overflow: hidden;
+
+            color: #d9d9d9;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+
+        .rcshp-source-description {
+
+            max-width: 650px;
+
+            margin-top: 4px;
+
+            overflow: hidden;
+
+            color: #555555;
+
+            font-size: 9px;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+
+        .rcshp-source-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+        }
+
+
+        .rcshp-language {
+
+            padding:
+                5px 7px;
+
+            border: 1px solid #292929;
+
+            border-radius: 5px;
+
+            background: #101010;
+
+            color: #888888;
+
+            font-family: monospace;
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+            white-space: nowrap;
+        }
+
+
+        .rcshp-arrow {
+
+            color: #414141;
+
+            font-size: 15px;
+
+            transition: .2s ease;
+        }
+
+
+        .rcshp-source:hover
+        .rcshp-arrow {
+
+            color: #c5c5c5;
+
+            transform:
+                translateX(3px);
+        }
+
+
+        /* ============================================================
+           EMPTY
+        ============================================================ */
+
+        .rcshp-empty {
+
+            display: none;
+
+            padding:
+                50px 20px;
+
+            border: 1px dashed #202020;
+
+            border-radius: 12px;
+
+            background: #090909;
+
+            text-align: center;
+        }
+
+
+        .rcshp-empty-icon {
+
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin:
+                0 auto 12px;
+
+            border: 1px solid #292929;
+
+            border-radius: 10px;
+
+            color: #777777;
+
+            font-family: monospace;
+        }
+
+
+        .rcshp-empty strong {
+
+            display: block;
+
+            color: #d0d0d0;
+
+            font-size: 12px;
+        }
+
+
+        .rcshp-empty span {
+
+            display: block;
+
+            margin-top: 5px;
+
+            color: #555555;
+
+            font-size: 9px;
+        }
+
+
+        /* ============================================================
+           DETAIL
+        ============================================================ */
+
+        .rcshp-detail-page {
+            display: none;
+        }
+
+
+        .rcshp-back {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin:
+                0 0 11px;
+
+            padding:
+                6px 0;
+
+            border: 0;
+
+            outline: 0;
+
+            background: transparent;
+
+            color: #777777;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 10px;
+
+            transition:
+                color .2s ease;
+        }
+
+
+        .rcshp-back:hover {
+            color: #eeeeee;
+        }
+
+
+        /* ============================================================
+           DETAIL CARD
+        ============================================================ */
+
+        .rcshp-detail-card {
+
+            overflow: hidden;
+
+            border: 1px solid #1b1b1b;
+
+            border-radius: 15px;
+
+            background: #090909;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, .3);
+        }
+
+
+        /* ============================================================
+           DETAIL HEADER
+        ============================================================ */
+
+        .rcshp-detail-header {
+
+            padding: 22px;
+
+            border-bottom:
+                1px solid #181818;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #111111,
+                    #090909
+                );
+        }
+
+
+        .rcshp-detail-top {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 18px;
+        }
+
+
+        .rcshp-detail-main {
+            min-width: 0;
+        }
+
+
+        .rcshp-detail-title {
+
+            color: #eeeeee;
+
+            font-size:
+                clamp(
+                    21px,
+                    4vw,
+                    30px
+                );
+
+            font-weight: 950;
+
+            line-height: 1.1;
+
+            letter-spacing: -1px;
+        }
+
+
+        .rcshp-detail-description {
+
+            max-width: 700px;
+
+            margin-top: 9px;
+
+            color: #646464;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+        }
+
+
+        .rcshp-detail-language {
+
+            flex: 0 0 auto;
+
+            padding:
+                6px 8px;
+
+            border: 1px solid #292929;
+
+            border-radius: 5px;
+
+            background: #101010;
+
+            color: #999999;
+
+            font-family: monospace;
+
+            font-size: 7px;
+
+            font-weight: 900;
+        }
+
+
+        /* ============================================================
+           TAGS
+        ============================================================ */
+
+        .rcshp-tags {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 5px;
+
+            margin-top: 14px;
+        }
+
+
+        .rcshp-tag {
+
+            padding:
+                5px 7px;
+
+            border: 1px solid #202020;
+
+            border-radius: 5px;
+
+            background: #0b0b0b;
+
+            color: #696969;
+
+            font-family: monospace;
+
+            font-size: 7px;
+        }
+
+
+        /* ============================================================
+           CODE HEADER
+        ============================================================ */
+
+        .rcshp-code-header {
+
+            min-height: 41px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            padding:
+                0 14px;
+
+            border-bottom:
+                1px solid #171717;
+
+            background: #070707;
+        }
+
+
+        .rcshp-code-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #626262;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            letter-spacing: .8px;
+        }
+
+
+        .rcshp-code-dots {
+
+            display: flex;
+
+            gap: 4px;
+        }
+
+
+        .rcshp-code-dots span {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #292929;
+        }
+
+
+        .rcshp-code-language {
+
+            color: #696969;
+
+            font-family: monospace;
+
+            font-size: 7px;
+
+            font-weight: 900;
+        }
+
+
+        /* ============================================================
+           CODE VIEWER
+        ============================================================ */
+
+        .rcshp-code-wrapper {
+
+            max-width: 100%;
+
+            max-height: 560px;
+
+            overflow: auto;
+
+            background: #050505;
+
+            scrollbar-width: thin;
+
+            scrollbar-color:
+                #292929
+                #050505;
+        }
+
+
+        .rcshp-code-wrapper::-webkit-scrollbar {
+
+            width: 7px;
+            height: 7px;
+        }
+
+
+        .rcshp-code-wrapper::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+
+        .rcshp-code-wrapper::-webkit-scrollbar-thumb {
+
+            border-radius: 10px;
+
+            background: #282828;
+        }
+
+
+        .rcshp-code-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #373737;
+        }
+
+
+        .rcshp-code-inner {
+
+            display: flex;
+
+            width: max-content;
+
+            min-width: 100%;
+        }
+
+
+        .rcshp-line-numbers {
+
+            flex: 0 0 auto;
+
+            min-width: 46px;
+
+            padding:
+                18px 10px;
+
+            border-right:
+                1px solid #151515;
+
+            color: #353535;
+
+            font-family: monospace;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+
+            text-align: right;
+
+            user-select: none;
+        }
+
+
+        .rcshp-code {
+
+            min-height: 100px;
+
+            margin: 0;
+
+            padding:
+                18px 20px;
+
+            color: #cccccc;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+
+            white-space: pre;
+        }
+
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+
+        .rcshp-detail-footer {
+
+            padding: 12px;
+
+            border-top:
+                1px solid #181818;
+
+            background: #080808;
+        }
+
+
+        .rcshp-copy {
+
+            width: 100%;
+
+            height: 40px;
+
+            border: 1px solid #292929;
+
+            border-radius: 8px;
+
+            outline: 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #161616,
+                    #0c0c0c
+                );
+
+            color: #aaaaaa;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            transition: .2s ease;
+        }
+
+
+        .rcshp-copy:hover {
+
+            border-color: #3a3a3a;
+
+            color: #ffffff;
+
+            background: #151515;
+        }
+
+
+        .rcshp-copy.success {
+
+            border-color: #3b3b3b;
+
+            background: #151515;
+
+            color: #e0e0e0;
+        }
+
+
+        /* ============================================================
+           MOBILE
+        ============================================================ */
+
+        @media (max-width: 700px) {
+
+            .rcshp-container {
+
+                padding:
+                    20px 12px 50px;
+            }
+
+
+            .rcshp-status {
+                display: none;
+            }
+
+
+            .rcshp-hero {
+
+                min-height: 230px;
+
+                padding:
+                    27px 20px;
+
+                border-radius: 15px;
+            }
+
+
+            .rcshp-hero-title {
+
+                font-size: 32px;
+
+                letter-spacing: -1.7px;
+            }
+
+
+            .rcshp-hero-description {
+                font-size: 10px;
+            }
+
+
+            .rcshp-stats {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+
+            .rcshp-stat:last-child {
+
+                grid-column:
+                    1 / -1;
+            }
+
+
+            .rcshp-toolbar {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .rcshp-count {
+
+                justify-content: center;
+            }
+
+
+            .rcshp-source {
+
+                min-height: 62px;
+
+                padding: 10px;
+            }
+
+
+            .rcshp-source-icon {
+
+                width: 35px;
+                height: 35px;
+            }
+
+
+            .rcshp-source-description {
+                max-width: 190px;
+            }
+
+
+            .rcshp-source-right
+            .rcshp-language {
+                display: none;
+            }
+
+
+            .rcshp-detail-header {
+
+                padding:
+                    18px 15px;
+            }
+
+
+            .rcshp-detail-top {
+
+                flex-direction: column;
+
+                gap: 10px;
+            }
+
+
+            .rcshp-detail-language {
+                display: inline-flex;
+            }
+
+
+            .rcshp-code-wrapper {
+                max-height: 480px;
+            }
+
+        }
+
+
+        @media (max-width: 390px) {
+
+            .rcshp-container {
+
+                padding-left: 9px;
+
+                padding-right: 9px;
+            }
+
+
+            .rcshp-brand-sub {
+                display: none;
+            }
+
+
+            .rcshp-hero {
+
+                padding:
+                    24px 17px;
+            }
+
+
+            .rcshp-hero-title {
+                font-size: 29px;
+            }
+
+
+            .rcshp-source-description {
+                max-width: 145px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ============================================================
+         REYCLOUDSHP — SNIPPET LIBRARY
+    ============================================================ -->
+
+    <section class="rcshp-page">
+
+
+        <!-- BACKGROUND -->
+
+        <div class="rcshp-bg" aria-hidden="true">
+
+            <div class="rcshp-bg-grid"></div>
+
+            <div
+                class="rcshp-bg-glow rcshp-bg-glow-1"
+            ></div>
+
+            <div
+                class="rcshp-bg-glow rcshp-bg-glow-2"
+            ></div>
+
+        </div>
+
+
+        <div class="rcshp-container">
+
+
+            <!-- ====================================================
+                 HEADER
+            ===================================================== -->
+
+            <header class="rcshp-header">
+
+
+                <div class="rcshp-brand">
+
+
+                    <div class="rcshp-logo">
+                        &lt;/&gt;
+                    </div>
+
+
+                    <div>
+
+                        <div class="rcshp-brand-name">
+                            ReyCloudSHP
+                        </div>
+
+
+                        <div class="rcshp-brand-sub">
+                            Developer Source Library
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="rcshp-status">
+
+                    <span class="rcshp-status-dot"></span>
+
+                    ONLINE
+
+                </div>
+
+
+            </header>
+
+
+
+            <!-- ====================================================
+                 LIST PAGE
+            ===================================================== -->
+
+            <main
+                class="rcshp-list-page"
+                id="rcshpListPage"
+            >
+
+
+                <!-- HERO -->
+
+                <section class="rcshp-hero">
+
+
+                    <div
+                        class="rcshp-hero-grid"
+                        aria-hidden="true"
+                    ></div>
+
+
+                    <div
+                        class="rcshp-hero-glow"
+                        aria-hidden="true"
+                    ></div>
+
+
+                    <div class="rcshp-hero-content">
+
+
+                        <div class="rcshp-label">
+
+                            &lt;/&gt;
+
+                            REYCLOUDSHP
+
+                            /
+
+                            SNIPPETS
+
+                        </div>
+
+
+                        <h1 class="rcshp-hero-title">
+
+                            SOURCE
+
+                            <span>
+                                LIBRARY.
+                            </span>
+
+                        </h1>
+
+
+                        <p class="rcshp-hero-description">
+
+                            Kumpulan source code dan snippet
+                            untuk berbagai kebutuhan development.
+                            Pilih source untuk melihat detail
+                            dan isi kode.
+
+                        </p>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     STATS
+                ================================================== -->
+
+                <section class="rcshp-stats">
+
+
+                    <div class="rcshp-stat">
+
+                        <div class="rcshp-stat-label">
+                            TOTAL SOURCE
+                        </div>
+
+
+                        <div
+                            class="rcshp-stat-value"
+                            id="rcshpTotal"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+
+                    <div class="rcshp-stat">
+
+                        <div class="rcshp-stat-label">
+                            LANGUAGES
+                        </div>
+
+
+                        <div
+                            class="rcshp-stat-value"
+                            id="rcshpLanguages"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+
+                    <div class="rcshp-stat">
+
+                        <div class="rcshp-stat-label">
+                            STATUS
+                        </div>
+
+
+                        <div class="rcshp-stat-value">
+                            ONLINE
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     SEARCH
+                ================================================== -->
+
+                <section class="rcshp-toolbar">
+
+
+                    <div class="rcshp-search">
+
+
+                        <span
+                            class="rcshp-search-icon"
+                            aria-hidden="true"
+                        >
+                            ⌕
+                        </span>
+
+
+                        <input
+                            type="search"
+                            id="rcshpSearch"
+                            placeholder="Cari source, language, atau tag..."
+                            autocomplete="off"
+                        >
+
+
+                    </div>
+
+
+                    <div
+                        class="rcshp-count"
+                        id="rcshpCount"
+                    >
+                        0 SOURCE
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- SECTION HEAD -->
+
+                <div class="rcshp-section-head">
+
+                    <span>
+                        AVAILABLE SOURCES
+                    </span>
+
+
+                    <span>
+                        REYCLOUDSHP
+                    </span>
+
+                </div>
+
+
+
+                <!-- SOURCE LIST -->
+
+                <div
+                    class="rcshp-source-list"
+                    id="rcshpSourceList"
+                ></div>
+
+
+
+                <!-- EMPTY -->
+
+                <div
+                    class="rcshp-empty"
+                    id="rcshpEmpty"
+                >
+
+
+                    <div class="rcshp-empty-icon">
+                        &lt;/&gt;
+                    </div>
+
+
+                    <strong>
+                        Source tidak ditemukan
+                    </strong>
+
+
+                    <span>
+                        Coba gunakan kata kunci lainnya.
+                    </span>
+
+
+                </div>
+
+
+            </main>
+
+
+
+            <!-- ====================================================
+                 DETAIL PAGE
+            ===================================================== -->
+
+            <section
+                class="rcshp-detail-page"
+                id="rcshpDetailPage"
+            >
+
+
+                <!-- BACK -->
+
+                <button
+                    type="button"
+                    class="rcshp-back"
+                    id="rcshpBack"
+                >
+
+                    <span>
+                        ←
+                    </span>
+
+                    Kembali ke Source
+
+                </button>
+
+
+
+                <!-- DETAIL CARD -->
+
+                <article class="rcshp-detail-card">
+
+
+                    <!-- DETAIL HEADER -->
+
+                    <div class="rcshp-detail-header">
+
+
+                        <div class="rcshp-detail-top">
+
+
+                            <div class="rcshp-detail-main">
+
+
+                                <div
+                                    class="rcshp-detail-title"
+                                    id="rcshpDetailTitle"
+                                ></div>
+
+
+                                <div
+                                    class="rcshp-detail-description"
+                                    id="rcshpDetailDescription"
+                                ></div>
+
+
+                            </div>
+
+
+                            <div
+                                class="rcshp-detail-language"
+                                id="rcshpDetailLanguage"
+                            ></div>
+
+
+                        </div>
+
+
+                        <div
+                            class="rcshp-tags"
+                            id="rcshpDetailTags"
+                        ></div>
+
+
+                    </div>
+
+
+
+                    <!-- CODE HEADER -->
+
+                    <div class="rcshp-code-header">
+
+
+                        <div class="rcshp-code-title">
+
+
+                            <div class="rcshp-code-dots">
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+
+                            SOURCE CODE
+
+
+                        </div>
+
+
+                        <div
+                            class="rcshp-code-language"
+                            id="rcshpCodeLanguage"
+                        ></div>
+
+
+                    </div>
+
+
+
+                    <!-- CODE VIEWER -->
+
+                    <div class="rcshp-code-wrapper">
+
+
+                        <div class="rcshp-code-inner">
+
+
+                            <div
+                                class="rcshp-line-numbers"
+                                id="rcshpLineNumbers"
+                            ></div>
+
+
+                            <pre
+                                class="rcshp-code"
+                                id="rcshpCode"
+                            ></pre>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- DETAIL FOOTER -->
+
+                    <div class="rcshp-detail-footer">
+
+
+                        <button
+                            type="button"
+                            class="rcshp-copy"
+                            id="rcshpCopy"
+                        >
+
+                            ▣
+                            &nbsp;
+                            SALIN ISI CODE
+
+                        </button>
+
+
+                    </div>
+
+
+                </article>
+
+
+            </section>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ============================================================
+         JAVASCRIPT
+    ============================================================ -->
+
+    <script>
+
+        (() => {
+
+            "use strict";
+
+
+            /* ========================================================
+               DATA SNIPPETS
+
+               FORMAT SESUAI YANG DIMINTA
+            ======================================================== */
+
+            const snippets = [
+
+                {
+                    id: "contoh-1",
+
+                    title: "HELLO WORLD",
+
+                    language: "JAVASCRIPT",
+
+                    description:
+                        "Contoh JavaScript sederhana.",
+
+                    tags: [
+                        "#JS",
+                        "#BASIC"
+                    ],
+
+                    code:
+`console.log("Hello World");`
+                },
+
+
+                {
+                    id: "contoh-2",
+
+                    title: "HTML BASIC",
+
+                    language: "HTML",
+
+                    description:
+                        "Struktur HTML sederhana untuk halaman web.",
+
+                    tags: [
+                        "#HTML",
+                        "#WEB",
+                        "#BASIC"
+                    ],
+
+                    code:
+`<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+</head>
+<body>
+
+    <h1>Hello World</h1>
+
+</body>
+</html>`
+                },
+
+
+                {
+                    id: "contoh-3",
+
+                    title: "CSS CARD",
+
+                    language: "CSS",
+
+                    description:
+                        "Contoh card sederhana menggunakan CSS.",
+
+                    tags: [
+                        "#CSS",
+                        "#UI",
+                        "#DESIGN"
+                    ],
+
+                    code:
+`.card {
+    width: 300px;
+    padding: 20px;
+    border-radius: 14px;
+    background: #111;
+    color: #fff;
+    border: 1px solid #333;
+}`
+                },
+
+
+                {
+                    id: "contoh-4",
+
+                    title: "FETCH API",
+
+                    language: "JAVASCRIPT",
+
+                    description:
+                        "Contoh mengambil data dari REST API menggunakan fetch.",
+
+                    tags: [
+                        "#JS",
+                        "#API",
+                        "#FETCH"
+                    ],
+
+                    code:
+`async function getData() {
+    try {
+        const response = await fetch(
+            "https://example.com/api/data"
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+getData();`
+                },
+
+
+                {
+                    id: "contoh-5",
+
+                    title: "NODE EXPRESS",
+
+                    language: "JAVASCRIPT",
+
+                    description:
+                        "Contoh server Express sederhana.",
+
+                    tags: [
+                        "#NODEJS",
+                        "#EXPRESS",
+                        "#API"
+                    ],
+
+                    code:
+`const express = require("express");
+
+const app = express();
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.json({
+        status: true,
+        message: "Hello ReyCloudSHP"
+    });
+});
+
+app.listen(3000, () => {
+    console.log(
+        "Server running on port 3000"
+    );
+});`
+                },
+
+
+                {
+                    id: "contoh-6",
+
+                    title: "PYTHON HELLO",
+
+                    language: "PYTHON",
+
+                    description:
+                        "Contoh program Python sederhana.",
+
+                    tags: [
+                        "#PYTHON",
+                        "#BASIC"
+                    ],
+
+                    code:
+`def main():
+    message = "Hello World"
+    print(message)
+
+
+if __name__ == "__main__":
+    main()`
+                },
+
+
+                {
+                    id: "contoh-7",
+
+                    title: "BASH UPDATE",
+
+                    language: "BASH",
+
+                    description:
+                        "Contoh command Bash untuk update package.",
+
+                    tags: [
+                        "#BASH",
+                        "#LINUX",
+                        "#TERMUX"
+                    ],
+
+                    code:
+`#!/bin/bash
+
+echo "Updating packages..."
+
+pkg update -y
+pkg upgrade -y
+
+echo "Update selesai."`
+                },
+
+
+                {
+                    id: "contoh-8",
+
+                    title: "PHP BASIC",
+
+                    language: "PHP",
+
+                    description:
+                        "Contoh PHP sederhana.",
+
+                    tags: [
+                        "#PHP",
+                        "#WEB",
+                        "#BASIC"
+                    ],
+
+                    code:
+`<?php
+
+$name = "ReyCloudSHP";
+
+echo "Hello " . $name;
+
+?>`
+                },
+
+
+                {
+                    id: "contoh-9",
+
+                    title: "JSON CONFIG",
+
+                    language: "JSON",
+
+                    description:
+                        "Contoh konfigurasi JSON sederhana.",
+
+                    tags: [
+                        "#JSON",
+                        "#CONFIG"
+                    ],
+
+                    code:
+`{
+    "name": "ReyCloudSHP",
+    "version": "1.0.0",
+    "status": true,
+    "author": "Rey"
+}`
+                },
+
+
+                {
+                    id: "contoh-10",
+
+                    title: "MYSQL TABLE",
+
+                    language: "SQL",
+
+                    description:
+                        "Contoh membuat tabel users menggunakan SQL.",
+
+                    tags: [
+                        "#SQL",
+                        "#MYSQL",
+                        "#DATABASE"
+                    ],
+
+                    code:
+`CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    created_at TIMESTAMP
+        DEFAULT CURRENT_TIMESTAMP
+);`
+                }
+
+            ];
+
+
+
+            /* ========================================================
+               ELEMENT
+            ======================================================== */
+
+            const listPage =
+                document.getElementById(
+                    "rcshpListPage"
+                );
+
+
+            const detailPage =
+                document.getElementById(
+                    "rcshpDetailPage"
+                );
+
+
+            const sourceList =
+                document.getElementById(
+                    "rcshpSourceList"
+                );
+
+
+            const empty =
+                document.getElementById(
+                    "rcshpEmpty"
+                );
+
+
+            const search =
+                document.getElementById(
+                    "rcshpSearch"
+                );
+
+
+            const total =
+                document.getElementById(
+                    "rcshpTotal"
+                );
+
+
+            const languages =
+                document.getElementById(
+                    "rcshpLanguages"
+                );
+
+
+            const count =
+                document.getElementById(
+                    "rcshpCount"
+                );
+
+
+            const back =
+                document.getElementById(
+                    "rcshpBack"
+                );
+
+
+            const detailTitle =
+                document.getElementById(
+                    "rcshpDetailTitle"
+                );
+
+
+            const detailLanguage =
+                document.getElementById(
+                    "rcshpDetailLanguage"
+                );
+
+
+            const detailDescription =
+                document.getElementById(
+                    "rcshpDetailDescription"
+                );
+
+
+            const detailTags =
+                document.getElementById(
+                    "rcshpDetailTags"
+                );
+
+
+            const codeLanguage =
+                document.getElementById(
+                    "rcshpCodeLanguage"
+                );
+
+
+            const code =
+                document.getElementById(
+                    "rcshpCode"
+                );
+
+
+            const lineNumbers =
+                document.getElementById(
+                    "rcshpLineNumbers"
+                );
+
+
+            const copy =
+                document.getElementById(
+                    "rcshpCopy"
+                );
+
+
+            let selectedSnippet = null;
+
+
+
+            /* ========================================================
+               ESCAPE HTML
+            ======================================================== */
+
+            function escapeHTML(value) {
+
+                return String(
+                    value ?? ""
+                )
+
+                    .replace(
+                        /&/g,
+                        "&amp;"
+                    )
+
+                    .replace(
+                        /</g,
+                        "&lt;"
+                    )
+
+                    .replace(
+                        />/g,
+                        "&gt;"
+                    )
+
+                    .replace(
+                        /"/g,
+                        "&quot;"
+                    )
+
+                    .replace(
+                        /'/g,
+                        "&#039;"
+                    );
+
+            }
+
+
+
+            /* ========================================================
+               UPDATE STATS
+            ======================================================== */
+
+            function updateStats() {
+
+                total.textContent =
+                    snippets.length;
+
+
+                const uniqueLanguages =
+                    new Set(
+
+                        snippets
+
+                            .map(
+                                snippet =>
+                                    String(
+                                        snippet.language || ""
+                                    )
+                                        .trim()
+                                        .toUpperCase()
+                            )
+
+                            .filter(Boolean)
+
+                    );
+
+
+                languages.textContent =
+                    uniqueLanguages.size;
+
+            }
+
+
+
+            /* ========================================================
+               RENDER SOURCES
+            ======================================================== */
+
+            function renderSources() {
+
+                const keyword =
+                    search.value
+                        .trim()
+                        .toLowerCase();
+
+
+                const results =
+                    snippets.filter(
+                        snippet => {
+
+                            if (!keyword) {
+                                return true;
+                            }
+
+
+                            const title =
+                                String(
+                                    snippet.title || ""
+                                )
+                                    .toLowerCase();
+
+
+                            const language =
+                                String(
+                                    snippet.language || ""
+                                )
+                                    .toLowerCase();
+
+
+                            const description =
+                                String(
+                                    snippet.description || ""
+                                )
+                                    .toLowerCase();
+
+
+                            const tags =
+                                Array.isArray(
+                                    snippet.tags
+                                )
+
+                                    ? snippet.tags
+                                        .join(" ")
+                                        .toLowerCase()
+
+                                    : "";
+
+
+                            return (
+
+                                title.includes(
+                                    keyword
+                                )
+
+                                ||
+
+                                language.includes(
+                                    keyword
+                                )
+
+                                ||
+
+                                description.includes(
+                                    keyword
+                                )
+
+                                ||
+
+                                tags.includes(
+                                    keyword
+                                )
+
+                            );
+
+                        }
+                    );
+
+
+                sourceList.innerHTML =
+                    "";
+
+
+                count.textContent =
+                    `${results.length} SOURCE`;
+
+
+                if (!results.length) {
+
+                    empty.style.display =
+                        "block";
+
+                    return;
+
+                }
+
+
+                empty.style.display =
+                    "none";
+
+
+                results.forEach(
+                    snippet => {
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "rcshp-source";
+
+
+                        item.dataset.id =
+                            snippet.id;
+
+
+                        item.setAttribute(
+                            "role",
+                            "button"
+                        );
+
+
+                        item.setAttribute(
+                            "tabindex",
+                            "0"
+                        );
+
+
+                        item.innerHTML = `
+
+                            <div class="rcshp-source-left">
+
+                                <div class="rcshp-source-icon">
+                                    &lt;/&gt;
+                                </div>
+
+
+                                <div class="rcshp-source-info">
+
+                                    <div class="rcshp-source-title">
+                                        ${escapeHTML(
+                                            snippet.title
+                                        )}
+                                    </div>
+
+
+                                    <div class="rcshp-source-description">
+                                        ${escapeHTML(
+                                            snippet.description
+                                        )}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="rcshp-source-right">
+
+                                <span class="rcshp-language">
+                                    ${escapeHTML(
+                                        snippet.language
+                                    )}
+                                </span>
+
+
+                                <span class="rcshp-arrow">
+                                    →
+                                </span>
+
+                            </div>
+
+                        `;
+
+
+                        sourceList.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+            }
+
+
+
+            /* ========================================================
+               LINE NUMBERS
+            ======================================================== */
+
+            function createLineNumbers(
+                source
+            ) {
+
+                const lines =
+                    String(
+                        source || ""
+                    )
+                        .split("\n");
+
+
+                const output = [];
+
+
+                for (
+                    let i = 1;
+                    i <= lines.length;
+                    i++
+                ) {
+
+                    output.push(i);
+
+                }
+
+
+                lineNumbers.innerHTML =
+                    output.join("<br>");
+
+            }
+
+
+
+            /* ========================================================
+               OPEN SNIPPET
+            ======================================================== */
+
+            function openSnippet(
+                id
+            ) {
+
+                const snippet =
+                    snippets.find(
+                        item =>
+                            String(
+                                item.id
+                            ) ===
+                            String(id)
+                    );
+
+
+                if (!snippet) {
+                    return;
+                }
+
+
+                selectedSnippet =
+                    snippet;
+
+
+                detailTitle.textContent =
+                    snippet.title || "";
+
+
+                detailLanguage.textContent =
+                    snippet.language || "";
+
+
+                codeLanguage.textContent =
+                    snippet.language || "";
+
+
+                detailDescription.textContent =
+                    snippet.description || "";
+
+
+                code.textContent =
+                    snippet.code || "";
+
+
+                createLineNumbers(
+                    snippet.code
+                );
+
+
+                detailTags.innerHTML =
+                    "";
+
+
+                if (
+                    Array.isArray(
+                        snippet.tags
+                    )
+                ) {
+
+                    snippet.tags.forEach(
+                        tag => {
+
+                            const tagElement =
+                                document.createElement(
+                                    "span"
+                                );
+
+
+                            tagElement.className =
+                                "rcshp-tag";
+
+
+                            tagElement.textContent =
+                                tag;
+
+
+                            detailTags.appendChild(
+                                tagElement
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                copy.textContent =
+                    "▣   SALIN ISI CODE";
+
+
+                copy.classList.remove(
+                    "success"
+                );
+
+
+                listPage.style.display =
+                    "none";
+
+
+                detailPage.style.display =
+                    "block";
+
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+
+
+
+            /* ========================================================
+               CLOSE SNIPPET
+            ======================================================== */
+
+            function closeSnippet() {
+
+                selectedSnippet =
+                    null;
+
+
+                detailPage.style.display =
+                    "none";
+
+
+                listPage.style.display =
+                    "block";
+
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+
+
+
+            /* ========================================================
+               COPY CODE
+            ======================================================== */
+
+            async function copyCode() {
+
+                if (!selectedSnippet) {
+                    return;
+                }
+
+
+                const source =
+                    selectedSnippet.code || "";
+
+
+                try {
+
+                    if (
+                        navigator.clipboard &&
+                        window.isSecureContext
+                    ) {
+
+                        await navigator.clipboard.writeText(
+                            source
+                        );
+
+                    } else {
+
+                        fallbackCopy(
+                            source
+                        );
+
+                    }
+
+
+                    copySuccess();
+
+                } catch (error) {
+
+                    fallbackCopy(
+                        source
+                    );
+
+
+                    copySuccess();
+
+                }
+
+            }
+
+
+
+            /* ========================================================
+               FALLBACK COPY
+            ======================================================== */
+
+            function fallbackCopy(
+                text
+            ) {
+
+                const textarea =
+                    document.createElement(
+                        "textarea"
+                    );
+
+
+                textarea.value =
+                    text;
+
+
+                textarea.style.position =
+                    "fixed";
+
+
+                textarea.style.left =
+                    "-9999px";
+
+
+                textarea.style.top =
+                    "0";
+
+
+                textarea.style.opacity =
+                    "0";
+
+
+                document.body.appendChild(
+                    textarea
+                );
+
+
+                textarea.focus();
+
+                textarea.select();
+
+
+                try {
+
+                    document.execCommand(
+                        "copy"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+                }
+
+
+                textarea.remove();
+
+            }
+
+
+
+            /* ========================================================
+               COPY SUCCESS
+            ======================================================== */
+
+            function copySuccess() {
+
+                copy.textContent =
+                    "✓   CODE BERHASIL DISALIN";
+
+
+                copy.classList.add(
+                    "success"
+                );
+
+
+                setTimeout(
+                    () => {
+
+                        copy.textContent =
+                            "▣   SALIN ISI CODE";
+
+
+                        copy.classList.remove(
+                            "success"
+                        );
+
+                    },
+                    1800
+                );
+
+            }
+
+
+
+            /* ========================================================
+               SOURCE CLICK
+            ======================================================== */
+
+            sourceList.addEventListener(
+                "click",
+                event => {
+
+                    const source =
+                        event.target.closest(
+                            ".rcshp-source"
+                        );
+
+
+                    if (!source) {
+                        return;
+                    }
+
+
+                    openSnippet(
+                        source.dataset.id
+                    );
+
+                }
+            );
+
+
+
+            /* ========================================================
+               SOURCE KEYBOARD
+            ======================================================== */
+
+            sourceList.addEventListener(
+                "keydown",
+                event => {
+
+                    if (
+                        event.key !== "Enter" &&
+                        event.key !== " "
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const source =
+                        event.target.closest(
+                            ".rcshp-source"
+                        );
+
+
+                    if (!source) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    openSnippet(
+                        source.dataset.id
+                    );
+
+                }
+            );
+
+
+
+            /* ========================================================
+               SEARCH
+            ======================================================== */
+
+            search.addEventListener(
+                "input",
+                renderSources
+            );
+
+
+
+            /* ========================================================
+               BACK
+            ======================================================== */
+
+            back.addEventListener(
+                "click",
+                closeSnippet
+            );
+
+
+
+            /* ========================================================
+               COPY
+            ======================================================== */
+
+            copy.addEventListener(
+                "click",
+                copyCode
+            );
+
+
+
+            /* ========================================================
+               KEYBOARD SEARCH SHORTCUT
+            ======================================================== */
+
+            document.addEventListener(
+                "keydown",
+                event => {
+
+                    if (
+                        event.key === "/" &&
+                        document.activeElement !== search &&
+                        document.activeElement.tagName !== "INPUT" &&
+                        document.activeElement.tagName !== "TEXTAREA"
+                    ) {
+
+                        event.preventDefault();
+
+                        search.focus();
+
+                    }
+
+
+                    if (
+                        event.key === "Escape" &&
+                        detailPage.style.display === "block"
+                    ) {
+
+                        closeSnippet();
+
+                    }
+
+                }
+            );
+
+
+
+            /* ========================================================
+               INITIALIZE
+            ======================================================== */
+
+            updateStats();
+
+            renderSources();
+
+        })();
+
+    </script>
+
+
+</body>
+
+</html>

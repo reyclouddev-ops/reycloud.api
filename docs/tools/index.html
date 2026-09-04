@@ -1565,7 +1565,7 @@ button:disabled{
 <script>
 
 const API_BASE =
-    "https://api.reycode.my.id";
+    "https://api.legionteknologi.my.id";
 
 
 /*
@@ -1699,60 +1699,21 @@ const apiList = [
         ]
     },
 
-    /* EXISTING ENDPOINTS */
+    /* AMPREM CREATE (SINGLE ENDPOINT) */
 
     {
         category:"tools",
         categoryName:"Tools & Utilities",
         categoryIcon:"🛠️",
-        title:"Create Stak & Task",
-        desc:"Membuat task baru pembuatan akun amprem dan mencatat stak",
-        path:"/amprem/create",
-        method:"POST",
+        title:"Amprem Create",
+        desc:"Membuat akun AM Premium secara otomatis menggunakan proxy rotation dan mail.tm",
+        path:"/amprem/generate",
+        method:"GET",
         param:"none",
-        placeholder:"",
-        ampremCreate:true
+        placeholder:""
     },
 
-    {
-        category:"tools",
-        categoryName:"Tools & Utilities",
-        categoryIcon:"🛠️",
-        title:"Check Task & Stak",
-        desc:"Mengecek status task atau stack berdasarkan ID atau Token",
-        path:"/amprem/task",
-        method:"GET",
-        params:[
-            {
-                name:"id",
-                label:"🆔 Task ID / Stack ID / Token",
-                placeholder:"Masukkan ID atau Token",
-                type:"text",
-                required:true
-            }
-        ],
-        ampremCheck:true
-    },
-
-    {
-        category:"tools",
-        categoryName:"Tools & Utilities",
-        categoryIcon:"🛠️",
-        title:"Get Verification Link",
-        desc:"Mendapatkan link verifikasi magic link setelah task sukses",
-        path:"/verif/amprem/link",
-        method:"GET",
-        params:[
-            {
-                name:"task",
-                label:"🆔 Task ID",
-                placeholder:"Masukkan Task ID",
-                type:"text",
-                required:true
-            }
-        ],
-        ampremLink:true
-    },
+    /* OTHER ENDPOINTS */
 
     {
         category:"other",
