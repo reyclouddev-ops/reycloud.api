@@ -1080,10 +1080,8 @@ input[type="file"]{
         rgba(239,68,68,.3);
 }
 
-
 /* =========================================================
    CONSOLE RESPONSE
-   Tambahan saja
 ========================================================= */
 
 .response.console-mode{
@@ -1201,19 +1199,9 @@ input[type="file"]{
 }
 
 @keyframes consoleBlink{
-
-    0%,
-    49%{
-        opacity:1;
-    }
-
-    50%,
-    100%{
-        opacity:0;
-    }
-
+    0%, 49%{ opacity:1; }
+    50%, 100%{ opacity:0; }
 }
-
 
 /* =========================================================
    MEDIA
@@ -1398,122 +1386,17 @@ input[type="file"]{
 ========================================================= */
 
 @media(max-width:600px){
-
-    .app{
-        padding:
-            18px
-            13px
-            45px;
-    }
-
-    .hero{
-        padding:19px;
-    }
-
-    .hero-title{
-        font-size:18px;
-    }
-
-    .hero-text{
-        font-size:10px;
-    }
-
-    .endpoint{
-        padding:14px;
-    }
-
-    .endpoint-desc{
-        display:none;
-    }
-
-    .endpoint-meta{
-        gap:5px;
-    }
-
-    .method{
-        display:none;
-    }
-
-    .try-btn{
-        padding:
-            8px
-            11px;
-    }
-
-    .modal-body{
-        padding:15px;
-    }
-
-    .response-actions{
-        flex-wrap:wrap;
-        justify-content:flex-end;
-    }
-
-}
-
-@media(max-width:430px){
-
-    .brand h1{
-        font-size:14px;
-    }
-
-    .brand p{
-        font-size:8px;
-    }
-
-    .logo,
-    .back-btn{
-        width:40px;
-        height:40px;
-    }
-
-    .endpoint{
-        gap:9px;
-    }
-
-    .endpoint-info h4{
-        font-size:11px;
-    }
-
-    .endpoint-info p{
-        font-size:8px;
-    }
-
-    .try-btn{
-        font-size:8px;
-        padding:7px 9px;
-    }
-
-    .modal-foot{
-        padding:
-            12px 14px;
-    }
-
-}
-
-@media(max-width:350px){
-
-    .brand{
-        gap:7px;
-    }
-
-    .back-btn{
-        width:36px;
-        height:36px;
-    }
-
-    .logo{
-        width:36px;
-        height:36px;
-    }
-
-    .brand h1{
-        font-size:12px;
-    }
-
-    .endpoint-info h4{
-        font-size:10px;
-    }
+    .app{ padding:18px 13px 45px; }
+    .hero{ padding:19px; }
+    .hero-title{ font-size:18px; }
+    .hero-text{ font-size:10px; }
+    .endpoint{ padding:14px; }
+    .endpoint-desc{ display:none; }
+    .endpoint-meta{ gap:5px; }
+    .method{ display:none; }
+    .try-btn{ padding:8px 11px; }
+    .modal-body{ padding:15px; }
+    .response-actions{ flex-wrap:wrap; justify-content:flex-end; }
 }
 </style>
 </head>
@@ -1522,3354 +1405,806 @@ input[type="file"]{
 
 <div class="app">
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
     <header class="header">
-
         <div class="brand">
-
-            <a
-                href="/dashboard"
-                class="back-btn"
-                title="Kembali ke Dashboard"
-            >
+            <a href="/dashboard" class="back-btn" title="Kembali ke Dashboard">
                 <svg viewBox="0 0 24 24">
                     <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                 </svg>
             </a>
-
-            <div class="logo">
-                AI
-            </div>
-
+            <div class="logo">AI</div>
             <div>
-
-                <h1>
-                    AI Intelligence
-                </h1>
-
-                <p>
-                    ReyCloudSHP API Docs
-                </p>
-
+                <h1>AI Intelligence</h1>
+                <p>ReyCloudSHP API Docs</p>
             </div>
-
         </div>
-
     </header>
 
-
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
-
     <section class="hero glass">
-
         <div class="hero-content">
-
-            <div class="hero-title">
-                🤖 AI Intelligence Endpoints
-            </div>
-
+            <div class="hero-title">🤖 AI Intelligence Endpoints</div>
             <div class="hero-text">
                 Kumpulan endpoint AI ReyCloudSHP untuk
                 conversational AI, multi-model chat,
                 image generation, image processing,
                 prompt extraction, dan utilities AI lainnya.
             </div>
-
         </div>
-
     </section>
 
-
-    <!-- =====================================================
-         ENDPOINT HEADER
-    ====================================================== -->
-
     <div class="endpoint-head">
-
-        <div class="category">
-            Endpoints List
-        </div>
-
-        <div
-            class="endpoint-count"
-            id="endpointCount"
-        >
-            0 endpoints
-        </div>
-
+        <div class="category">Endpoints List</div>
+        <div class="endpoint-count" id="endpointCount">0 endpoints</div>
     </div>
-
-
-    <!-- =====================================================
-         SEARCH
-    ====================================================== -->
 
     <div class="search-wrap">
-
-        <input
-            id="endpointSearch"
-            class="search"
-            type="search"
-            autocomplete="off"
-            placeholder="🔎 Cari endpoint AI..."
-        >
-
+        <input id="endpointSearch" class="search" type="search" autocomplete="off" placeholder="🔎 Cari endpoint AI...">
     </div>
-
-
-    <!-- =====================================================
-         ENDPOINT LIST
-    ====================================================== -->
 
     <div id="apiListContainer"></div>
 
 </div>
 
-
-<!-- =========================================================
-     API MODAL
-========================================================= -->
-
-<div
-    class="overlay"
-    id="apiModal"
->
-
+<div class="overlay" id="apiModal">
     <div class="modal">
-
-        <!-- MODAL HEADER -->
-
         <div class="modal-head">
-
             <div class="modal-title-wrap">
-
-                <h3 id="modalTitle">
-                    Endpoint
-                </h3>
-
-                <p id="modalEndpoint">
-                    /endpoint
-                </p>
-
+                <h3 id="modalTitle">Endpoint</h3>
+                <p id="modalEndpoint">/endpoint</p>
             </div>
-
-            <button
-                class="close"
-                id="closeModal"
-                type="button"
-            >
-                ✕
-            </button>
-
+            <button class="close" id="closeModal" type="button">✕</button>
         </div>
-
-
-        <!-- MODAL BODY -->
 
         <div class="modal-body">
 
-            <!-- INPUT -->
-
-            <label
-                class="label"
-                id="inputLabel"
-            >
-                Query Parameter
-            </label>
-
-            <input
-                id="apiInput"
-                class="input"
-                type="text"
-                autocomplete="off"
-                placeholder="Masukkan value..."
-            >
-
-
-            <!-- FILE -->
-
-            <input
-                id="apiFileInput"
-                class="input"
-                type="file"
-                style="display:none"
-            >
-
-
-            <!-- AI MODEL -->
-
-            <div
-                class="custom-select-container"
-                id="customSelectContainer"
-            >
-
-                <label class="label">
-                    Pilih Model AI
-                </label>
-
-                <div
-                    class="custom-select-trigger"
-                    id="selectTrigger"
-                >
-
-                    <span id="selectedModelText">
-                        qwen3.7-plus (Default)
-                    </span>
-
-                    <span>
-                        ▾
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="custom-options"
-                    id="customOptions"
-                >
-
-                    <div
-                        class="custom-option selected"
-                        data-value="qwen3.7-plus"
-                    >
-                        qwen3.7-plus (Default)
-                    </div>
-
-                    <div
-                        class="custom-option"
-                        data-value="standard"
-                    >
-                        standard
-                    </div>
-
-                    <div
-                        class="custom-option"
-                        data-value="deepseek-v3.2"
-                    >
-                        deepseek-v3.2
-                    </div>
-
-                    <div
-                        class="custom-option"
-                        data-value="gemini-2.5-flash-lite"
-                    >
-                        gemini-2.5-flash-lite
-                    </div>
-
-                    <div
-                        class="custom-option"
-                        data-value="gemma-4"
-                    >
-                        gemma-4
-                    </div>
-
-                    <div
-                        class="custom-option"
-                        data-value="llama-3.3-70b-instruct"
-                    >
-                        llama-3.3-70b-instruct
-                    </div>
-
-                    <div
-                        class="custom-option"
-                        data-value="gpt-oss-120b"
-                    >
-                        gpt-oss-120b
-                    </div>
-
-                    <div
-                        class="custom-option"
-                        data-value="gpt-5-nano"
-                    >
-                        gpt-5-nano
-                    </div>
-
-                </div>
-
+            <div id="inputGroup">
+                <label class="label" id="inputLabel">Query Parameter</label>
+                <input id="apiInput" class="input" type="text" autocomplete="off" placeholder="Masukkan value...">
             </div>
 
+            <div id="fileGroup" style="display:none;">
+                <label class="label" id="fileLabel">Upload File / Gambar</label>
+                <input id="apiFileInput" class="input" type="file" accept="image/*">
+            </div>
 
-            <!-- CODE TABS -->
+            <div class="custom-select-container" id="customSelectContainer">
+                <label class="label">Pilih Model AI</label>
+                <div class="custom-select-trigger" id="selectTrigger">
+                    <span id="selectedModelText">standard (Default)</span>
+                    <span>▾</span>
+                </div>
+                <div class="custom-options" id="customOptions">
+                    <div class="custom-option selected" data-value="standard">standard (Default)</div>
+                    <div class="custom-option" data-value="deepseek-v3.2">deepseek-v3.2</div>
+                    <div class="custom-option" data-value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</div>
+                    <div class="custom-option" data-value="gemma-4">gemma-4</div>
+                    <div class="custom-option" data-value="llama-3.3-70b-instruct">llama-3.3-70b-instruct</div>
+                    <div class="custom-option" data-value="gpt-oss-120b">gpt-oss-120b</div>
+                    <div class="custom-option" data-value="gpt-5-nano">gpt-5-nano</div>
+                </div>
+            </div>
 
             <div class="tabs">
-
-                <button
-                    class="tab active"
-                    data-lang="curl"
-                    type="button"
-                >
-                    cURL
-                </button>
-
-                <button
-                    class="tab"
-                    data-lang="javascript"
-                    type="button"
-                >
-                    Node.js
-                </button>
-
-                <button
-                    class="tab"
-                    data-lang="python"
-                    type="button"
-                >
-                    Python
-                </button>
-
-                <button
-                    class="tab"
-                    data-lang="php"
-                    type="button"
-                >
-                    PHP
-                </button>
-
+                <button class="tab active" data-lang="curl" type="button">cURL</button>
+                <button class="tab" data-lang="javascript" type="button">Node.js</button>
+                <button class="tab" data-lang="python" type="button">Python</button>
+                <button class="tab" data-lang="php" type="button">PHP</button>
             </div>
-
-
-            <!-- CODE -->
 
             <div class="code-wrap">
-
-                <pre
-                    class="code"
-                    id="codeSnippet"
-                >...</pre>
-
-                <button
-                    class="copy-code"
-                    id="copyCode"
-                    type="button"
-                >
-                    Salin
-                </button>
-
+                <pre class="code" id="codeSnippet">...</pre>
+                <button class="copy-code" id="copyCode" type="button">Salin</button>
             </div>
-
-
-            <!-- RESPONSE HEADER -->
 
             <div class="response-head">
-
-                <label
-                    class="label"
-                    style="margin:0"
-                >
-                    API Response
-                </label>
-
+                <label class="label" style="margin:0">API Response</label>
                 <div class="response-actions">
-
-                    <button
-                        class="small-btn"
-                        id="copyEndpoint"
-                        type="button"
-                    >
-                        🔗 Endpoint
-                    </button>
-
-                    <button
-                        class="small-btn"
-                        id="copyResponse"
-                        type="button"
-                    >
-                        📋 Response
-                    </button>
-
+                    <button class="small-btn" id="copyEndpoint" type="button">🔗 Endpoint</button>
+                    <button class="small-btn" id="copyResponse" type="button">📋 Response</button>
                 </div>
-
             </div>
 
+            <div class="response" id="apiResponse">// Klik Execute Request untuk menjalankan API...</div>
 
-            <!-- RESPONSE -->
-
-            <div
-                class="response"
-                id="apiResponse"
-            >
-                // Klik Execute Request untuk menjalankan API...
-            </div>
-
-
-            <!-- MEDIA -->
-
-            <div
-                class="media"
-                id="mediaPreview"
-            ></div>
+            <div class="media" id="mediaPreview"></div>
 
         </div>
-
-
-        <!-- MODAL FOOT -->
 
         <div class="modal-foot">
-
-            <button
-                class="open-btn"
-                id="openEndpoint"
-                type="button"
-            >
-                ↗ Buka
-            </button>
-
-            <button
-                class="execute-btn"
-                id="executeRequest"
-                type="button"
-            >
-                Execute Request
-            </button>
-
+            <button class="open-btn" id="openEndpoint" type="button">↗ Buka</button>
+            <button class="execute-btn" id="executeRequest" type="button">Execute Request</button>
         </div>
-
     </div>
-
 </div>
 
-
-<!-- =========================================================
-     TOAST
-========================================================= -->
-
-<div
-    class="toast"
-    id="toast"
->
-    Tersalin!
-</div>
-
+<div class="toast" id="toast">Tersalin!</div>
 
 <script>
 "use strict";
 
-/* =========================================================
-   CONFIG
-========================================================= */
-
 const CONFIG = {
-
-    API_BASE:
-        "https://api.reycode.my.id",
-
-    DEFAULT_MODEL:
-        "qwen3.7-plus",
-
-    REQUEST_TIMEOUT:
-        30000,
-
-    MAX_RESPONSE_LENGTH:
-        50000
-
+    API_BASE: "https://api.reycode.my.id",
+    DEFAULT_MODEL: "standard",
+    REQUEST_TIMEOUT: 30000,
+    MAX_RESPONSE_LENGTH: 50000
 };
 
-
-/* =========================================================
-   AI ENDPOINT DATABASE
-========================================================= */
-
 const aiApiList = [
-
     {
-        title:
-            "Qwen AI Assistant",
-
-        desc:
-            "Alibaba Tongyi Lab Advanced LLM with Deep Thinking & Search",
-
-        icon:
-            "🌟",
-
-        path:
-            "/ai/qwen",
-
-        method:
-            "GET",
-
-        param:
-            "text",
-
-        placeholder:
-            "Jelaskan tentang Black Hole...",
-
-        hasModel:
-            true
+        title: "Rayleigh AI",
+        desc: "Advanced conversational assistant",
+        icon: "🤖",
+        path: "/ai/rayleigh",
+        method: "GET",
+        param: "text",
+        placeholder: "Jelaskan cara kerja VPS"
     },
-
     {
-        title:
-            "Qwen AI Image Generation",
-
-        desc:
-            "Generate image via Qwen AI Native API (Requires Token)",
-
-        icon:
-            "🖼️",
-
-        path:
-            "/ai/qwen/image",
-
-        method:
-            "GET",
-
-        param:
-            "prompt",
-
-        placeholder:
-            "A futuristic cyberpunk city...",
-
-        hasModel:
-            true
+        title: "DeepAI Chat Advanced",
+        desc: "Multi-model conversational AI",
+        icon: "🧠",
+        path: "/ai/deepai/chat",
+        method: "GET",
+        param: "text",
+        placeholder: "Halo, apa kabar?",
+        hasModel: true
     },
-
     {
-        title:
-            "Rayleigh AI",
-
-        desc:
-            "Advanced conversational assistant",
-
-        icon:
-            "🤖",
-
-        path:
-            "/ai/rayleigh",
-
-        method:
-            "GET",
-
-        param:
-            "text",
-
-        placeholder:
-            "Jelaskan cara kerja VPS"
+        title: "DeepAI Models List",
+        desc: "Get available DeepAI models",
+        icon: "📚",
+        path: "/ai/deepai/models",
+        method: "GET",
+        param: "none",
+        placeholder: ""
     },
-
-
     {
-        title:
-            "DeepAI Chat Advanced",
-
-        desc:
-            "Multi-model conversational AI",
-
-        icon:
-            "🧠",
-
-        path:
-            "/ai/deepai/chat",
-
-        method:
-            "GET",
-
-        param:
-            "text",
-
-        placeholder:
-            "Halo, apa kabar?",
-
-        hasModel:
-            true
+        title: "Img 2 Prompt",
+        desc: "Extract prompt from image",
+        icon: "🖼️",
+        path: "/ai/imgtoprompt",
+        method: "POST",
+        param: "file",
+        placeholder: "Pilih file"
     },
-
-
     {
-        title:
-            "DeepAI Models List",
-
-        desc:
-            "Get available DeepAI models",
-
-        icon:
-            "📚",
-
-        path:
-            "/ai/deepai/models",
-
-        method:
-            "GET",
-
-        param:
-            "none",
-
-        placeholder:
-            ""
+        title: "Img 2 Img AI",
+        desc: "Modify image using AI (Upload File & Prompt)",
+        icon: "🎨",
+        path: "/ai/img2img",
+        method: "POST",
+        param: "img2img",
+        placeholder: "Contoh: ubah menjadi anime"
     },
-
-
     {
-        title:
-            "Img 2 Prompt",
-
-        desc:
-            "Extract prompt from image",
-
-        icon:
-            "🖼️",
-
-        path:
-            "/ai/imgtoprompt",
-
-        method:
-            "POST",
-
-        param:
-            "file",
-
-        placeholder:
-            "Pilih file"
+        title: "Imagen Generate",
+        desc: "Generate image using Imagen AI",
+        icon: "✨",
+        path: "/ai/imagen",
+        method: "GET",
+        param: "prompt",
+        placeholder: "robot futuristik"
     },
-
-
     {
-        title:
-            "Img 2 Img AI",
-
-        desc:
-            "Modify image using AI",
-
-        icon:
-            "🎨",
-
-        path:
-            "/ai/img2img",
-
-        method:
-            "GET",
-
-        param:
-            "prompt",
-
-        placeholder:
-            "Contoh: ubah menjadi anime"
+        title: "Imagen Image",
+        desc: "Generate binary image",
+        icon: "🌌",
+        path: "/ai/imagen/image",
+        method: "GET",
+        param: "prompt",
+        placeholder: "robot futuristik"
     },
-
-
     {
-        title:
-            "Imagen Generate",
-
-        desc:
-            "Generate image using Imagen AI",
-
-        icon:
-            "✨",
-
-        path:
-            "/ai/imagen",
-
-        method:
-            "GET",
-
-        param:
-            "prompt",
-
-        placeholder:
-            "robot futuristik"
+        title: "Imagen Styles",
+        desc: "Get available Imagen styles",
+        icon: "🎭",
+        path: "/ai/imagen/styles",
+        method: "GET",
+        param: "none",
+        placeholder: ""
     },
-
-
     {
-        title:
-            "Imagen Image",
-
-        desc:
-            "Generate binary image",
-
-        icon:
-            "🌌",
-
-        path:
-            "/ai/imagen/image",
-
-        method:
-            "GET",
-
-        param:
-            "prompt",
-
-        placeholder:
-            "robot futuristik"
-    },
-
-
-    {
-        title:
-            "Imagen Styles",
-
-        desc:
-            "Get available Imagen styles",
-
-        icon:
-            "🎭",
-
-        path:
-            "/ai/imagen/styles",
-
-        method:
-            "GET",
-
-        param:
-            "none",
-
-        placeholder:
-            ""
-    },
-
-
-    {
-        title:
-            "Imagen Ratios",
-
-        desc:
-            "Get available image ratios",
-
-        icon:
-            "📐",
-
-        path:
-            "/ai/imagen/ratios",
-
-        method:
-            "GET",
-
-        param:
-            "none",
-
-        placeholder:
-            ""
+        title: "Imagen Ratios",
+        desc: "Get available image ratios",
+        icon: "📐",
+        path: "/ai/imagen/ratios",
+        method: "GET",
+        param: "none",
+        placeholder: ""
     }
-
 ];
 
+const modal = document.getElementById("apiModal");
+const inputGroup = document.getElementById("inputGroup");
+const input = document.getElementById("apiInput");
+const fileGroup = document.getElementById("fileGroup");
+const fileInput = document.getElementById("apiFileInput");
+const customSelectContainer = document.getElementById("customSelectContainer");
+const selectTrigger = document.getElementById("selectTrigger");
+const customOptions = document.getElementById("customOptions");
+const selectedModelText = document.getElementById("selectedModelText");
+const responseBox = document.getElementById("apiResponse");
+const mediaPreview = document.getElementById("mediaPreview");
+const codeSnippet = document.getElementById("codeSnippet");
+const executeButton = document.getElementById("executeRequest");
+const searchInput = document.getElementById("endpointSearch");
+const endpointCount = document.getElementById("endpointCount");
 
-/* =========================================================
-   DOM
-========================================================= */
+let currentApi = null;
+let currentUrl = "";
+let currentResponse = "";
+let requestRunning = false;
+let selectedModelValue = CONFIG.DEFAULT_MODEL;
+let toastTimer = null;
 
-const modal =
-    document.getElementById(
-        "apiModal"
-    );
-
-const input =
-    document.getElementById(
-        "apiInput"
-    );
-
-const fileInput =
-    document.getElementById(
-        "apiFileInput"
-    );
-
-const customSelectContainer =
-    document.getElementById(
-        "customSelectContainer"
-    );
-
-const selectTrigger =
-    document.getElementById(
-        "selectTrigger"
-    );
-
-const customOptions =
-    document.getElementById(
-        "customOptions"
-    );
-
-const selectedModelText =
-    document.getElementById(
-        "selectedModelText"
-    );
-
-const responseBox =
-    document.getElementById(
-        "apiResponse"
-    );
-
-const mediaPreview =
-    document.getElementById(
-        "mediaPreview"
-    );
-
-const codeSnippet =
-    document.getElementById(
-        "codeSnippet"
-    );
-
-const executeButton =
-    document.getElementById(
-        "executeRequest"
-    );
-
-const searchInput =
-    document.getElementById(
-        "endpointSearch"
-    );
-
-const endpointCount =
-    document.getElementById(
-        "endpointCount"
-    );
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let currentApi =
-    null;
-
-let currentUrl =
-    "";
-
-let currentResponse =
-    "";
-
-let requestRunning =
-    false;
-
-let selectedModelValue =
-    CONFIG.DEFAULT_MODEL;
-
-let toastTimer =
-    null;
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function sleep(ms){
-
-    return new Promise(
-        resolve =>
-            setTimeout(
-                resolve,
-                ms
-            )
-    );
-
-}
-
-
+function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
 function escapeHtml(value){
-
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
+    return String(value).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 }
 
+function renderList(keyword = ""){
+    const container = document.getElementById("apiListContainer");
+    container.innerHTML = "";
+    const normalized = keyword.trim().toLowerCase();
 
-/* =========================================================
-   RENDER ENDPOINTS
-========================================================= */
+    const filtered = aiApiList.filter(api => {
+        if(!normalized) return true;
+        return [api.title, api.desc, api.path, api.param].join(" ").toLowerCase().includes(normalized);
+    });
 
-function renderList(
-    keyword = ""
-){
-
-    const container =
-        document.getElementById(
-            "apiListContainer"
-        );
-
-    container.innerHTML =
-        "";
-
-    const normalized =
-        keyword
-            .trim()
-            .toLowerCase();
-
-    const filtered =
-        aiApiList.filter(api => {
-
-            if(!normalized)
-                return true;
-
-            return [
-                api.title,
-                api.desc,
-                api.path,
-                api.param
-            ]
-            .join(" ")
-            .toLowerCase()
-            .includes(normalized);
-
-        });
-
-
-    endpointCount.textContent =
-        `${filtered.length} endpoint${filtered.length !== 1 ? "s" : ""}`;
-
+    endpointCount.textContent = `${filtered.length} endpoint${filtered.length !== 1 ? "s" : ""}`;
 
     if(!filtered.length){
-
-        const empty =
-            document.createElement(
-                "div"
-            );
-
-        empty.className =
-            "empty glass";
-
-        empty.textContent =
-            "🔎 Endpoint tidak ditemukan.";
-
-        container.appendChild(
-            empty
-        );
-
+        const empty = document.createElement("div");
+        empty.className = "empty glass";
+        empty.textContent = "🔎 Endpoint tidak ditemukan.";
+        container.appendChild(empty);
         return;
-
     }
 
-
-    const fragment =
-        document.createDocumentFragment();
-
-
+    const fragment = document.createDocumentFragment();
     filtered.forEach(api => {
+        const card = document.createElement("div");
+        card.className = "endpoint glass";
 
-        const card =
-            document.createElement(
-                "div"
-            );
+        const info = document.createElement("div");
+        info.className = "endpoint-info";
 
-        card.className =
-            "endpoint glass";
+        const top = document.createElement("div");
+        top.className = "endpoint-top";
 
+        const icon = document.createElement("div");
+        icon.className = "endpoint-icon";
+        icon.textContent = api.icon || "🤖";
 
-        const info =
-            document.createElement(
-                "div"
-            );
+        const title = document.createElement("h4");
+        title.textContent = api.title;
 
-        info.className =
-            "endpoint-info";
+        top.appendChild(icon);
+        top.appendChild(title);
 
+        const path = document.createElement("p");
+        path.textContent = api.path;
 
-        const top =
-            document.createElement(
-                "div"
-            );
+        const desc = document.createElement("div");
+        desc.className = "endpoint-desc";
+        desc.textContent = api.desc;
 
-        top.className =
-            "endpoint-top";
+        info.appendChild(top);
+        info.appendChild(path);
+        info.appendChild(desc);
 
+        const meta = document.createElement("div");
+        meta.className = "endpoint-meta";
 
-        const icon =
-            document.createElement(
-                "div"
-            );
+        const method = document.createElement("span");
+        method.className = "method";
+        method.textContent = api.method || "GET";
 
-        icon.className =
-            "endpoint-icon";
+        const button = document.createElement("button");
+        button.className = "try-btn";
+        button.type = "button";
+        button.textContent = "Test API";
+        button.addEventListener("click", () => openModal(api));
 
-        icon.textContent =
-            api.icon || "🤖";
+        meta.appendChild(method);
+        meta.appendChild(button);
 
-
-        const title =
-            document.createElement(
-                "h4"
-            );
-
-        title.textContent =
-            api.title;
-
-
-        top.appendChild(
-            icon
-        );
-
-        top.appendChild(
-            title
-        );
-
-
-        const path =
-            document.createElement(
-                "p"
-            );
-
-        path.textContent =
-            api.path;
-
-
-        const desc =
-            document.createElement(
-                "div"
-            );
-
-        desc.className =
-            "endpoint-desc";
-
-        desc.textContent =
-            api.desc;
-
-
-        info.appendChild(
-            top
-        );
-
-        info.appendChild(
-            path
-        );
-
-        info.appendChild(
-            desc
-        );
-
-
-        const meta =
-            document.createElement(
-                "div"
-            );
-
-        meta.className =
-            "endpoint-meta";
-
-
-        const method =
-            document.createElement(
-                "span"
-            );
-
-        method.className =
-            "method";
-
-        method.textContent =
-            api.method || "GET";
-
-
-        const button =
-            document.createElement(
-                "button"
-            );
-
-        button.className =
-            "try-btn";
-
-        button.type =
-            "button";
-
-        button.textContent =
-            "Test API";
-
-
-        button.addEventListener(
-            "click",
-            () =>
-                openModal(api)
-        );
-
-
-        meta.appendChild(
-            method
-        );
-
-        meta.appendChild(
-            button
-        );
-
-
-        card.appendChild(
-            info
-        );
-
-        card.appendChild(
-            meta
-        );
-
-
-        fragment.appendChild(
-            card
-        );
-
+        card.appendChild(info);
+        card.appendChild(meta);
+        fragment.appendChild(card);
     });
 
-
-    container.appendChild(
-        fragment
-    );
-
+    container.appendChild(fragment);
 }
-
-
-/* =========================================================
-   BUILD URL
-========================================================= */
 
 function buildUrl(){
+    if(!currentApi) return CONFIG.API_BASE;
+    const base = CONFIG.API_BASE + currentApi.path;
 
-    if(!currentApi)
-        return CONFIG.API_BASE;
-
-
-    const base =
-        CONFIG.API_BASE +
-        currentApi.path;
-
-
-    if(
-        currentApi.param === "none" ||
-        currentApi.param === "file"
-    ){
-
+    if(currentApi.param === "none" || currentApi.param === "file" || currentApi.param === "img2img"){
         return base;
-
     }
 
-
-    const params =
-        new URLSearchParams();
-
-
-    const value =
-        input.value.trim();
-
+    const params = new URLSearchParams();
+    const value = input.value.trim();
 
     if(value){
-
-        params.set(
-            currentApi.param,
-            value
-        );
-
+        params.set(currentApi.param, value);
     }
-
-
     if(currentApi.hasModel){
-
-        params.set(
-            "model",
-            selectedModelValue
-        );
-
+        params.set("model", selectedModelValue);
     }
 
-
-    const query =
-        params.toString();
-
-
-    return query
-        ? `${base}?${query}`
-        : base;
-
+    const query = params.toString();
+    return query ? `${base}?${query}` : base;
 }
 
-
-/* =========================================================
-   CODE GENERATOR
-========================================================= */
-
-function updateCode(
-    lang = "curl"
-){
-
-    currentUrl =
-        buildUrl();
-
-
+function updateCode(lang = "curl"){
+    currentUrl = buildUrl();
     if(!currentApi){
-
-        codeSnippet.textContent =
-            "...";
-
+        codeSnippet.textContent = "...";
         return;
-
     }
-
 
     let code = "";
-
-
-    if(
-        currentApi.param === "file"
-    ){
-
+    if(currentApi.param === "file" || currentApi.param === "img2img"){
         if(lang === "curl"){
-
-            code =
-`curl -X POST "${CONFIG.API_BASE}${currentApi.path}" \\
-  -F "file=@/path/to/file"`;
-
+            code = currentApi.param === "img2img"
+                ? `curl -X POST "${CONFIG.API_BASE}${currentApi.path}" \\\n  -F "image=@/path/to/image.jpg" \\\n  -F "prompt=ubah menjadi anime"`
+                : `curl -X POST "${CONFIG.API_BASE}${currentApi.path}" \\\n  -F "file=@/path/to/file"`;
+        }else if(lang === "javascript"){
+            code = `const axios = require("axios");\nconst fs = require("fs");\n\n(async () => {\n  try {\n    const form = new FormData();\n    form.append("file", fs.createReadStream("/path/to/file"));\n    const res = await axios.post("${CONFIG.API_BASE}${currentApi.path}", form);\n    console.log(res.data);\n  } catch (err) { console.error(err.message); }\n})();`;
+        }else if(lang === "python"){
+            code = `import requests\n\nwith open("/path/to/file", "rb") as f:\n    res = requests.post("${CONFIG.API_BASE}${currentApi.path}", files={"file": f})\nprint(res.json())`;
+        }else if(lang === "php"){
+            code = `$ch = curl_init("${CONFIG.API_BASE}${currentApi.path}");\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, ["file" => new CURLFile("/path/to/file")]);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\necho curl_exec($ch);\ncurl_close($ch);`;
         }
-        else if(lang === "javascript"){
-
-            code =
-`const axios = require("axios");
-const fs = require("fs");
-
-(async () => {
-  try {
-    const form = new FormData();
-
-    form.append(
-      "file",
-      fs.createReadStream("/path/to/file")
-    );
-
-    const res = await axios.post(
-      "${CONFIG.API_BASE}${currentApi.path}",
-      form,
-      {
-        headers: form.getHeaders()
-      }
-    );
-
-    console.log(res.data);
-
-  } catch (err) {
-    console.error(err.message);
-  }
-})();`;
-
-        }
-        else if(lang === "python"){
-
-            code =
-`import requests
-
-with open("/path/to/file", "rb") as f:
-    res = requests.post(
-        "${CONFIG.API_BASE}${currentApi.path}",
-        files={"file": f}
-    )
-
-print(res.json())`;
-
-        }
-        else if(lang === "php"){
-
-            code =
-`$ch = curl_init(
-    "${CONFIG.API_BASE}${currentApi.path}"
-);
-
-curl_setopt(
-    $ch,
-    CURLOPT_POST,
-    true
-);
-
-curl_setopt(
-    $ch,
-    CURLOPT_POSTFIELDS,
-    [
-        "file" => new CURLFile(
-            "/path/to/file"
-        )
-    ]
-);
-
-curl_setopt(
-    $ch,
-    CURLOPT_RETURNTRANSFER,
-    true
-);
-
-$response = curl_exec($ch);
-
-curl_close($ch);
-
-echo $response;`;
-
-        }
-
-    }
-    else{
-
+    }else{
         if(lang === "curl"){
-
-            code =
-`curl -X ${currentApi.method || "GET"} "${currentUrl}"`;
-
+            code = `curl -X ${currentApi.method || "GET"} "${currentUrl}"`;
+        }else if(lang === "javascript"){
+            code = `const axios = require("axios");\n\n(async () => {\n  try {\n    const res = await axios.${(currentApi.method || "GET").toLowerCase()}("${currentUrl}");\n    console.log(res.data);\n  } catch (err) { console.error(err.message); }\n})();`;
+        }else if(lang === "python"){
+            code = `import requests\n\nres = requests.${(currentApi.method || "GET").toLowerCase()}("${currentUrl}")\nprint(res.json())`;
+        }else if(lang === "php"){
+            code = `$ch = curl_init("${currentUrl}");\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\necho curl_exec($ch);\ncurl_close($ch);`;
         }
-
-
-        else if(lang === "javascript"){
-
-            code =
-`const axios = require("axios");
-
-(async () => {
-  try {
-
-    const res = await axios.${(
-        currentApi.method || "GET"
-    ).toLowerCase()}(
-      "${currentUrl}"
-    );
-
-    console.log(res.data);
-
-  } catch (err) {
-
-    console.error(
-      err.message
-    );
-
-  }
-})();`;
-
-        }
-
-
-        else if(lang === "python"){
-
-            code =
-`import requests
-
-res = requests.${(
-                currentApi.method || "GET"
-            ).toLowerCase()}(
-    "${currentUrl}"
-)
-
-print(res.json())`;
-
-        }
-
-
-        else if(lang === "php"){
-
-            code =
-`$ch = curl_init(
-    "${currentUrl}"
-);
-
-curl_setopt(
-    $ch,
-    CURLOPT_RETURNTRANSFER,
-    true
-);
-
-$response =
-    curl_exec($ch);
-
-curl_close($ch);
-
-echo $response;`;
-
-        }
-
     }
 
-
-    codeSnippet.innerHTML =
-        escapeHtml(code)
-        .replace(
-            escapeHtml(currentUrl),
-            `<span class="highlight">${
-                escapeHtml(currentUrl)
-            }</span>`
-        );
-
+    codeSnippet.innerHTML = escapeHtml(code).replace(escapeHtml(currentUrl), `<span class="highlight">${escapeHtml(currentUrl)}</span>`);
 }
-
-
-/* =========================================================
-   OPEN MODAL
-========================================================= */
 
 function openModal(api){
+    currentApi = api;
+    currentUrl = "";
+    currentResponse = "";
+    selectedModelValue = CONFIG.DEFAULT_MODEL;
 
-    currentApi =
-        api;
+    document.getElementById("modalTitle").textContent = api.title;
+    document.getElementById("modalEndpoint").textContent = CONFIG.API_BASE + api.path;
 
-    currentUrl =
-        "";
-
-    currentResponse =
-        "";
-
-    selectedModelValue =
-        CONFIG.DEFAULT_MODEL;
-
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        api.title;
-
-
-    document.getElementById(
-        "modalEndpoint"
-    ).textContent =
-        CONFIG.API_BASE +
-        api.path;
-
-
-    input.value =
-        "";
-
-    input.placeholder =
-        api.placeholder ||
-        "Masukkan value...";
-
-
-    fileInput.value =
-        "";
-
+    input.value = "";
+    input.placeholder = api.placeholder || "Masukkan value...";
+    fileInput.value = "";
 
     if(api.param === "none"){
-
-        document.getElementById(
-            "inputLabel"
-        ).textContent =
-            "No Parameter Required";
-
-        input.style.display =
-            "none";
-
-        fileInput.style.display =
-            "none";
-
+        inputGroup.style.display = "none";
+        fileGroup.style.display = "none";
+    }else if(api.param === "file"){
+        inputGroup.style.display = "none";
+        fileGroup.style.display = "block";
+        document.getElementById("fileLabel").textContent = "Upload File";
+    }else if(api.param === "img2img"){
+        inputGroup.style.display = "block";
+        fileGroup.style.display = "block";
+        document.getElementById("inputLabel").textContent = "AI Prompt";
+        document.getElementById("fileLabel").textContent = "Source Image";
+        input.placeholder = api.placeholder || "Masukkan prompt...";
+    }else{
+        inputGroup.style.display = "block";
+        fileGroup.style.display = "none";
+        document.getElementById("inputLabel").textContent = "Enter " + api.param.toUpperCase();
     }
 
-    else if(api.param === "file"){
+    customSelectContainer.style.display = api.hasModel ? "block" : "none";
+    selectedModelText.textContent = CONFIG.DEFAULT_MODEL + " (Default)";
 
-        document.getElementById(
-            "inputLabel"
-        ).textContent =
-            "Upload File / Multipart";
+    customOptions.querySelectorAll(".custom-option").forEach(option => {
+        option.classList.toggle("selected", option.dataset.value === CONFIG.DEFAULT_MODEL);
+    });
 
-        input.style.display =
-            "none";
+    responseBox.className = "response";
+    responseBox.textContent = "// Klik Execute Request untuk menjalankan API...";
+    mediaPreview.innerHTML = "";
+    mediaPreview.classList.remove("active");
 
-        fileInput.style.display =
-            "block";
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    document.querySelector('.tab[data-lang="curl"]').classList.add("active");
 
-    }
+    updateCode("curl");
+    modal.classList.add("active");
 
-    else{
-
-        document.getElementById(
-            "inputLabel"
-        ).textContent =
-            "Enter " +
-            api.param.toUpperCase();
-
-        input.style.display =
-            "block";
-
-        fileInput.style.display =
-            "none";
-
-    }
-
-
-    customSelectContainer.style.display =
-        api.hasModel
-            ? "block"
-            : "none";
-
-
-    selectedModelText.textContent =
-        "qwen3.7-plus (Default)";
-
-
-    customOptions
-        .querySelectorAll(".custom-option")
-        .forEach(option => {
-
-            option.classList.toggle(
-                "selected",
-                option.dataset.value ===
-                    CONFIG.DEFAULT_MODEL
-            );
-
-        });
-
-
-    responseBox.className =
-        "response";
-
-    responseBox.textContent =
-        "// Klik Execute Request untuk menjalankan API...";
-
-
-    mediaPreview.innerHTML =
-        "";
-
-    mediaPreview.classList.remove(
-        "active"
-    );
-
-
-    document
-        .querySelectorAll(".tab")
-        .forEach(tab =>
-            tab.classList.remove(
-                "active"
-            )
-        );
-
-
-    document
-        .querySelector(
-            '.tab[data-lang="curl"]'
-        )
-        .classList.add(
-            "active"
-        );
-
-
-    updateCode(
-        "curl"
-    );
-
-
-    modal.classList.add(
-        "active"
-    );
-
-
-    setTimeout(
-        () => {
-
-            if(
-                api.param !== "none" &&
-                api.param !== "file"
-            ){
-
-                input.focus();
-
-            }
-
-        },
-        150
-    );
-
+    setTimeout(() => {
+        if(api.param !== "none" && api.param !== "file"){
+            input.focus();
+        }
+    }, 150);
 }
-
-
-/* =========================================================
-   CLOSE MODAL
-========================================================= */
 
 function closeModal(){
-
-    if(requestRunning)
-        return;
-
-    modal.classList.remove(
-        "active"
-    );
-
+    if(requestRunning) return;
+    modal.classList.remove("active");
 }
 
+document.getElementById("closeModal").addEventListener("click", closeModal);
+modal.addEventListener("click", e => { if(e.target === modal && !requestRunning) closeModal(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && modal.classList.contains("active") && !requestRunning) closeModal(); });
 
-/* =========================================================
-   MODAL EVENTS
-========================================================= */
+searchInput.addEventListener("input", () => renderList(searchInput.value));
+input.addEventListener("input", () => {
+    const active = document.querySelector(".tab.active");
+    updateCode(active ? active.dataset.lang : "curl");
+});
 
-document
-    .getElementById("closeModal")
-    .addEventListener(
-        "click",
-        closeModal
-    );
-
-
-modal.addEventListener(
-    "click",
-    event => {
-
-        if(
-            event.target === modal &&
-            !requestRunning
-        ){
-
-            closeModal();
-
-        }
-
+fileInput.addEventListener("change", () => {
+    if(fileInput.files.length){
+        responseBox.className = "response";
+        responseBox.textContent = `📁 File selected:\n${fileInput.files[0].name}\nSize: ${formatBytes(fileInput.files[0].size)}`;
     }
-);
+});
 
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if(
-            event.key === "Escape" &&
-            modal.classList.contains("active") &&
-            !requestRunning
-        ){
-
-            closeModal();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-searchInput.addEventListener(
-    "input",
-    () =>
-        renderList(
-            searchInput.value
-        )
-);
-
-
-/* =========================================================
-   INPUT CHANGE
-========================================================= */
-
-input.addEventListener(
-    "input",
-    () => {
-
-        const active =
-            document.querySelector(
-                ".tab.active"
-            );
-
-        updateCode(
-            active
-                ? active.dataset.lang
-                : "curl"
-        );
-
-    }
-);
-
-
-/* =========================================================
-   FILE CHANGE
-========================================================= */
-
-fileInput.addEventListener(
-    "change",
-    () => {
-
-        if(
-            fileInput.files.length
-        ){
-
-            responseBox.className =
-                "response";
-
-            responseBox.textContent =
-                `📁 File selected:
-
-${fileInput.files[0].name}
-
-Size:
-${formatBytes(
-    fileInput.files[0].size
-)}
-
-Type:
-${fileInput.files[0].type || "unknown"}
-
-Klik Execute Request untuk mengirim file.`;
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   TABS
-========================================================= */
-
-document
-    .querySelectorAll(".tab")
-    .forEach(tab => {
-
-        tab.addEventListener(
-            "click",
-            () => {
-
-                document
-                    .querySelectorAll(".tab")
-                    .forEach(item =>
-                        item.classList.remove(
-                            "active"
-                        )
-                    );
-
-                tab.classList.add(
-                    "active"
-                );
-
-                updateCode(
-                    tab.dataset.lang
-                );
-
-            }
-        );
-
+document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
+        tab.classList.add("active");
+        updateCode(tab.dataset.lang);
     });
+});
 
+selectTrigger.addEventListener("click", () => { customOptions.classList.toggle("open"); });
 
-/* =========================================================
-   CUSTOM MODEL
-========================================================= */
-
-selectTrigger.addEventListener(
-    "click",
-    () => {
-
-        customOptions.classList.toggle(
-            "open"
-        );
-
-    }
-);
-
-
-customOptions
-    .querySelectorAll(".custom-option")
-    .forEach(option => {
-
-        option.addEventListener(
-            "click",
-            () => {
-
-                customOptions
-                    .querySelectorAll(
-                        ".custom-option"
-                    )
-                    .forEach(item =>
-                        item.classList.remove(
-                            "selected"
-                        )
-                    );
-
-
-                option.classList.add(
-                    "selected"
-                );
-
-
-                selectedModelValue =
-                    option.dataset.value;
-
-
-                selectedModelText.textContent =
-                    option.textContent;
-
-
-                customOptions.classList.remove(
-                    "open"
-                );
-
-
-                const active =
-                    document.querySelector(
-                        ".tab.active"
-                    );
-
-
-                updateCode(
-                    active
-                        ? active.dataset.lang
-                        : "curl"
-                );
-
-            }
-        );
-
+customOptions.querySelectorAll(".custom-option").forEach(option => {
+    option.addEventListener("click", () => {
+        customOptions.querySelectorAll(".custom-option").forEach(item => item.classList.remove("selected"));
+        option.classList.add("selected");
+        selectedModelValue = option.dataset.value;
+        selectedModelText.textContent = option.textContent;
+        customOptions.classList.remove("open");
+        const active = document.querySelector(".tab.active");
+        updateCode(active ? active.dataset.lang : "curl");
     });
+});
 
-
-document.addEventListener(
-    "click",
-    event => {
-
-        if(
-            customSelectContainer &&
-            !customSelectContainer.contains(
-                event.target
-            )
-        ){
-
-            customOptions.classList.remove(
-                "open"
-            );
-
-        }
-
+document.addEventListener("click", e => {
+    if(customSelectContainer && !customSelectContainer.contains(e.target)){
+        customOptions.classList.remove("open");
     }
-);
+});
 
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-function showToast(
-    message = "Tersalin!"
-){
-
-    const toast =
-        document.getElementById(
-            "toast"
-        );
-
-
-    toast.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toastTimer =
-        setTimeout(
-            () =>
-                toast.classList.remove(
-                    "show"
-                ),
-            1800
-        );
-
+function showToast(message = "Tersalin!"){
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.classList.remove("show"); }, 1800);
 }
 
-
-/* =========================================================
-   COPY
-========================================================= */
-
-async function copyText(
-    text,
-    message
-){
-
-    if(!text){
-
-        showToast(
-            "Tidak ada data"
-        );
-
-        return;
-
-    }
-
-
+async function copyText(text, message){
+    if(!text){ showToast("Tidak ada data"); return; }
     try{
-
-        await navigator.clipboard.writeText(
-            text
-        );
-
-    }
-    catch{
-
-        const textarea =
-            document.createElement(
-                "textarea"
-            );
-
-        textarea.value =
-            text;
-
-        textarea.style.position =
-            "fixed";
-
-        textarea.style.opacity =
-            "0";
-
-        document.body.appendChild(
-            textarea
-        );
-
+        await navigator.clipboard.writeText(text);
+    }catch{
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
         textarea.focus();
         textarea.select();
-
-        document.execCommand(
-            "copy"
-        );
-
+        document.execCommand("copy");
         textarea.remove();
-
     }
-
-
-    showToast(
-        message
-    );
-
+    showToast(message);
 }
 
+document.getElementById("copyEndpoint").addEventListener("click", () => copyText(currentUrl || buildUrl(), "Endpoint tersalin!"));
+document.getElementById("copyResponse").addEventListener("click", () => copyText(currentResponse, "Response tersalin!"));
+document.getElementById("copyCode").addEventListener("click", () => copyText(codeSnippet.innerText, "Code tersalin!"));
 
-document
-    .getElementById("copyEndpoint")
-    .addEventListener(
-        "click",
-        () =>
-            copyText(
-                currentUrl ||
-                buildUrl(),
-                "Endpoint tersalin!"
-            )
-    );
+document.getElementById("openEndpoint").addEventListener("click", () => {
+    const url = currentUrl || buildUrl();
+    if(!url || !currentApi){ showToast("Endpoint belum siap"); return; }
+    window.open(url, "_blank", "noopener,noreferrer");
+});
 
-
-document
-    .getElementById("copyResponse")
-    .addEventListener(
-        "click",
-        () =>
-            copyText(
-                currentResponse,
-                "Response tersalin!"
-            )
-    );
-
-
-document
-    .getElementById("copyCode")
-    .addEventListener(
-        "click",
-        () =>
-            copyText(
-                codeSnippet.innerText,
-                "Code tersalin!"
-            )
-    );
-
-
-/* =========================================================
-   OPEN ENDPOINT
-========================================================= */
-
-document
-    .getElementById("openEndpoint")
-    .addEventListener(
-        "click",
-        () => {
-
-            const url =
-                currentUrl ||
-                buildUrl();
-
-
-            if(
-                !url ||
-                !currentApi
-            ){
-
-                showToast(
-                    "Endpoint belum siap"
-                );
-
-                return;
-
-            }
-
-
-            window.open(
-                url,
-                "_blank",
-                "noopener,noreferrer"
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   FORMAT BYTES
-========================================================= */
-
-function formatBytes(
-    bytes
-){
-
-    if(!bytes)
-        return "0 Bytes";
-
-
-    const units =
-        [
-            "Bytes",
-            "KB",
-            "MB",
-            "GB"
-        ];
-
-
-    const index =
-        Math.floor(
-            Math.log(bytes) /
-            Math.log(1024)
-        );
-
-
-    return (
-        bytes /
-        Math.pow(
-            1024,
-            index
-        )
-    )
-    .toFixed(2) +
-    " " +
-    units[index];
-
+function formatBytes(bytes){
+    if(!bytes) return "0 Bytes";
+    const units = ["Bytes", "KB", "MB", "GB"];
+    const index = Math.floor(Math.log(bytes) / Math.log(1024));
+    return (bytes / Math.pow(1024, index)).toFixed(2) + " " + units[index];
 }
 
-
-/* =========================================================
-   MEDIA DETECTION
-========================================================= */
-
-function isImage(
-    contentType = "",
-    url = ""
-){
-
-    return (
-        contentType.includes(
-            "image/"
-        ) ||
-        /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i
-            .test(url)
-    );
-
+function isImage(contentType = "", url = ""){
+    return contentType.includes("image/") || /\.(jpg|jpeg|png|gif|webp|bmp|svg|avif)(\?|$)/i.test(url);
+}
+function isVideo(contentType = "", url = ""){
+    return contentType.includes("video/") || /\.(mp4|webm|mov|mkv|avi)(\?|$)/i.test(url);
+}
+function extractUrls(text){
+    if(typeof text !== "string") return [];
+    return text.match(/https?:\/\/[^\s"'<>]+/gi) || [];
 }
 
-
-function isVideo(
-    contentType = "",
-    url = ""
-){
-
-    return (
-        contentType.includes(
-            "video/"
-        ) ||
-        /\.(mp4|webm|mov|mkv|avi)(\?|$)/i
-            .test(url)
-    );
-
-}
-
-
-function extractUrls(
-    text
-){
-
-    if(
-        typeof text !==
-        "string"
-    ){
-
-        return [];
-
-    }
-
-
-    return (
-        text.match(
-            /https?:\/\/[^\s"'<>]+/gi
-        ) ||
-        []
-    );
-
-}
-
-
-/* =========================================================
-   DEEP MEDIA FINDER
-========================================================= */
-
-function findMediaUrlDeep(
-    data
-){
-
-    if(!data)
+function findMediaUrlDeep(data){
+    if(!data) return null;
+    if(typeof data === "string"){
+        const urls = extractUrls(data);
+        for(const url of urls){ if(isImage("", url) || isVideo("", url)) return url; }
+        if(/^https?:\/\//i.test(data.trim())) return data.trim();
         return null;
-
-
-    if(
-        typeof data ===
-        "string"
-    ){
-
-        const urls =
-            extractUrls(
-                data
-            );
-
-
-        for(
-            const url of urls
-        ){
-
-            if(
-                isImage("",url) ||
-                isVideo("",url)
-            ){
-
-                return url;
-
-            }
-
-        }
-
-
-        if(
-            /^https?:\/\//i
-                .test(
-                    data.trim()
-                )
-        ){
-
-            return data.trim();
-
-        }
-
-
+    }
+    if(Array.isArray(data)){
+        for(const item of data){ const res = findMediaUrlDeep(item); if(res) return res; }
         return null;
-
     }
-
-
-    if(
-        Array.isArray(data)
-    ){
-
-        for(
-            const item of data
-        ){
-
-            const result =
-                findMediaUrlDeep(
-                    item
-                );
-
-
-            if(result)
-                return result;
-
-        }
-
-
-        return null;
-
-    }
-
-
-    if(
-        typeof data ===
-        "object"
-    ){
-
-        const priorityKeys = [
-
-            "url",
-            "image",
-            "imageUrl",
-            "image_url",
-            "img",
-            "photo",
-            "picture",
-            "thumbnail",
-            "thumbnailUrl",
-            "thumbnail_url",
-            "media",
-            "mediaUrl",
-            "media_url",
-            "video",
-            "videoUrl",
-            "video_url",
-            "download",
-            "downloadUrl",
-            "download_url",
-            "result",
-            "data",
-            "displayUrl"
-
-        ];
-
-
-        for(
-            const key of priorityKeys
-        ){
-
-            if(
-                data[key] !==
-                    undefined &&
-                data[key] !==
-                    null
-            ){
-
-                const result =
-                    findMediaUrlDeep(
-                        data[key]
-                    );
-
-
-                if(result)
-                    return result;
-
+    if(typeof data === "object"){
+        const priorityKeys = ["url", "image", "imageUrl", "image_url", "img", "photo", "picture", "thumbnail", "media", "video", "download", "result", "data"];
+        for(const key of priorityKeys){
+            if(data[key] !== undefined && data[key] !== null){
+                const res = findMediaUrlDeep(data[key]);
+                if(res) return res;
             }
-
         }
-
-
-        for(
-            const key of Object.keys(data)
-        ){
-
-            const result =
-                findMediaUrlDeep(
-                    data[key]
-                );
-
-
-            if(result)
-                return result;
-
+        for(const key of Object.keys(data)){
+            const res = findMediaUrlDeep(data[key]);
+            if(res) return res;
         }
-
     }
-
-
     return null;
-
 }
 
+function showMedia(url, type = ""){
+    mediaPreview.innerHTML = "";
+    let element = null;
 
-/* =========================================================
-   SHOW MEDIA
-========================================================= */
-
-function showMedia(
-    url,
-    type = ""
-){
-
-    mediaPreview.innerHTML =
-        "";
-
-
-    let element =
-        null;
-
-
-    if(
-        isImage(
-            type,
-            url
-        )
-    ){
-
-        element =
-            document.createElement(
-                "img"
-            );
-
-        element.src =
-            url;
-
-        element.alt =
-            "API Image Response";
-
-        element.loading =
-            "lazy";
-
+    if(isImage(type, url)){
+        element = document.createElement("img");
+        element.src = url;
+        element.alt = "API Image Response";
+        element.loading = "lazy";
+    }else if(isVideo(type, url)){
+        element = document.createElement("video");
+        element.src = url;
+        element.controls = true;
+        element.playsInline = true;
     }
 
+    if(!element) return;
+    mediaPreview.appendChild(element);
 
-    else if(
-        isVideo(
-            type,
-            url
-        )
-    ){
+    const urlText = document.createElement("span");
+    urlText.className = "media-url";
+    urlText.textContent = url;
+    mediaPreview.appendChild(urlText);
 
-        element =
-            document.createElement(
-                "video"
-            );
+    const buttons = document.createElement("div");
+    buttons.className = "media-buttons";
 
-        element.src =
-            url;
+    const copy = document.createElement("button");
+    copy.className = "small-btn";
+    copy.textContent = "🔗 Salin URL";
+    copy.type = "button";
+    copy.onclick = () => copyText(url, "URL media tersalin!");
 
-        element.controls =
-            true;
+    const open = document.createElement("button");
+    open.className = "small-btn";
+    open.textContent = "↗ Buka Media";
+    open.type = "button";
+    open.onclick = () => window.open(url, "_blank", "noopener,noreferrer");
 
-        element.playsInline =
-            true;
-
-    }
-
-
-    if(!element)
-        return;
-
-
-    mediaPreview.appendChild(
-        element
-    );
-
-
-    const urlText =
-        document.createElement(
-            "span"
-        );
-
-    urlText.className =
-        "media-url";
-
-    urlText.textContent =
-        url;
-
-
-    mediaPreview.appendChild(
-        urlText
-    );
-
-
-    const buttons =
-        document.createElement(
-            "div"
-        );
-
-    buttons.className =
-        "media-buttons";
-
-
-    const copy =
-        document.createElement(
-            "button"
-        );
-
-    copy.className =
-        "small-btn";
-
-    copy.textContent =
-        "🔗 Salin URL";
-
-    copy.type =
-        "button";
-
-    copy.onclick =
-        () =>
-            copyText(
-                url,
-                "URL media tersalin!"
-            );
-
-
-    const open =
-        document.createElement(
-            "button"
-        );
-
-    open.className =
-        "small-btn";
-
-    open.textContent =
-        "↗ Buka Media";
-
-    open.type =
-        "button";
-
-    open.onclick =
-        () =>
-            window.open(
-                url,
-                "_blank",
-                "noopener,noreferrer"
-            );
-
-
-    buttons.appendChild(
-        copy
-    );
-
-    buttons.appendChild(
-        open
-    );
-
-
-    mediaPreview.appendChild(
-        buttons
-    );
-
-
-    mediaPreview.classList.add(
-        "active"
-    );
-
+    buttons.appendChild(copy);
+    buttons.appendChild(open);
+    mediaPreview.appendChild(buttons);
+    mediaPreview.classList.add("active");
 }
-
-
-/* =========================================================
-   CONSOLE PROGRESS
-========================================================= */
 
 function consoleTime(){
-
-    return new Date()
-        .toLocaleTimeString(
-            "id-ID",
-            {
-                hour:"2-digit",
-                minute:"2-digit",
-                second:"2-digit"
-            }
-        );
-
+    return new Date().toLocaleTimeString("id-ID", { hour:"2-digit", minute:"2-digit", second:"2-digit" });
 }
 
-
-function consoleLine(
-    message,
-    type = "info"
-){
-
-    const line =
-        document.createElement(
-            "div"
-        );
-
-    line.className =
-        "console-line console-" +
-        type;
-
-
-    const time =
-        document.createElement(
-            "span"
-        );
-
-    time.className =
-        "console-time";
-
-    time.textContent =
-        `[${consoleTime()}] `;
-
-
-    line.appendChild(
-        time
-    );
-
-
-    const text =
-        document.createElement(
-            "span"
-        );
-
-    text.textContent =
-        message;
-
-
-    line.appendChild(
-        text
-    );
-
-
-    responseBox.appendChild(
-        line
-    );
-
-
-    responseBox.scrollTop =
-        responseBox.scrollHeight;
-
-
+function consoleLine(message, type = "info"){
+    const line = document.createElement("div");
+    line.className = "console-line console-" + type;
+    const time = document.createElement("span");
+    time.className = "console-time";
+    time.textContent = `[${consoleTime()}] `;
+    line.appendChild(time);
+    const text = document.createElement("span");
+    text.textContent = message;
+    line.appendChild(text);
+    responseBox.appendChild(line);
+    responseBox.scrollTop = responseBox.scrollHeight;
     return line;
-
 }
-
 
 function createConsole(){
-
-    responseBox.className =
-        "response console-mode";
-
-    responseBox.innerHTML =
-        "";
-
+    responseBox.className = "response console-mode";
+    responseBox.innerHTML = "";
 }
 
-
-function setConsoleProgress(
-    percent
-){
-
-    let progress =
-        responseBox.querySelector(
-            ".console-progress"
-        );
-
-
+function setConsoleProgress(percent){
+    let progress = responseBox.querySelector(".console-progress");
     if(!progress){
-
-        progress =
-            document.createElement(
-                "div"
-            );
-
-        progress.className =
-            "console-progress";
-
-
-        const bar =
-            document.createElement(
-                "span"
-            );
-
-        bar.className =
-            "console-progress-bar";
-
-
-        progress.appendChild(
-            bar
-        );
-
-
-        responseBox.appendChild(
-            progress
-        );
-
+        progress = document.createElement("div");
+        progress.className = "console-progress";
+        const bar = document.createElement("span");
+        bar.className = "console-progress-bar";
+        progress.appendChild(bar);
+        responseBox.appendChild(progress);
     }
-
-
-    const bar =
-        progress.querySelector(
-            ".console-progress-bar"
-        );
-
-
+    const bar = progress.querySelector(".console-progress-bar");
     if(bar){
-
-        bar.style.width =
-            `${Math.max(
-                0,
-                Math.min(
-                    100,
-                    percent
-                )
-            )}%`;
-
+        bar.style.width = `${Math.max(0, Math.min(100, percent))}%`;
     }
-
-
-    responseBox.scrollTop =
-        responseBox.scrollHeight;
-
+    responseBox.scrollTop = responseBox.scrollHeight;
 }
 
-
-async function showProgress(
-    message,
-    type = "info",
-    percent = null,
-    delay = 250
-){
-
-    consoleLine(
-        message,
-        type
-    );
-
-
-    if(percent !== null){
-
-        setConsoleProgress(
-            percent
-        );
-
-    }
-
-
-    await sleep(
-        delay
-    );
-
+async function showProgress(message, type = "info", percent = null, delay = 250){
+    consoleLine(message, type);
+    if(percent !== null) setConsoleProgress(percent);
+    await sleep(delay);
 }
 
+async function fetchWithTimeout(url, options = {}){
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), CONFIG.REQUEST_TIMEOUT);
+    try{
+        return await fetch(url, { ...options, signal: controller.signal });
+    } finally {
+        clearTimeout(timer);
+    }
+}
 
-/* =========================================================
-   FETCH WITH TIMEOUT
-========================================================= */
+executeButton.addEventListener("click", async () => {
+    if(requestRunning || !currentApi) return;
 
-async function fetchWithTimeout(
-    url,
-    options = {}
-){
+    requestRunning = true;
+    executeButton.disabled = true;
+    executeButton.textContent = "Processing...";
 
-    const controller =
-        new AbortController();
+    currentUrl = buildUrl();
+    currentResponse = "";
+    mediaPreview.innerHTML = "";
+    mediaPreview.classList.remove("active");
+    createConsole();
 
-
-    const timer =
-        setTimeout(
-            () =>
-                controller.abort(),
-            CONFIG.REQUEST_TIMEOUT
-        );
-
+    const start = performance.now();
 
     try{
+        await showProgress(`$ ${currentApi.method || "GET"} ${currentApi.path}`, "command", 5, 180);
+        await showProgress("Initializing request...", "info", 10, 220);
 
-        return await fetch(
-            url,
-            {
-                ...options,
-                signal:
-                    controller.signal
+        let res;
+
+        if(currentApi.param === "file" || currentApi.param === "img2img"){
+            if(!fileInput.files.length){
+                throw new Error("Pilih file gambar terlebih dahulu.");
             }
-        );
 
-    }
-    finally{
+            await showProgress(`File selected: ${fileInput.files[0].name}`, "info", 18, 180);
 
-        clearTimeout(
-            timer
-        );
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
 
-    }
+            if(currentApi.param === "img2img"){
+                const promptVal = input.value.trim();
+                if(promptVal) formData.append("prompt", promptVal);
+            }
 
-}
+            await showProgress("Preparing multipart/form-data...", "info", 38, 220);
+            res = await fetchWithTimeout(`${CONFIG.API_BASE}${currentApi.path}`, {
+                method: "POST",
+                body: formData
+            });
+        }else{
+            await showProgress(`${currentApi.method || "GET"} ${currentApi.path}`, "command", 40, 180);
+            res = await fetchWithTimeout(currentUrl, {
+                method: currentApi.method || "GET",
+                cache: "no-store",
+                headers: { "Accept": "*/*" }
+            });
+        }
 
+        await showProgress("API connection established", "success", 58, 220);
+        await showProgress("Processing request...", "info", 68, 220);
+        await showProgress("Waiting for API response...", "warning", 78, 300);
 
-/* =========================================================
-   EXECUTE REQUEST
-========================================================= */
+        const elapsed = Math.round(performance.now() - start);
+        const contentType = (res.headers.get("content-type") || "").toLowerCase();
 
-executeButton.addEventListener(
-    "click",
-    async () => {
+        await showProgress("Response received", "success", 88, 180);
+        await showProgress(`HTTP ${res.status} ${res.statusText}`, res.ok ? "success" : "error", 92, 160);
+        await showProgress(`Response time: ${elapsed} ms`, "muted", 96, 150);
 
-        if(
-            requestRunning ||
-            !currentApi
-        ){
-
+        if(contentType.includes("image/")){
+            const blob = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nImage response received.`;
+            showMedia(blobUrl, contentType);
+            setConsoleProgress(100);
+            consoleLine("✓ Image response received", "success");
+            consoleLine("✓ Request completed", "success");
             return;
-
         }
 
+        if(contentType.includes("video/")){
+            const blob = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            currentResponse = `HTTP ${res.status} ${res.statusText}\nContent-Type: ${contentType}\nResponse time: ${elapsed} ms\n\nVideo response received.`;
+            showMedia(blobUrl, contentType);
+            setConsoleProgress(100);
+            consoleLine("✓ Video response received", "success");
+            consoleLine("✓ Request completed", "success");
+            return;
+        }
 
-        requestRunning =
-            true;
+        const raw = await res.text();
+        let data;
+        try{ data = JSON.parse(raw); } catch { data = raw; }
 
-        executeButton.disabled =
-            true;
+        await showProgress("Analyzing response...", "info", 97, 180);
+        let mediaUrl = findMediaUrlDeep(data);
 
-        executeButton.textContent =
-            "Processing...";
-
-
-        currentUrl =
-            buildUrl();
-
-        currentResponse =
-            "";
-
-
-        mediaPreview.innerHTML =
-            "";
-
-        mediaPreview.classList.remove(
-            "active"
-        );
-
-
-        createConsole();
-
-
-        const start =
-            performance.now();
-
-
-        try{
-
-            /* =================================================
-               INITIALIZE
-            ================================================= */
-
-            await showProgress(
-                `$ ${
-                    currentApi.method || "GET"
-                } ${currentApi.path}`,
-                "command",
-                5,
-                180
-            );
-
-
-            await showProgress(
-                "Initializing request...",
-                "info",
-                10,
-                220
-            );
-
-
-            if(
-                currentApi.param ===
-                "file"
-            ){
-
-                if(
-                    !fileInput.files.length
-                ){
-
-                    throw new Error(
-                        "Pilih file terlebih dahulu."
-                    );
-
-                }
-
-
-                await showProgress(
-                    `File selected: ${fileInput.files[0].name}`,
-                    "info",
-                    18,
-                    180
-                );
-
-
-                await showProgress(
-                    `File size: ${formatBytes(
-                        fileInput.files[0].size
-                    )}`,
-                    "muted",
-                    null,
-                    150
-                );
-
-            }
-            else{
-
-                await showProgress(
-                    "Target URL detected",
-                    "info",
-                    18,
-                    180
-                );
-
-            }
-
-
-            await showProgress(
-                "Connecting to API...",
-                "info",
-                30,
-                300
-            );
-
-
-            let res;
-
-
+        if(mediaUrl){
+            await showProgress("Media URL detected", "success", 98, 150);
+            let mediaType = "";
             try{
+                const mediaResponse = await fetchWithTimeout(mediaUrl, { method: "HEAD", cache: "no-store" });
+                mediaType = (mediaResponse.headers.get("content-type") || "").toLowerCase();
+            }catch{}
 
-                /* =================================================
-                   FILE REQUEST
-                ================================================= */
-
-                if(
-                    currentApi.param ===
-                    "file"
-                ){
-
-                    const formData =
-                        new FormData();
-
-
-                    formData.append(
-                        "file",
-                        fileInput.files[0]
-                    );
-
-
-                    await showProgress(
-                        "Preparing multipart/form-data...",
-                        "info",
-                        38,
-                        220
-                    );
-
-
-                    res =
-                        await fetchWithTimeout(
-                            `${CONFIG.API_BASE}${currentApi.path}`,
-                            {
-                                method:"POST",
-                                body:formData
-                            }
-                        );
-
-                }
-
-                /* =================================================
-                   NORMAL REQUEST
-                ================================================= */
-
-                else{
-
-                    await showProgress(
-                        `${currentApi.method || "GET"} ${currentApi.path}`,
-                        "command",
-                        40,
-                        180
-                    );
-
-
-                    res =
-                        await fetchWithTimeout(
-                            currentUrl,
-                            {
-                                method:
-                                    currentApi.method ||
-                                    "GET",
-
-                                cache:
-                                    "no-store",
-
-                                headers:{
-                                    "Accept":
-                                        "*/*"
-                                }
-                            }
-                        );
-
-                }
-
+            if(mediaType || isImage("", mediaUrl) || isVideo("", mediaUrl)){
+                showMedia(mediaUrl, mediaType);
             }
-            catch(error){
-
-                if(
-                    error.name ===
-                    "AbortError"
-                ){
-
-                    throw new Error(
-                        "Request timeout. Server terlalu lama merespons."
-                    );
-
-                }
-
-
-                throw new Error(
-                    "Gagal terhubung ke API. Periksa CORS atau status server."
-                );
-
-            }
-
-
-            await showProgress(
-                "API connection established",
-                "success",
-                58,
-                220
-            );
-
-
-            await showProgress(
-                "Processing request...",
-                "info",
-                68,
-                220
-            );
-
-
-            await showProgress(
-                "Waiting for API response...",
-                "warning",
-                78,
-                300
-            );
-
-
-            const elapsed =
-                Math.round(
-                    performance.now() -
-                    start
-                );
-
-
-            const contentType =
-                (
-                    res.headers.get(
-                        "content-type"
-                    ) ||
-                    ""
-                )
-                .toLowerCase();
-
-
-            /* =================================================
-               RESPONSE RECEIVED
-            ================================================= */
-
-            await showProgress(
-                "Response received",
-                "success",
-                88,
-                180
-            );
-
-
-            await showProgress(
-                `HTTP ${res.status} ${res.statusText}`,
-                res.ok
-                    ? "success"
-                    : "error",
-                92,
-                160
-            );
-
-
-            await showProgress(
-                `Response time: ${elapsed} ms`,
-                "muted",
-                96,
-                150
-            );
-
-
-            /* =================================================
-               IMAGE RESPONSE
-            ================================================= */
-
-            if(
-                contentType.includes(
-                    "image/"
-                )
-            ){
-
-                const blob =
-                    await res.blob();
-
-
-                const blobUrl =
-                    URL.createObjectURL(
-                        blob
-                    );
-
-
-                currentResponse =
-`HTTP ${res.status} ${res.statusText}
-Content-Type: ${contentType}
-Response time: ${elapsed} ms
-
-Image response received.`;
-
-
-                showMedia(
-                    blobUrl,
-                    contentType
-                );
-
-
-                setConsoleProgress(
-                    100
-                );
-
-
-                consoleLine(
-                    "✓ Image response received",
-                    "success"
-                );
-
-
-                consoleLine(
-                    "✓ Request completed",
-                    "success"
-                );
-
-
-                return;
-
-            }
-
-
-            /* =================================================
-               VIDEO RESPONSE
-            ================================================= */
-
-            if(
-                contentType.includes(
-                    "video/"
-                )
-            ){
-
-                const blob =
-                    await res.blob();
-
-
-                const blobUrl =
-                    URL.createObjectURL(
-                        blob
-                    );
-
-
-                currentResponse =
-`HTTP ${res.status} ${res.statusText}
-Content-Type: ${contentType}
-Response time: ${elapsed} ms
-
-Video response received.`;
-
-
-                showMedia(
-                    blobUrl,
-                    contentType
-                );
-
-
-                setConsoleProgress(
-                    100
-                );
-
-
-                consoleLine(
-                    "✓ Video response received",
-                    "success"
-                );
-
-
-                consoleLine(
-                    "✓ Request completed",
-                    "success"
-                );
-
-
-                return;
-
-            }
-
-
-            /* =================================================
-               TEXT / JSON RESPONSE
-            ================================================= */
-
-            const raw =
-                await res.text();
-
-
-            let data;
-
-
-            try{
-
-                data =
-                    JSON.parse(
-                        raw
-                    );
-
-            }
-            catch{
-
-                data =
-                    raw;
-
-            }
-
-
-            /* =================================================
-               MEDIA URL DETECTION
-            ================================================= */
-
-            await showProgress(
-                "Analyzing response...",
-                "info",
-                97,
-                180
-            );
-
-
-            let mediaUrl =
-                findMediaUrlDeep(
-                    data
-                );
-
-
-            if(
-                mediaUrl
-            ){
-
-                await showProgress(
-                    "Media URL detected",
-                    "success",
-                    98,
-                    150
-                );
-
-
-                let mediaType =
-                    "";
-
-
-                try{
-
-                    const mediaResponse =
-                        await fetchWithTimeout(
-                            mediaUrl,
-                            {
-                                method:
-                                    "HEAD",
-
-                                cache:
-                                    "no-store"
-                            }
-                        );
-
-
-                    mediaType =
-                        (
-                            mediaResponse
-                                .headers
-                                .get(
-                                    "content-type"
-                                ) ||
-                            ""
-                        )
-                        .toLowerCase();
-
-                }
-                catch{}
-
-
-                if(
-                    mediaType ||
-                    isImage(
-                        "",
-                        mediaUrl
-                    ) ||
-                    isVideo(
-                        "",
-                        mediaUrl
-                    )
-                ){
-
-                    showMedia(
-                        mediaUrl,
-                        mediaType
-                    );
-
-                }
-
-            }
-
-
-            /* =================================================
-               FORMAT RESPONSE
-            ================================================= */
-
-            let formattedResponse;
-
-
-            if(
-                data &&
-                typeof data ===
-                    "object"
-            ){
-
-                formattedResponse =
-                    JSON.stringify(
-                        data,
-                        null,
-                        2
-                    );
-
-            }
-            else{
-
-                formattedResponse =
-                    String(data);
-
-            }
-
-
-            if(
-                formattedResponse.length >
-                CONFIG.MAX_RESPONSE_LENGTH
-            ){
-
-                formattedResponse =
-                    formattedResponse.slice(
-                        0,
-                        CONFIG.MAX_RESPONSE_LENGTH
-                    ) +
-                    "\n\n...[response dipotong]";
-
-            }
-
-
-            currentResponse =
-                formattedResponse;
-
-
-            /* =================================================
-               FINISH
-            ================================================= */
-
-            setConsoleProgress(
-                100
-            );
-
-
-            consoleLine(
-                `✓ Request completed in ${elapsed} ms`,
-                res.ok
-                    ? "success"
-                    : "error"
-            );
-
-
-            const result =
-                document.createElement(
-                    "div"
-                );
-
-            result.className =
-                "console-result";
-
-
-            result.textContent =
-`HTTP ${res.status} ${res.statusText}
-
-${formattedResponse}`;
-
-
-            responseBox.appendChild(
-                result
-            );
-
-
-            responseBox.scrollTop =
-                responseBox.scrollHeight;
-
-
-        }
-        catch(error){
-
-            const elapsed =
-                Math.round(
-                    performance.now() -
-                    start
-                );
-
-
-            currentResponse =
-                error?.message ||
-                "Unknown error";
-
-
-            setConsoleProgress(
-                100
-            );
-
-
-            consoleLine(
-                "✕ API Request Failed",
-                "error"
-            );
-
-
-            consoleLine(
-                currentResponse,
-                "error"
-            );
-
-
-            consoleLine(
-                `Elapsed: ${elapsed} ms`,
-                "muted"
-            );
-
-
-            const endpoint =
-                document.createElement(
-                    "div"
-                );
-
-            endpoint.className =
-                "console-result console-error";
-
-
-            endpoint.textContent =
-`Endpoint:
-${currentUrl}`;
-
-
-            responseBox.appendChild(
-                endpoint
-            );
-
-
-            responseBox.scrollTop =
-                responseBox.scrollHeight;
-
-        }
-        finally{
-
-            requestRunning =
-                false;
-
-            executeButton.disabled =
-                false;
-
-            executeButton.textContent =
-                "Execute Request";
-
         }
 
+        let formattedResponse = (data && typeof data === "object") ? JSON.stringify(data, null, 2) : String(data);
+        if(formattedResponse.length > CONFIG.MAX_RESPONSE_LENGTH){
+            formattedResponse = formattedResponse.slice(0, CONFIG.MAX_RESPONSE_LENGTH) + "\n\n...[response dipotong]";
+        }
+        currentResponse = formattedResponse;
+
+        setConsoleProgress(100);
+        consoleLine(`✓ Request completed in ${elapsed} ms`, res.ok ? "success" : "error");
+
+        const result = document.createElement("div");
+        result.className = "console-result";
+        result.textContent = `HTTP ${res.status} ${res.statusText}\n\n${formattedResponse}`;
+        responseBox.appendChild(result);
+        responseBox.scrollTop = responseBox.scrollHeight;
+
+    }catch(error){
+        const elapsed = Math.round(performance.now() - start);
+        currentResponse = error?.message || "Unknown error";
+        setConsoleProgress(100);
+        consoleLine("✕ API Request Failed", "error");
+        consoleLine(currentResponse, "error");
+        consoleLine(`Elapsed: ${elapsed} ms`, "muted");
+
+        const endpoint = document.createElement("div");
+        endpoint.className = "console-result console-error";
+        endpoint.textContent = `Endpoint:\n${currentUrl}`;
+        responseBox.appendChild(endpoint);
+        responseBox.scrollTop = responseBox.scrollHeight;
+    }finally{
+        requestRunning = false;
+        executeButton.disabled = false;
+        executeButton.textContent = "Execute Request";
     }
-);
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
+});
 
 renderList();
-
-
-/* =========================================================
-   DEBUG
-========================================================= */
-
-console.log(
-    "[ReyCloudSHP] AI Docs loaded:",
-    aiApiList.length,
-    "endpoints"
-);
-
 </script>
 
 </body>

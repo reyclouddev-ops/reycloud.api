@@ -1713,30 +1713,6 @@ const apiList = [
         placeholder:""
     },
 
-    /* OTHER ENDPOINTS */
-
-    {
-        category:"other",
-        categoryName:"Other APIs",
-        categoryIcon:"🌐",
-        title:"Search School",
-        desc:"Mencari sekolah berdasarkan query nama",
-        path:"/dapodik/search",
-        param:"q",
-        placeholder:"SMKN 1 Batam"
-    },
-
-    {
-        category:"other",
-        categoryName:"Other APIs",
-        categoryIcon:"🌐",
-        title:"School Detail",
-        desc:"Mengambil detail sekolah berdasarkan NPSN",
-        path:"/dapodik/detail",
-        param:"npsn",
-        placeholder:"10900123"
-    },
-
     /* TEMPMAIL CREATE */
 
     {
@@ -1830,6 +1806,30 @@ const apiList = [
             }
         ],
         tempmailDelete:true
+    },
+
+    {
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"Upload File",
+        desc:"Upload file ke server dan dapatkan direct link",
+        path:"/upload",
+        method:"POST",
+        param:"file",
+        placeholder:"Pilih file untuk di-upload"
+    },
+
+    {
+        category:"tools",
+        categoryName:"Tools & Utilities",
+        categoryIcon:"🛠️",
+        title:"AI Image Upscale",
+        desc:"Tingkatkan resolusi dan kejernihan gambar menggunakan AI",
+        path:"/tools/upscale",
+        method:"POST",
+        param:"file",
+        placeholder:"Pilih file gambar untuk di-upscale"
     },
 
     {

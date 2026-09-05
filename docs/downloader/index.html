@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,9 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 :root{
@@ -165,8 +162,7 @@ a{
     padding:27px;
     border:1px solid var(--border);
     border-radius:22px;
-    background:
-        linear-gradient(135deg,rgba(12,18,26,.97),rgba(7,10,14,.96));
+    background:linear-gradient(135deg,rgba(12,18,26,.97),rgba(7,10,14,.96));
     box-shadow:var(--shadow);
 }
 
@@ -381,33 +377,12 @@ a{
     font-size:17px;
 }
 
-.endpoint-icon.youtube{
-    color:#ff4e5b;
-}
-
-.endpoint-icon.tiktok{
-    color:#fff;
-}
-
-.endpoint-icon.instagram{
-    color:#e98cff;
-}
-
-.endpoint-icon.mediafire{
-    color:#54a5ff;
-}
-
-.endpoint-icon.videy{
-    color:#70e0ff;
-}
-
-.endpoint-icon.getdl{
-    color:#77f0b6;
-}
-
-.endpoint-icon.api{
-    color:var(--cyan);
-}
+.endpoint-icon.youtube{ color:#ff4e5b; }
+.endpoint-icon.tiktok{ color:#fff; }
+.endpoint-icon.instagram{ color:#e98cff; }
+.endpoint-icon.mediafire{ color:#54a5ff; }
+.endpoint-icon.videy{ color:#70e0ff; }
+.endpoint-icon.getdl{ color:#77f0b6; }
 
 .endpoint-info{
     min-width:0;
@@ -764,8 +739,7 @@ a{
     padding:17px;
     border:1px solid #1a222d;
     border-radius:18px;
-    background:
-        linear-gradient(180deg,#030507,#010203);
+    background:linear-gradient(180deg,#030507,#010203);
     font-family:"JetBrains Mono",monospace;
     font-size:11px;
     line-height:1.8;
@@ -785,29 +759,12 @@ a{
     color:#475569;
 }
 
-.console-command{
-    color:#93c5fd;
-}
-
-.console-info{
-    color:#cbd5e1;
-}
-
-.console-success{
-    color:#6ee7b7;
-}
-
-.console-warning{
-    color:#fbbf24;
-}
-
-.console-error{
-    color:#fca5a5;
-}
-
-.console-muted{
-    color:#64748b;
-}
+.console-command{ color:#93c5fd; }
+.console-info{ color:#cbd5e1; }
+.console-success{ color:#6ee7b7; }
+.console-warning{ color:#fbbf24; }
+.console-error{ color:#fca5a5; }
+.console-muted{ color:#64748b; }
 
 .console-result{
     margin-top:8px;
@@ -834,29 +791,26 @@ a{
     transition:width .3s ease;
 }
 
-.console-cursor{
-    display:inline-block;
-    width:6px;
-    height:12px;
-    margin-left:3px;
-    vertical-align:-2px;
-    background:#93c5fd;
-    animation:consoleBlink .8s steps(1) infinite;
-}
-
-@keyframes consoleBlink{
-    50%{opacity:0}
-}
-
-/* ================= RESULT ================= */
+/* ================= RESULT / MEDIA PREVIEW ================= */
 
 .media-result{
     display:none;
-    margin-top:13px;
-    padding:13px;
+    margin-top:17px;
+    padding:15px;
     border:1px solid #1c2a35;
-    border-radius:14px;
+    border-radius:16px;
     background:#070c11;
+}
+
+.media-preview-container{
+    margin-top:9px;
+    width:100%;
+    max-height:340px;
+    background:#020304;
+    border-radius:12px;
+    overflow:hidden;
+    display:grid;
+    place-items:center;
 }
 
 .media-preview{
@@ -864,20 +818,19 @@ a{
     width:100%;
     max-height:330px;
     object-fit:contain;
-    border-radius:10px;
     background:#020304;
 }
 
 .media-actions{
     display:flex;
     gap:8px;
-    margin-top:9px;
+    margin-top:11px;
 }
 
 .media-actions a,
 .media-actions button{
     height:36px;
-    padding:0 11px;
+    padding:0 12px;
     display:flex;
     align-items:center;
     gap:7px;
@@ -886,6 +839,7 @@ a{
     background:#0b1117;
     color:#9eb0c3;
     font-size:10px;
+    font-weight:600;
 }
 
 .media-actions a:hover,
@@ -896,7 +850,7 @@ a{
 
 .response-box{
     display:none;
-    margin-top:13px;
+    margin-top:17px;
 }
 
 .response-content{
@@ -962,101 +916,22 @@ a{
 /* ================= RESPONSIVE ================= */
 
 @media(max-width:760px){
-    .app{
-        width:min(100% - 18px,1180px);
-    }
-
-    .topbar{
-        height:64px;
-    }
-
-    .brand-sub{
-        display:none;
-    }
-
-    .online{
-        padding:8px;
-    }
-
-    .online span{
-        display:none;
-    }
-
-    .hero{
-        padding:21px;
-    }
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .toolbar{
-        flex-direction:column;
-    }
-
-    .filter{
-        width:100%;
-    }
-
-    .endpoint{
-        grid-template-columns:40px minmax(0,1fr) auto;
-    }
-
-    .endpoint-path{
-        display:none;
-    }
-
-    .test-btn{
-        padding:0 10px;
-    }
-
-    .test-btn span{
-        display:none;
-    }
-
-    .form-row{
-        flex-wrap:wrap;
-    }
-
-    .input-wrap{
-        min-width:100%;
-    }
-
-    .run-btn,
-    .file-btn{
-        flex:1;
-    }
-}
-
-@media(max-width:480px){
-    .brand-title{
-        font-size:12px;
-    }
-
-    .brand-logo{
-        width:38px;
-        height:38px;
-    }
-
-    .hero h1{
-        font-size:25px;
-    }
-
-    .endpoint{
-        padding:9px;
-    }
-
-    .endpoint-name{
-        font-size:11px;
-    }
-
-    .modal{
-        padding:8px;
-    }
-
-    .playground{
-        padding:13px;
-    }
+    .app{ width:min(100% - 18px,1180px); }
+    .topbar{ height:64px; }
+    .brand-sub{ display:none; }
+    .online{ padding:8px; }
+    .online span{ display:none; }
+    .hero{ padding:21px; }
+    .stats{ grid-template-columns:1fr; }
+    .toolbar{ flex-direction:column; }
+    .filter{ width:100%; }
+    .endpoint{ grid-template-columns:40px minmax(0,1fr) auto; }
+    .endpoint-path{ display:none; }
+    .test-btn{ padding:0 10px; }
+    .test-btn span{ display:none; }
+    .form-row{ flex-wrap:wrap; }
+    .input-wrap{ min-width:100%; }
+    .run-btn,.file-btn{ flex:1; }
 }
 </style>
 </head>
@@ -1066,12 +941,10 @@ a{
 <div class="app">
 
     <header class="topbar">
-
         <div class="brand">
             <div class="brand-logo">
                 <i class="fa-solid fa-cloud-arrow-down"></i>
             </div>
-
             <div>
                 <div class="brand-title">Media Downloader</div>
                 <div class="brand-sub">ReyCloudSHP API Documentation</div>
@@ -1079,97 +952,69 @@ a{
         </div>
 
         <div class="top-actions">
-
             <a href="/dashboard" class="back-btn">
                 <i class="fa-solid fa-arrow-left"></i>
                 <span>Dashboard</span>
             </a>
-
             <div class="online">
                 <span class="online-dot"></span>
                 <span>API Online</span>
             </div>
-
         </div>
-
     </header>
 
     <section class="hero">
-
         <div class="hero-label">
             <i class="fa-solid fa-bolt"></i>
             Media API V3
         </div>
-
         <h1>Download media dengan API sederhana.</h1>
-
         <p>
             Dokumentasi API ReyCloudSHP untuk mengunduh media dari berbagai
             platform. Pilih endpoint, masukkan URL, lalu jalankan langsung
             melalui playground.
         </p>
-
         <div class="hero-base">
             <i class="fa-solid fa-server"></i>
             <span id="heroBase">API Base: Loading...</span>
         </div>
-
     </section>
 
     <section class="stats">
-
         <div class="stat">
             <div class="stat-top">
                 <div>
                     <div class="stat-label">TOTAL ENDPOINT</div>
                     <div class="stat-value" id="totalEndpoint">8</div>
                 </div>
-
-                <div class="stat-icon">
-                    <i class="fa-solid fa-code"></i>
-                </div>
+                <div class="stat-icon"><i class="fa-solid fa-code"></i></div>
             </div>
         </div>
-
         <div class="stat">
             <div class="stat-top">
                 <div>
                     <div class="stat-label">PLATFORM</div>
                     <div class="stat-value">7+</div>
                 </div>
-
-                <div class="stat-icon">
-                    <i class="fa-solid fa-globe"></i>
-                </div>
+                <div class="stat-icon"><i class="fa-solid fa-globe"></i></div>
             </div>
         </div>
-
         <div class="stat">
             <div class="stat-top">
                 <div>
                     <div class="stat-label">STATUS</div>
                     <div class="stat-value">Online</div>
                 </div>
-
-                <div class="stat-icon">
-                    <i class="fa-solid fa-circle-check"></i>
-                </div>
+                <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
             </div>
         </div>
-
     </section>
 
     <section class="toolbar">
-
         <div class="search">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Cari endpoint atau platform..."
-                autocomplete="off">
+            <input id="searchInput" type="text" placeholder="Cari endpoint atau platform..." autocomplete="off">
         </div>
-
         <div class="filter">
             <select id="platformFilter">
                 <option value="all">Semua Platform</option>
@@ -1181,272 +1026,141 @@ a{
                 <option value="getdl">GetDL</option>
             </select>
         </div>
-
     </section>
 
     <section>
-
         <div class="category">
-            <h2>
-                <i class="fa-solid fa-plug"></i>
-                API Endpoints
-            </h2>
-
+            <h2><i class="fa-solid fa-plug"></i> API Endpoints</h2>
             <span id="endpointCount">8 endpoints</span>
         </div>
-
         <div class="endpoint-list" id="endpointList"></div>
-
         <div class="empty" id="emptyState">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <br><br>
+            <i class="fa-solid fa-magnifying-glass"></i><br><br>
             Endpoint tidak ditemukan.
         </div>
-
     </section>
 
     <div class="footer">
-        <i class="fa-solid fa-code"></i>
-        ReyCloudSHP Media Downloader API
+        <i class="fa-solid fa-code"></i> ReyCloudSHP Media Downloader API
     </div>
 
 </div>
 
-
 <div class="modal" id="modal">
-
     <div class="modal-box">
-
         <div class="modal-head">
-
             <div class="modal-title">
-
                 <div class="modal-title-icon" id="modalIcon">
                     <i class="fa-solid fa-globe"></i>
                 </div>
-
                 <div>
                     <strong id="modalTitle">Test API</strong>
                     <small id="modalPath">/download/example</small>
                 </div>
-
             </div>
-
             <button class="close" id="closeModal">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-
         </div>
 
         <div class="playground">
-
             <div class="request-line">
                 <span id="modalMethod">GET</span>
                 <strong id="modalRequestPath">/download/example</strong>
             </div>
 
             <div class="form-row">
-
                 <div class="input-wrap" id="urlInputWrap">
-
                     <i class="fa-solid fa-link"></i>
-
-                    <input
-                        id="urlInput"
-                        class="url-input"
-                        type="text"
-                        placeholder="https://example.com/media">
-
+                    <input id="urlInput" class="url-input" type="text" placeholder="https://example.com/media">
                 </div>
-
-                <button
-                    class="file-btn"
-                    id="fileBtn"
-                    style="display:none">
-
+                <button class="file-btn" id="fileBtn" style="display:none;">
                     <i class="fa-solid fa-file-arrow-up"></i>
                     <span>Pilih File</span>
-
                 </button>
-
-                <button
-                    class="run-btn"
-                    id="runBtn">
-
+                <button class="run-btn" id="runBtn">
                     <i class="fa-solid fa-play"></i>
                     <span>Run API</span>
-
                 </button>
-
             </div>
 
             <div class="file-info" id="fileInfo"></div>
 
-
             <div class="code-section">
-
                 <div class="section-label">
-                    <strong>
-                        <i class="fa-solid fa-terminal"></i>
-                        Request Example
-                    </strong>
-
+                    <strong><i class="fa-solid fa-terminal"></i> Request Example</strong>
                     <span id="codeMethod">cURL</span>
                 </div>
-
                 <div class="tabs">
-
-                    <button class="tab active" data-code="curl">
-                        cURL
-                    </button>
-
-                    <button class="tab" data-code="node">
-                        Node.js
-                    </button>
-
-                    <button class="tab" data-code="python">
-                        Python
-                    </button>
-
-                    <button class="tab" data-code="php">
-                        PHP
-                    </button>
-
+                    <button class="tab active" data-code="curl">cURL</button>
+                    <button class="tab" data-code="node">Node.js</button>
+                    <button class="tab" data-code="python">Python</button>
+                    <button class="tab" data-code="php">PHP</button>
                 </div>
-
                 <div class="code-box">
-
                     <pre class="code" id="codeBox"></pre>
-
                     <button class="copy-btn" id="copyCode">
-                        <i class="fa-regular fa-copy"></i>
-                        Copy
+                        <i class="fa-regular fa-copy"></i> Copy
                     </button>
-
                 </div>
-
             </div>
 
-
             <div class="console-wrap">
-
                 <div class="section-label">
-
-                    <strong>
-                        <i class="fa-solid fa-terminal"></i>
-                        API Console
-                    </strong>
-
+                    <strong><i class="fa-solid fa-terminal"></i> API Console</strong>
                     <span>Live execution</span>
-
                 </div>
-
                 <div class="console" id="console">
-
                     <div class="console-line console-muted">
                         <span class="console-time">[--:--:--]</span>
                         <span>Ready. Waiting for API request...</span>
                     </div>
-
                 </div>
-
                 <div class="console-progress">
-                    <div
-                        class="console-progress-bar"
-                        id="progressBar"></div>
+                    <div class="console-progress-bar" id="progressBar"></div>
                 </div>
-
             </div>
-
 
             <div class="media-result" id="mediaResult">
-
                 <div class="section-label">
-                    <strong>
-                        <i class="fa-solid fa-photo-film"></i>
-                        Media Result
-                    </strong>
-
+                    <strong><i class="fa-solid fa-photo-film"></i> Media Preview</strong>
                     <span id="mediaType">Media</span>
                 </div>
-
-                <div id="mediaContainer"></div>
-
+                <div class="media-preview-container" id="mediaContainer"></div>
                 <div class="media-actions">
-
-                    <a
-                        href="#"
-                        id="downloadMedia"
-                        target="_blank"
-                        rel="noopener">
-
-                        <i class="fa-solid fa-download"></i>
-                        Download / Open
+                    <a href="#" id="downloadMedia" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-download"></i> Download / Open
                     </a>
-
                     <button id="copyMedia">
-                        <i class="fa-regular fa-copy"></i>
-                        Copy URL
+                        <i class="fa-regular fa-copy"></i> Copy URL
                     </button>
-
                 </div>
-
             </div>
-
 
             <div class="response-box" id="responseBox">
-
                 <div class="section-label">
-                    <strong>
-                        <i class="fa-solid fa-brackets-curly"></i>
-                        Response
-                    </strong>
-
-                    <button
-                        class="copy-btn"
-                        id="copyResponse"
-                        style="position:static">
-
-                        <i class="fa-regular fa-copy"></i>
-                        Copy
+                    <strong><i class="fa-solid fa-brackets-curly"></i> Response Data</strong>
+                    <button class="copy-btn" id="copyResponse" style="position:static;">
+                        <i class="fa-regular fa-copy"></i> Copy
                     </button>
                 </div>
-
-                <pre
-                    class="response-content"
-                    id="responseContent"></pre>
-
+                <pre class="response-content" id="responseContent"></pre>
             </div>
-
         </div>
-
     </div>
-
 </div>
-
 
 <div class="toast" id="toast">
     <i class="fa-solid fa-circle-check"></i>
     <span id="toastText">Copied!</span>
 </div>
 
-
 <script>
 "use strict";
 
-/* ============================================================
-   CONFIG
-============================================================ */
-
 const API_BASE = "https://api.reycode.my.id";
 
-
-/* ============================================================
-   ENDPOINT DATA
-============================================================ */
-
 const endpoints = [
-
     {
         id:"ytmp3",
         name:"YouTube Audio MP3",
@@ -1458,7 +1172,6 @@ const endpoints = [
         param:"url",
         description:"Download audio YouTube dalam format MP3."
     },
-
     {
         id:"ytmp4",
         name:"YouTube Video MP4",
@@ -1470,7 +1183,6 @@ const endpoints = [
         param:"url",
         description:"Download video YouTube dalam format MP4."
     },
-
     {
         id:"tiktok",
         name:"TikTok Downloader V1",
@@ -1482,7 +1194,6 @@ const endpoints = [
         param:"url",
         description:"Download video TikTok tanpa watermark."
     },
-
     {
         id:"tiktokv2",
         name:"TikTok Downloader V2",
@@ -1494,7 +1205,6 @@ const endpoints = [
         param:"url",
         description:"TikTok downloader dengan endpoint versi kedua."
     },
-
     {
         id:"igdl",
         name:"Instagram Downloader",
@@ -1506,7 +1216,6 @@ const endpoints = [
         param:"url",
         description:"Download media dari Instagram."
     },
-
     {
         id:"mediafire",
         name:"MediaFire Extractor",
@@ -1518,7 +1227,6 @@ const endpoints = [
         param:"url",
         description:"Extract direct download link dari MediaFire."
     },
-
     {
         id:"videy",
         name:"Videy Uploader",
@@ -1530,7 +1238,6 @@ const endpoints = [
         param:"file",
         description:"Upload video menggunakan endpoint Videy."
     },
-
     {
         id:"getdl",
         name:"GetDL Downloader",
@@ -1542,27 +1249,16 @@ const endpoints = [
         param:"url",
         description:"Universal media downloader GetDL."
     }
-
 ];
 
-
-/* ============================================================
-   STATE
-============================================================ */
-
 const state = {
-    current:null,
-    currentCode:"curl",
-    running:false,
-    lastResponse:null,
-    lastMediaUrl:null,
-    selectedFile:null
+    current: null,
+    currentCode: "curl",
+    running: false,
+    lastResponse: null,
+    lastMediaUrl: null,
+    selectedFile: null
 };
-
-
-/* ============================================================
-   DOM
-============================================================ */
 
 const endpointList = document.getElementById("endpointList");
 const endpointCount = document.getElementById("endpointCount");
@@ -1606,23 +1302,12 @@ const toast = document.getElementById("toast");
 const toastText = document.getElementById("toastText");
 const heroBase = document.getElementById("heroBase");
 
-
-/* ============================================================
-   INIT
-============================================================ */
-
 function init(){
     totalEndpoint.textContent = endpoints.length;
     heroBase.textContent = `API Base: ${API_BASE}`;
     renderEndpoints();
 }
-
 init();
-
-
-/* ============================================================
-   RENDER ENDPOINTS
-============================================================ */
 
 function renderEndpoints(){
     const query = searchInput.value.trim().toLowerCase();
@@ -1636,7 +1321,6 @@ function renderEndpoints(){
             item.description.toLowerCase().includes(query);
 
         const matchesPlatform = platform === "all" || item.platform === platform;
-
         return matchesSearch && matchesPlatform;
     });
 
@@ -1657,13 +1341,9 @@ function renderEndpoints(){
                     ${escapeHTML(item.name)}
                     <span class="method">${escapeHTML(item.method)}</span>
                 </div>
-                <div class="endpoint-desc">
-                    ${escapeHTML(item.description)}
-                </div>
+                <div class="endpoint-desc">${escapeHTML(item.description)}</div>
             </div>
-            <div class="endpoint-path">
-                ${escapeHTML(item.path)}
-            </div>
+            <div class="endpoint-path">${escapeHTML(item.path)}</div>
             <button class="test-btn" data-endpoint="${escapeAttribute(item.id)}">
                 <i class="fa-solid fa-play"></i>
                 <span>Test API</span>
@@ -1674,11 +1354,6 @@ function renderEndpoints(){
         endpointList.appendChild(row);
     });
 }
-
-
-/* ============================================================
-   MODAL
-============================================================ */
 
 function openEndpointModal(item){
     state.current = item;
@@ -1722,9 +1397,7 @@ function openEndpointModal(item){
     modal.classList.add("active");
 
     setTimeout(() => {
-        if(item.method === "GET"){
-            urlInput.focus();
-        }
+        if(item.method === "GET") urlInput.focus();
     }, 100);
 }
 
@@ -1734,53 +1407,30 @@ function closeCurrentModal(){
 }
 
 closeModal.addEventListener("click", closeCurrentModal);
-
-modal.addEventListener("click", event => {
-    if(event.target === modal) closeCurrentModal();
-});
-
-document.addEventListener("keydown", event => {
-    if(event.key === "Escape" && modal.classList.contains("active")){
-        closeCurrentModal();
-    }
-});
-
-
-/* ============================================================
-   CODE GENERATOR
-============================================================ */
+modal.addEventListener("click", e => { if(e.target === modal) closeCurrentModal(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && modal.classList.contains("active")) closeCurrentModal(); });
 
 function updateCode(){
     if(!state.current) return;
     const item = state.current;
     const value = urlInput.value.trim() || "https://example.com/media";
-
     const requestUrl = item.method === "GET"
         ? `${API_BASE}${item.path}?${item.param}=${encodeURIComponent(value)}`
         : `${API_BASE}${item.path}`;
 
     let code = "";
-
     if(state.currentCode === "curl"){
-        code = item.method === "POST"
-            ? `curl -X POST "${requestUrl}" \\\n  -F "file=@video.mp4"`
-            : `curl "${requestUrl}"`;
+        code = item.method === "POST" ? `curl -X POST "${requestUrl}" \\\n  -F "file=@video.mp4"` : `curl "${requestUrl}"`;
     }else if(state.currentCode === "node"){
-        code = item.method === "POST"
-            ? `const fs = require("fs");\n\nconst form = new FormData();\nform.append("file", new Blob([fs.readFileSync("video.mp4")]));\n\nconst response = await fetch("${requestUrl}", {\n  method: "POST",\n  body: form\n});\n\nconsole.log(await response.text());`
-            : `const response = await fetch("${requestUrl}");\nconst data = await response.text();\nconsole.log(data);`;
+        code = item.method === "POST" ? `const fs = require("fs");\n\nconst form = new FormData();\nform.append("file", new Blob([fs.readFileSync("video.mp4")]));\n\nconst response = await fetch("${requestUrl}", {\n  method: "POST",\n  body: form\n});\n\nconsole.log(await response.text());` : `const response = await fetch("${requestUrl}");\nconst data = await response.text();\nconsole.log(data);`;
     }else if(state.currentCode === "python"){
-        code = item.method === "POST"
-            ? `import requests\n\nwith open("video.mp4", "rb") as f:\n    response = requests.post("${requestUrl}", files={"file": f})\n\nprint(response.text)`
-            : `import requests\n\nresponse = requests.get("${requestUrl}")\nprint(response.text)`;
+        code = item.method === "POST" ? `import requests\n\nwith open("video.mp4", "rb") as f:\n    response = requests.post("${requestUrl}", files={"file": f})\n\nprint(response.text)` : `import requests\n\nresponse = requests.get("${requestUrl}")\nprint(response.text)`;
     }else if(state.currentCode === "php"){
-        code = item.method === "POST"
-            ? `$ch = curl_init("${requestUrl}");\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, ["file" => new CURLFile("video.mp4")]);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\necho $response;`
-            : `$ch = curl_init("${requestUrl}");\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\necho $response;`;
+        code = item.method === "POST" ? `$ch = curl_init("${requestUrl}");\ncurl_setopt($ch, CURLOPT_POST, true);\ncurl_setopt($ch, CURLOPT_POSTFIELDS, ["file" => new CURLFile("video.mp4")]);\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\necho $response;` : `$ch = curl_init("${requestUrl}");\ncurl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n$response = curl_exec($ch);\ncurl_close($ch);\necho $response;`;
     }
 
     codeBox.textContent = code;
-    codeMethod.textContent = state.currentCode === "node" ? "Node.js" : state.currentCode === "python" ? "Python" : state.currentCode === "php" ? "PHP" : "cURL";
+    codeMethod.textContent = state.currentCode.toUpperCase();
 }
 
 document.querySelectorAll(".tab").forEach(tab => {
@@ -1793,18 +1443,13 @@ document.querySelectorAll(".tab").forEach(tab => {
 
 urlInput.addEventListener("input", updateCode);
 
-
-/* ============================================================
-   FILE PICKER
-============================================================ */
-
 fileBtn.addEventListener("click", () => {
     if(!state.current) return;
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "video/*,image/*";
-    input.onchange = event => {
-        const file = event.target.files[0];
+    input.onchange = e => {
+        const file = e.target.files[0];
         if(!file) return;
         state.selectedFile = file;
         fileInfo.style.display = "block";
@@ -1812,11 +1457,6 @@ fileBtn.addEventListener("click", () => {
     };
     input.click();
 });
-
-
-/* ============================================================
-   EXECUTE REQUEST
-============================================================ */
 
 async function execute(){
     if(!state.current || state.running) return;
@@ -1833,7 +1473,6 @@ async function execute(){
 
     state.lastResponse = null;
     state.lastMediaUrl = null;
-
     createConsole();
 
     try{
@@ -1846,15 +1485,12 @@ async function execute(){
         if(item.method === "GET"){
             const target = urlInput.value.trim();
             if(!target) throw new Error("URL tidak boleh kosong.");
-
             requestUrl = `${API_BASE}${item.path}?${encodeURIComponent(item.param)}=${encodeURIComponent(target)}`;
             await showProgress(`Target URL: ${target}`, 18, "info");
         }else{
             if(!state.selectedFile) throw new Error("Silakan pilih file terlebih dahulu.");
-
             requestUrl = `${API_BASE}${item.path}`;
             await showProgress(`Selected file: ${state.selectedFile.name}`, 18, "info");
-
             const form = new FormData();
             form.append(item.param, state.selectedFile);
             requestOptions = { method: "POST", body: form };
@@ -1889,30 +1525,24 @@ async function execute(){
         consoleLine(`Response time: ${responseTime}ms`, "muted");
         setConsoleProgress(92);
 
-        // 1. Direct Blob Response (Image / Video binary)
+        // Binary image / video response
         if(contentType.startsWith("image/") || contentType.startsWith("video/")){
             const blob = await response.blob();
             const blobUrl = URL.createObjectURL(blob);
-
             state.lastMediaUrl = blobUrl;
             state.lastResponse = { status: response.status, contentType, responseTime };
 
             showMedia(blobUrl, contentType);
             showResponse(state.lastResponse);
-
             consoleResult("Media binary response received successfully.", "success");
             setConsoleProgress(100);
             return;
         }
 
-        // 2. Text / JSON Response
+        // Text / JSON Response
         const text = await response.text();
         let data;
-        try{
-            data = JSON.parse(text);
-        }catch{
-            data = text;
-        }
+        try{ data = JSON.parse(text); }catch{ data = text; }
 
         state.lastResponse = data;
         showResponse(data);
@@ -1922,7 +1552,6 @@ async function execute(){
         if(mediaUrl){
             state.lastMediaUrl = mediaUrl;
             const detectedType = await detectMediaType(mediaUrl);
-
             showMedia(mediaUrl, detectedType === "video" ? "video/mp4" : detectedType === "image" ? "image/jpeg" : contentType);
             consoleResult("Media URL successfully extracted from response.", "success");
         }else{
@@ -1946,11 +1575,6 @@ async function execute(){
 
 runBtn.addEventListener("click", execute);
 
-
-/* ============================================================
-   CONSOLE HELPERS
-============================================================ */
-
 function consoleTime(){
     return new Date().toLocaleTimeString("id-ID", { hour12: false });
 }
@@ -1958,19 +1582,15 @@ function consoleTime(){
 function consoleLine(text, type="info"){
     const line = document.createElement("div");
     line.className = `console-line console-${type}`;
-
     const time = document.createElement("span");
     time.className = "console-time";
     time.textContent = `[${consoleTime()}]`;
-
     const content = document.createElement("span");
     content.textContent = text;
-
     line.appendChild(time);
     line.appendChild(content);
     consoleEl.appendChild(line);
     consoleEl.scrollTop = consoleEl.scrollHeight;
-    return line;
 }
 
 function consoleResult(text, type="success"){
@@ -1996,15 +1616,9 @@ async function showProgress(message, percent=0, type="info"){
     await sleep(300);
 }
 
-
-/* ============================================================
-   MEDIA RENDERER & PREVIEW
-============================================================ */
-
 function showMedia(url, contentType=""){
     mediaResult.style.display = "block";
     mediaContainer.innerHTML = "";
-
     const type = contentType.toLowerCase();
 
     if(type.includes("video") || /\.(mp4|webm|mov|mkv)(\?|$)/i.test(url)){
@@ -2025,7 +1639,6 @@ function showMedia(url, contentType=""){
         mediaContainer.appendChild(img);
         mediaType.textContent = "Image Preview";
     }
-
     downloadMedia.href = url;
 }
 
@@ -2035,19 +1648,12 @@ copyMedia.addEventListener("click", async () => {
     showToast("Media URL berhasil disalin.");
 });
 
-
-/* ============================================================
-   RESPONSE RENDERER
-============================================================ */
-
 function showResponse(data){
     responseBox.style.display = "block";
-
     if(typeof data === "string"){
         responseContent.textContent = data;
         return;
     }
-
     try{
         responseContent.textContent = JSON.stringify(data, null, 2);
     }catch{
@@ -2060,21 +1666,14 @@ copyResponse.addEventListener("click", async () => {
     showToast("Response berhasil disalin.");
 });
 
-
-/* ============================================================
-   DEEP MEDIA FINDER (JSON PARSER)
-============================================================ */
-
 function findMediaUrl(value){
     if(!value) return null;
-
     if(typeof value === "string"){
         if(/^https?:\/\//i.test(value) && (/\.(mp4|webm|mov|mkv|avi|jpg|jpeg|png|gif|webp)(\?|$)/i.test(value) || /download|media|video|image|play/i.test(value))){
             return value;
         }
         return null;
     }
-
     if(Array.isArray(value)){
         for(const item of value){
             const result = findMediaUrl(item);
@@ -2082,7 +1681,6 @@ function findMediaUrl(value){
         }
         return null;
     }
-
     if(typeof value === "object"){
         const priorityKeys = [
             "url", "download", "download_url", "downloadUrl",
@@ -2090,49 +1688,32 @@ function findMediaUrl(value){
             "videoUrl", "play", "play_url", "playUrl", "image",
             "image_url", "imageUrl", "link", "direct", "direct_url", "directUrl"
         ];
-
         for(const key of priorityKeys){
             if(Object.prototype.hasOwnProperty.call(value, key)){
                 const result = findMediaUrl(value[key]);
                 if(result) return result;
             }
         }
-
         for(const key of Object.keys(value)){
             const result = findMediaUrl(value[key]);
             if(result) return result;
         }
     }
-
     return null;
 }
-
-
-/* ============================================================
-   DETECT MEDIA TYPE VIA HEAD REQUEST OR EXTENSION
-============================================================ */
 
 async function detectMediaType(url){
     try{
         const response = await fetch(url, { method: "HEAD" });
         const type = (response.headers.get("content-type") || "").toLowerCase();
-
         if(type.startsWith("video/")) return "video";
         if(type.startsWith("image/")) return "image";
-    }catch{
-        // Fallback to extension check if CORS blocks HEAD
-    }
+    }catch{}
 
     if(/\.(mp4|webm|mov|mkv)(\?|$)/i.test(url)) return "video";
     if(/\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(url)) return "image";
-
     return "unknown";
 }
-
-
-/* ============================================================
-   COPY & TOAST UTILITIES
-============================================================ */
 
 copyCode.addEventListener("click", async () => {
     await copyText(codeBox.textContent);
@@ -2144,7 +1725,6 @@ async function copyText(text){
         await navigator.clipboard.writeText(text);
         return;
     }
-
     const textarea = document.createElement("textarea");
     textarea.value = text;
     textarea.style.position = "fixed";
@@ -2164,22 +1744,16 @@ function showToast(message){
     toastText.textContent = message;
     toast.classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2500);
+    toastTimer = setTimeout(() => { toast.classList.remove("show"); }, 2500);
 }
 
-function sleep(ms){
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
+function sleep(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
 function formatBytes(bytes){
     if(!bytes) return "0 B";
     const units = ["B", "KB", "MB", "GB"];
     const index = Math.floor(Math.log(bytes) / Math.log(1024));
     return (bytes / Math.pow(1024, index)).toFixed(index === 0 ? 0 : 2) + " " + units[index];
 }
-
 function escapeHTML(value){
     return String(value)
         .replace(/&/g, "&amp;")
@@ -2188,10 +1762,7 @@ function escapeHTML(value){
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
-
-function escapeAttribute(value){
-    return escapeHTML(value);
-}
+function escapeAttribute(value){ return escapeHTML(value); }
 </script>
 
 </body>
